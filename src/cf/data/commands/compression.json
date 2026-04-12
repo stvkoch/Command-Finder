@@ -1,0 +1,585 @@
+{
+  "category": "compression",
+  "commands": [
+    {
+      "name": "tar",
+      "synopsis": "tar [options] [file ...]",
+      "description": "Archive files together, optionally with compression",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a compressed tar archive of a directory",
+          "command": "tar -czf archive.tar.gz /path/to/directory",
+          "explanation": "Creates a gzip-compressed tar archive of the directory"
+        },
+        {
+          "type": "example",
+          "text": "extract a tar.gz archive",
+          "command": "tar -xzf archive.tar.gz",
+          "explanation": "Decompresses and extracts all files from the gzip tar archive"
+        },
+        {
+          "type": "example",
+          "text": "list the contents of a tar archive without extracting",
+          "command": "tar -tzf archive.tar.gz",
+          "explanation": "Shows all file paths inside the archive"
+        },
+        {
+          "type": "example",
+          "text": "extract a tar archive to a specific directory",
+          "command": "tar -xzf archive.tar.gz -C /opt/app",
+          "explanation": "Extracts the archive contents into /opt/app"
+        },
+        {
+          "type": "example",
+          "text": "create a bzip2-compressed tar archive",
+          "command": "tar -cjf archive.tar.bz2 /path/to/directory",
+          "explanation": "Creates a tar archive with bzip2 compression for better ratio"
+        },
+        {
+          "type": "example",
+          "text": "extract a single file from an archive",
+          "command": "tar -xzf archive.tar.gz path/to/file.txt",
+          "explanation": "Pulls only file.txt out of the archive"
+        }
+      ]
+    },
+    {
+      "name": "gzip",
+      "synopsis": "gzip [options] [file ...]",
+      "description": "Compress files using the Lempel-Ziv coding",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "compress a file with gzip",
+          "command": "gzip access.log",
+          "explanation": "Compresses the file in place, creating access.log.gz and removing the original"
+        },
+        {
+          "type": "example",
+          "text": "compress a file and keep the original",
+          "command": "gzip -k data.csv",
+          "explanation": "Creates data.csv.gz while keeping data.csv intact"
+        },
+        {
+          "type": "example",
+          "text": "compress with maximum compression level",
+          "command": "gzip -9 largefile.sql",
+          "explanation": "Uses the best compression ratio at the cost of more CPU time"
+        },
+        {
+          "type": "example",
+          "text": "compress all files in a directory",
+          "command": "gzip -r /var/log/old/",
+          "explanation": "Recursively compresses every file in the directory"
+        },
+        {
+          "type": "example",
+          "text": "show compression statistics",
+          "command": "gzip -lv archive.gz",
+          "explanation": "Displays the compression ratio and original file size"
+        }
+      ]
+    },
+    {
+      "name": "gunzip",
+      "synopsis": "gunzip [options] [file ...]",
+      "description": "Decompress gzip compressed files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "decompress a gzip file",
+          "command": "gunzip archive.gz",
+          "explanation": "Restores the original file and removes the .gz compressed version"
+        },
+        {
+          "type": "example",
+          "text": "decompress a file while keeping the compressed version",
+          "command": "gunzip -k data.csv.gz",
+          "explanation": "Extracts data.csv while leaving data.csv.gz in place"
+        },
+        {
+          "type": "example",
+          "text": "decompress to standard output for piping",
+          "command": "gunzip -c backup.sql.gz | mysql mydb",
+          "explanation": "Streams the decompressed SQL directly into the database"
+        },
+        {
+          "type": "example",
+          "text": "test if a gzip file is intact without extracting",
+          "command": "gunzip -t archive.gz",
+          "explanation": "Verifies the integrity of the compressed file"
+        }
+      ]
+    },
+    {
+      "name": "bzip2",
+      "synopsis": "bzip2 [options] [file ...]",
+      "description": "Compress files using the Burrows-Wheeler block sorting algorithm",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "compress a file with bzip2",
+          "command": "bzip2 largefile.txt",
+          "explanation": "Creates largefile.txt.bz2 with better compression than gzip"
+        },
+        {
+          "type": "example",
+          "text": "decompress a bzip2 file",
+          "command": "bzip2 -d archive.bz2",
+          "explanation": "Decompresses the file back to its original form"
+        },
+        {
+          "type": "example",
+          "text": "compress a file and keep the original",
+          "command": "bzip2 -k database.sql",
+          "explanation": "Creates database.sql.bz2 while preserving database.sql"
+        },
+        {
+          "type": "example",
+          "text": "check the integrity of a bzip2 compressed file",
+          "command": "bzip2 -t backup.bz2",
+          "explanation": "Tests whether the compressed file is valid without extracting"
+        },
+        {
+          "type": "example",
+          "text": "decompress to standard output for piping",
+          "command": "bzip2 -dc data.bz2 | wc -l",
+          "explanation": "Decompresses and counts the lines without creating a file"
+        }
+      ]
+    },
+    {
+      "name": "xz",
+      "synopsis": "xz [options] [file ...]",
+      "description": "Compress files using the LZMA2 algorithm for high compression ratios",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "compress a file with xz for maximum compression",
+          "command": "xz -9 large-dataset.csv",
+          "explanation": "Compresses the file with the highest compression level"
+        },
+        {
+          "type": "example",
+          "text": "decompress an xz file",
+          "command": "xz -d archive.xz",
+          "explanation": "Restores the original uncompressed file"
+        },
+        {
+          "type": "example",
+          "text": "compress a file and keep the original",
+          "command": "xz -k firmware.bin",
+          "explanation": "Creates firmware.bin.xz while keeping the original file"
+        },
+        {
+          "type": "example",
+          "text": "compress using multiple CPU threads for speed",
+          "command": "xz -T0 huge-file.tar",
+          "explanation": "Uses all available CPU cores to speed up compression"
+        },
+        {
+          "type": "example",
+          "text": "show compression info for an xz file",
+          "command": "xz -l archive.xz",
+          "explanation": "Displays compression ratio, check type, and stream information"
+        }
+      ]
+    },
+    {
+      "name": "zip",
+      "synopsis": "zip [options] zipfile files [...]",
+      "description": "Package and compress files into a zip archive",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a zip archive of files",
+          "command": "zip archive.zip file1.txt file2.txt",
+          "explanation": "Compresses file1.txt and file2.txt into archive.zip"
+        },
+        {
+          "type": "example",
+          "text": "create a zip archive of an entire directory",
+          "command": "zip -r project.zip /path/to/project",
+          "explanation": "Recursively zips the entire directory tree into project.zip"
+        },
+        {
+          "type": "example",
+          "text": "create a password-protected zip archive",
+          "command": "zip -e secure.zip confidential.pdf",
+          "explanation": "Prompts for a password and encrypts the zip archive"
+        },
+        {
+          "type": "example",
+          "text": "add files to an existing zip archive",
+          "command": "zip archive.zip newfile.txt",
+          "explanation": "Appends newfile.txt to the existing archive"
+        },
+        {
+          "type": "example",
+          "text": "create a zip excluding certain file patterns",
+          "command": "zip -r project.zip project/ -x '*.git*' '*.DS_Store'",
+          "explanation": "Zips the project directory while excluding git files and macOS metadata"
+        }
+      ]
+    },
+    {
+      "name": "unzip",
+      "synopsis": "unzip [options] zipfile [file ...] [-d dir]",
+      "description": "Extract files from a zip archive",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "extract all files from a zip archive",
+          "command": "unzip archive.zip",
+          "explanation": "Extracts all contents into the current directory"
+        },
+        {
+          "type": "example",
+          "text": "extract a zip archive to a specific directory",
+          "command": "unzip archive.zip -d /opt/app",
+          "explanation": "Extracts all contents into the /opt/app directory"
+        },
+        {
+          "type": "example",
+          "text": "list contents of a zip file without extracting",
+          "command": "unzip -l archive.zip",
+          "explanation": "Shows all files and their sizes inside the archive"
+        },
+        {
+          "type": "example",
+          "text": "extract a single file from a zip archive",
+          "command": "unzip archive.zip config.yaml",
+          "explanation": "Extracts only config.yaml from the archive"
+        },
+        {
+          "type": "example",
+          "text": "extract and overwrite existing files without prompting",
+          "command": "unzip -o archive.zip -d /opt/app",
+          "explanation": "Overwrites existing files silently during extraction"
+        }
+      ]
+    },
+    {
+      "name": "7z",
+      "synopsis": "7z [command] [options] archive [files ...]",
+      "description": "Compress and decompress files using the 7-Zip format with high compression",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a 7z archive with maximum compression",
+          "command": "7z a -mx=9 archive.7z /path/to/files",
+          "explanation": "Creates a 7z archive with the highest compression level"
+        },
+        {
+          "type": "example",
+          "text": "extract a 7z archive",
+          "command": "7z x archive.7z",
+          "explanation": "Extracts all files preserving the directory structure"
+        },
+        {
+          "type": "example",
+          "text": "list contents of a 7z archive",
+          "command": "7z l archive.7z",
+          "explanation": "Shows all files and their sizes inside the archive"
+        },
+        {
+          "type": "example",
+          "text": "create a password-protected 7z archive",
+          "command": "7z a -p -mhe=on secure.7z sensitive-data/",
+          "explanation": "Encrypts the archive contents and the file names with a password"
+        },
+        {
+          "type": "example",
+          "text": "extract a 7z archive to a specific directory",
+          "command": "7z x archive.7z -o/opt/extracted",
+          "explanation": "Extracts the archive contents into /opt/extracted"
+        }
+      ]
+    },
+    {
+      "name": "zcat",
+      "synopsis": "zcat [file ...]",
+      "description": "View contents of gzip compressed files without extracting",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "view the contents of a compressed file without extracting",
+          "command": "zcat access.log.gz",
+          "explanation": "Outputs the decompressed content to the terminal"
+        },
+        {
+          "type": "example",
+          "text": "pipe compressed file contents into another command",
+          "command": "zcat data.csv.gz | head -20",
+          "explanation": "Shows the first 20 lines of the compressed CSV without extracting"
+        },
+        {
+          "type": "example",
+          "text": "concatenate multiple compressed files",
+          "command": "zcat part1.gz part2.gz > combined.txt",
+          "explanation": "Decompresses and merges multiple gzipped files into one output"
+        },
+        {
+          "type": "example",
+          "text": "count lines in a compressed log file",
+          "command": "zcat /var/log/syslog.1.gz | wc -l",
+          "explanation": "Counts lines in the compressed syslog without extracting to disk"
+        }
+      ]
+    },
+    {
+      "name": "zless",
+      "synopsis": "zless [file ...]",
+      "description": "View compressed files page by page like the less command",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "browse a compressed log file interactively",
+          "command": "zless /var/log/syslog.1.gz",
+          "explanation": "Opens the compressed file in a pager for scrolling through content"
+        },
+        {
+          "type": "example",
+          "text": "read a compressed documentation file",
+          "command": "zless /usr/share/doc/package/changelog.gz",
+          "explanation": "Views the compressed changelog without extracting it"
+        },
+        {
+          "type": "example",
+          "text": "page through a large compressed CSV file",
+          "command": "zless data-export.csv.gz",
+          "explanation": "Allows scrolling through the compressed data file interactively"
+        },
+        {
+          "type": "example",
+          "text": "view a compressed text file with search capability",
+          "command": "zless report.txt.gz",
+          "explanation": "Opens the file in a pager where you can search with / like in less"
+        }
+      ]
+    },
+    {
+      "name": "zgrep",
+      "synopsis": "zgrep [options] pattern [file ...]",
+      "description": "Search for patterns inside compressed files without extracting",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "search for a pattern in a compressed log file",
+          "command": "zgrep 'ERROR' /var/log/syslog.1.gz",
+          "explanation": "Finds all lines containing ERROR in the compressed syslog"
+        },
+        {
+          "type": "example",
+          "text": "search case-insensitively in a compressed file",
+          "command": "zgrep -i 'warning' access.log.gz",
+          "explanation": "Matches warning, WARNING, Warning, etc. in the compressed file"
+        },
+        {
+          "type": "example",
+          "text": "count occurrences of a pattern in compressed files",
+          "command": "zgrep -c '404' /var/log/nginx/access.log.*.gz",
+          "explanation": "Counts 404 errors in each compressed access log file"
+        },
+        {
+          "type": "example",
+          "text": "search for a regex pattern across multiple compressed files",
+          "command": "zgrep -E 'error|fail|timeout' /var/log/app/*.gz",
+          "explanation": "Searches for any of the three patterns across all compressed log files"
+        },
+        {
+          "type": "example",
+          "text": "show line numbers of matches in a compressed file",
+          "command": "zgrep -n 'segfault' kern.log.gz",
+          "explanation": "Displays matching lines with their line numbers in the original file"
+        }
+      ]
+    },
+    {
+      "name": "rar",
+      "synopsis": "rar [command] [options] archive [files ...]",
+      "description": "Create and manage RAR archives",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a RAR archive of a directory",
+          "command": "rar a archive.rar /path/to/directory/",
+          "explanation": "Compresses the directory into archive.rar"
+        },
+        {
+          "type": "example",
+          "text": "create a password-protected RAR archive",
+          "command": "rar a -hp archive.rar sensitive-files/",
+          "explanation": "Creates an encrypted archive where both data and filenames are protected"
+        },
+        {
+          "type": "example",
+          "text": "create a multi-volume RAR archive split into parts",
+          "command": "rar a -v100m backup.rar /data/",
+          "explanation": "Splits the archive into 100 MB volumes for easier transport"
+        },
+        {
+          "type": "example",
+          "text": "add recovery records to a RAR archive for error correction",
+          "command": "rar a -rr5% archive.rar important-data/",
+          "explanation": "Adds 5% recovery data so the archive can repair minor corruption"
+        }
+      ]
+    },
+    {
+      "name": "unrar",
+      "synopsis": "unrar [command] [options] archive [files ...]",
+      "description": "Extract files from RAR archives",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "extract all files from a RAR archive",
+          "command": "unrar x archive.rar",
+          "explanation": "Extracts all files preserving the full directory structure"
+        },
+        {
+          "type": "example",
+          "text": "extract a RAR archive to a specific directory",
+          "command": "unrar x archive.rar /opt/output/",
+          "explanation": "Extracts all contents into the /opt/output directory"
+        },
+        {
+          "type": "example",
+          "text": "list contents of a RAR archive",
+          "command": "unrar l archive.rar",
+          "explanation": "Shows all files and their sizes without extracting"
+        },
+        {
+          "type": "example",
+          "text": "test the integrity of a RAR archive",
+          "command": "unrar t archive.rar",
+          "explanation": "Verifies that all files in the archive can be extracted correctly"
+        },
+        {
+          "type": "example",
+          "text": "extract files without preserving directory paths",
+          "command": "unrar e archive.rar /opt/flat/",
+          "explanation": "Extracts all files into a single directory ignoring archive folder structure"
+        }
+      ]
+    },
+    {
+      "name": "pigz",
+      "synopsis": "pigz [options] [file ...]",
+      "description": "Parallel implementation of gzip that uses multiple CPU cores",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "compress a large file using all CPU cores",
+          "command": "pigz largefile.sql",
+          "explanation": "Compresses the file using all available cores for much faster speed"
+        },
+        {
+          "type": "example",
+          "text": "compress a file with a specific number of threads",
+          "command": "pigz -p 4 database.dump",
+          "explanation": "Uses 4 threads for parallel compression"
+        },
+        {
+          "type": "example",
+          "text": "decompress a gzip file using multiple cores",
+          "command": "pigz -d backup.sql.gz",
+          "explanation": "Decompresses the file using parallel processing for speed"
+        },
+        {
+          "type": "example",
+          "text": "compress with maximum compression and keep the original",
+          "command": "pigz -9 -k huge-log.txt",
+          "explanation": "Best compression using all cores while preserving the original file"
+        },
+        {
+          "type": "example",
+          "text": "use pigz with tar for fast parallel archive creation",
+          "command": "tar cf - /data | pigz > backup.tar.gz",
+          "explanation": "Pipes tar output through pigz for parallel gzip compression"
+        }
+      ]
+    },
+    {
+      "name": "lz4",
+      "synopsis": "lz4 [options] [file ...]",
+      "description": "Extremely fast compression and decompression tool",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "compress a file extremely fast with lz4",
+          "command": "lz4 largefile.bin",
+          "explanation": "Compresses the file at very high speed, creating largefile.bin.lz4"
+        },
+        {
+          "type": "example",
+          "text": "decompress an lz4 file",
+          "command": "lz4 -d archive.lz4",
+          "explanation": "Decompresses the file back to its original form"
+        },
+        {
+          "type": "example",
+          "text": "compress with higher ratio at the cost of some speed",
+          "command": "lz4 -9 data.bin",
+          "explanation": "Uses the highest compression level available in lz4"
+        },
+        {
+          "type": "example",
+          "text": "compress and keep the original file",
+          "command": "lz4 -k snapshot.img",
+          "explanation": "Creates snapshot.img.lz4 while keeping the original file"
+        },
+        {
+          "type": "example",
+          "text": "benchmark lz4 compression speed on a file",
+          "command": "lz4 -b testfile.bin",
+          "explanation": "Runs a compression and decompression speed benchmark"
+        }
+      ]
+    },
+    {
+      "name": "zstd",
+      "synopsis": "zstd [options] [file ...]",
+      "description": "Compress and decompress files using the Zstandard algorithm",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "compress a file with zstandard",
+          "command": "zstd datafile.bin",
+          "explanation": "Creates datafile.bin.zst with a good balance of speed and compression"
+        },
+        {
+          "type": "example",
+          "text": "decompress a zstandard file",
+          "command": "zstd -d archive.zst",
+          "explanation": "Decompresses the file back to its original form"
+        },
+        {
+          "type": "example",
+          "text": "compress with maximum compression level",
+          "command": "zstd -19 database.sql",
+          "explanation": "Uses compression level 19 for the highest ratio"
+        },
+        {
+          "type": "example",
+          "text": "compress using multiple threads for speed",
+          "command": "zstd -T0 hugefile.tar",
+          "explanation": "Uses all available CPU cores for parallel compression"
+        },
+        {
+          "type": "example",
+          "text": "compress and keep the original file",
+          "command": "zstd -k important-data.bin",
+          "explanation": "Creates the compressed file while preserving the original"
+        },
+        {
+          "type": "example",
+          "text": "use zstd with tar for fast compressed archives",
+          "command": "tar --zstd -cf backup.tar.zst /data/",
+          "explanation": "Creates a tar archive compressed with zstandard for fast speed and good ratio"
+        }
+      ]
+    }
+  ]
+}

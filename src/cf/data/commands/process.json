@@ -1,0 +1,1018 @@
+{
+  "category": "process",
+  "commands": [
+    {
+      "name": "ps",
+      "synopsis": "ps [options]",
+      "description": "Report a snapshot of current processes",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all running processes with full details",
+          "command": "ps aux",
+          "explanation": "Shows all processes for all users with CPU/memory usage"
+        },
+        {
+          "type": "example",
+          "text": "find a process by name",
+          "command": "ps aux | grep nginx",
+          "explanation": "Filters process list for entries matching nginx"
+        },
+        {
+          "type": "example",
+          "text": "show processes in a tree hierarchy",
+          "command": "ps auxf",
+          "explanation": "Displays processes in a forest/tree format showing parent-child relationships"
+        },
+        {
+          "type": "example",
+          "text": "list processes sorted by memory usage",
+          "command": "ps aux --sort=-%mem | head -20",
+          "explanation": "Shows top 20 processes consuming the most memory"
+        },
+        {
+          "type": "example",
+          "text": "show only the process IDs for a specific command",
+          "command": "ps -C sshd -o pid=",
+          "explanation": "Lists PIDs of all sshd processes without headers"
+        }
+      ]
+    },
+    {
+      "name": "top",
+      "synopsis": "top [options]",
+      "description": "Display real-time system resource usage and running processes",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "monitor system processes in real time",
+          "command": "top",
+          "explanation": "Opens interactive process viewer showing CPU, memory, and process info"
+        },
+        {
+          "type": "example",
+          "text": "show processes for a specific user",
+          "command": "top -u www-data",
+          "explanation": "Filters the top display to only show processes owned by www-data"
+        },
+        {
+          "type": "example",
+          "text": "run top in batch mode for scripting",
+          "command": "top -bn1 | head -20",
+          "explanation": "Runs one iteration of top in non-interactive mode and shows top 20 lines"
+        },
+        {
+          "type": "example",
+          "text": "sort processes by memory consumption interactively",
+          "command": "top -o %MEM",
+          "explanation": "Starts top sorted by memory usage percentage"
+        },
+        {
+          "type": "example",
+          "text": "monitor a specific process by its PID",
+          "command": "top -p 1234",
+          "explanation": "Tracks only the process with PID 1234"
+        }
+      ]
+    },
+    {
+      "name": "htop",
+      "synopsis": "htop [options]",
+      "description": "Interactive process viewer with a colorful and user-friendly interface",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "open an interactive process manager",
+          "command": "htop",
+          "explanation": "Launches the htop process viewer with color-coded resource bars"
+        },
+        {
+          "type": "example",
+          "text": "view processes belonging to a particular user",
+          "command": "htop -u deploy",
+          "explanation": "Filters htop to show only processes owned by the deploy user"
+        },
+        {
+          "type": "example",
+          "text": "show processes in a tree view",
+          "command": "htop -t",
+          "explanation": "Opens htop with tree mode enabled to show parent-child relationships"
+        },
+        {
+          "type": "example",
+          "text": "monitor a specific process by PID in htop",
+          "command": "htop -p 5678",
+          "explanation": "Opens htop focused on the process with PID 5678"
+        },
+        {
+          "type": "example",
+          "text": "sort htop output by memory usage from the command line",
+          "command": "htop --sort-key=PERCENT_MEM",
+          "explanation": "Starts htop pre-sorted by memory usage percentage"
+        }
+      ]
+    },
+    {
+      "name": "kill",
+      "synopsis": "kill [-signal] pid [...]",
+      "description": "Send a signal to a process, typically to terminate it",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "terminate a process gracefully by its PID",
+          "command": "kill 1234",
+          "explanation": "Sends SIGTERM (default) to process 1234, allowing it to clean up"
+        },
+        {
+          "type": "example",
+          "text": "force kill an unresponsive process",
+          "command": "kill -9 1234",
+          "explanation": "Sends SIGKILL to immediately terminate process 1234 without cleanup"
+        },
+        {
+          "type": "example",
+          "text": "send a hangup signal to reload a daemon's configuration",
+          "command": "kill -HUP 1234",
+          "explanation": "Sends SIGHUP which many daemons interpret as a config reload request"
+        },
+        {
+          "type": "example",
+          "text": "list all available signal names",
+          "command": "kill -l",
+          "explanation": "Prints all signal names that can be sent with kill"
+        },
+        {
+          "type": "example",
+          "text": "stop a process temporarily",
+          "command": "kill -STOP 1234",
+          "explanation": "Suspends process 1234 so it stops executing but remains in memory"
+        }
+      ]
+    },
+    {
+      "name": "killall",
+      "synopsis": "killall [options] name [...]",
+      "description": "Kill processes by name rather than PID",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "terminate all processes with a given name",
+          "command": "killall firefox",
+          "explanation": "Sends SIGTERM to every process named firefox"
+        },
+        {
+          "type": "example",
+          "text": "force kill all instances of a program",
+          "command": "killall -9 python3",
+          "explanation": "Sends SIGKILL to every process named python3"
+        },
+        {
+          "type": "example",
+          "text": "kill processes owned by a specific user",
+          "command": "killall -u john nginx",
+          "explanation": "Terminates all nginx processes belonging to user john"
+        },
+        {
+          "type": "example",
+          "text": "ask for confirmation before killing each process",
+          "command": "killall -i node",
+          "explanation": "Interactively prompts before sending the signal to each matching node process"
+        },
+        {
+          "type": "example",
+          "text": "wait for all killed processes to die",
+          "command": "killall -w apache2",
+          "explanation": "Sends SIGTERM and waits until all apache2 processes have actually terminated"
+        }
+      ]
+    },
+    {
+      "name": "pkill",
+      "synopsis": "pkill [options] pattern",
+      "description": "Send a signal to processes matching a pattern",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "kill processes whose names match a pattern",
+          "command": "pkill -f 'python.*server'",
+          "explanation": "Terminates processes whose full command line matches the pattern"
+        },
+        {
+          "type": "example",
+          "text": "send a signal to all processes owned by a user",
+          "command": "pkill -u bob",
+          "explanation": "Sends SIGTERM to every process running under user bob"
+        },
+        {
+          "type": "example",
+          "text": "kill the newest instance of a process",
+          "command": "pkill -n chrome",
+          "explanation": "Sends SIGTERM only to the most recently started chrome process"
+        },
+        {
+          "type": "example",
+          "text": "kill the oldest instance of a process",
+          "command": "pkill -o worker",
+          "explanation": "Sends SIGTERM only to the longest-running worker process"
+        },
+        {
+          "type": "example",
+          "text": "reload a service by sending SIGHUP to matching processes",
+          "command": "pkill -HUP syslogd",
+          "explanation": "Sends SIGHUP to syslogd processes to trigger a configuration reload"
+        }
+      ]
+    },
+    {
+      "name": "pgrep",
+      "synopsis": "pgrep [options] pattern",
+      "description": "Look up processes based on name or other attributes and return their PIDs",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find the PID of a running program",
+          "command": "pgrep nginx",
+          "explanation": "Returns the PIDs of all processes named nginx"
+        },
+        {
+          "type": "example",
+          "text": "list processes matching a pattern with their names",
+          "command": "pgrep -la python",
+          "explanation": "Shows PIDs and full command lines of all processes matching python"
+        },
+        {
+          "type": "example",
+          "text": "count how many instances of a process are running",
+          "command": "pgrep -c node",
+          "explanation": "Returns the count of running processes named node"
+        },
+        {
+          "type": "example",
+          "text": "find processes owned by a specific user matching a pattern",
+          "command": "pgrep -u root sshd",
+          "explanation": "Lists PIDs of sshd processes owned by root"
+        },
+        {
+          "type": "example",
+          "text": "find a process by its full command line",
+          "command": "pgrep -f 'gunicorn.*wsgi'",
+          "explanation": "Matches against the full command line rather than just the process name"
+        }
+      ]
+    },
+    {
+      "name": "nice",
+      "synopsis": "nice [-n adjustment] command [args]",
+      "description": "Run a command with a modified scheduling priority",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "run a CPU-intensive task with lower priority",
+          "command": "nice -n 19 make -j4",
+          "explanation": "Runs make with the lowest priority so it does not hog the CPU"
+        },
+        {
+          "type": "example",
+          "text": "run a command with higher than normal priority",
+          "command": "sudo nice -n -10 ./critical-task",
+          "explanation": "Runs the task with elevated priority (requires root)"
+        },
+        {
+          "type": "example",
+          "text": "start a background compression job at low priority",
+          "command": "nice -n 15 gzip large-file.log &",
+          "explanation": "Compresses a file in the background without impacting other work"
+        },
+        {
+          "type": "example",
+          "text": "check the default nice value",
+          "command": "nice",
+          "explanation": "Prints the current default niceness value (usually 0)"
+        }
+      ]
+    },
+    {
+      "name": "renice",
+      "synopsis": "renice [-n] priority [-p pid] [-g pgrp] [-u user]",
+      "description": "Alter the scheduling priority of a running process",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "lower the priority of a running process",
+          "command": "renice -n 10 -p 1234",
+          "explanation": "Sets the nice value of process 1234 to 10, making it lower priority"
+        },
+        {
+          "type": "example",
+          "text": "increase the priority of all processes for a user",
+          "command": "sudo renice -n -5 -u www-data",
+          "explanation": "Boosts priority for all processes owned by www-data"
+        },
+        {
+          "type": "example",
+          "text": "set all processes in a process group to low priority",
+          "command": "renice -n 15 -g 5000",
+          "explanation": "Changes the niceness of all processes in process group 5000"
+        },
+        {
+          "type": "example",
+          "text": "make a background job nicer so it does not slow down interactive work",
+          "command": "renice -n 19 -p $(pgrep backup-script)",
+          "explanation": "Gives the backup script the lowest possible priority"
+        }
+      ]
+    },
+    {
+      "name": "nohup",
+      "synopsis": "nohup command [args]",
+      "description": "Run a command immune to hangups, with output redirected to a file",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "run a long task that continues after logging out",
+          "command": "nohup ./data-migration.sh &",
+          "explanation": "Starts the script in the background and it survives terminal close"
+        },
+        {
+          "type": "example",
+          "text": "run a command with nohup and redirect output to a custom file",
+          "command": "nohup python3 train.py > training.log 2>&1 &",
+          "explanation": "Runs the training script immune to hangups with all output going to training.log"
+        },
+        {
+          "type": "example",
+          "text": "start a web server that persists after disconnecting from SSH",
+          "command": "nohup node server.js &",
+          "explanation": "Keeps the Node server running even after the SSH session ends"
+        },
+        {
+          "type": "example",
+          "text": "run nohup and discard all output",
+          "command": "nohup ./cleanup.sh > /dev/null 2>&1 &",
+          "explanation": "Runs the script silently in the background with no output file"
+        }
+      ]
+    },
+    {
+      "name": "bg",
+      "synopsis": "bg [jobspec]",
+      "description": "Resume a suspended job in the background",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "resume the most recently suspended job in the background",
+          "command": "bg",
+          "explanation": "Continues the last stopped job as a background process"
+        },
+        {
+          "type": "example",
+          "text": "resume a specific job number in the background",
+          "command": "bg %2",
+          "explanation": "Resumes job number 2 to run in the background"
+        },
+        {
+          "type": "example",
+          "text": "suspend a running foreground process then background it",
+          "command": "bg %1",
+          "explanation": "After pressing Ctrl-Z to suspend, sends job 1 to background"
+        },
+        {
+          "type": "example",
+          "text": "put a stopped download back into the background",
+          "command": "bg %wget",
+          "explanation": "Resumes the wget job to continue downloading in the background"
+        }
+      ]
+    },
+    {
+      "name": "fg",
+      "synopsis": "fg [jobspec]",
+      "description": "Bring a background job to the foreground",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "bring the most recent background job to the foreground",
+          "command": "fg",
+          "explanation": "Moves the current background job to the foreground terminal"
+        },
+        {
+          "type": "example",
+          "text": "bring a specific background job to the foreground",
+          "command": "fg %2",
+          "explanation": "Brings job number 2 to the foreground"
+        },
+        {
+          "type": "example",
+          "text": "resume a stopped vim session in the foreground",
+          "command": "fg %vi",
+          "explanation": "Returns to the suspended vim editor session"
+        },
+        {
+          "type": "example",
+          "text": "bring a named job back to the foreground",
+          "command": "fg %make",
+          "explanation": "Brings the background make job back to the foreground"
+        }
+      ]
+    },
+    {
+      "name": "jobs",
+      "synopsis": "jobs [options] [jobspec]",
+      "description": "List active jobs in the current shell session",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all background and suspended jobs",
+          "command": "jobs",
+          "explanation": "Lists all jobs with their status (running, stopped, etc.)"
+        },
+        {
+          "type": "example",
+          "text": "list jobs with their process IDs",
+          "command": "jobs -l",
+          "explanation": "Shows jobs with their PIDs alongside the job numbers"
+        },
+        {
+          "type": "example",
+          "text": "show only running jobs",
+          "command": "jobs -r",
+          "explanation": "Filters the job list to only display currently running jobs"
+        },
+        {
+          "type": "example",
+          "text": "show only stopped jobs",
+          "command": "jobs -s",
+          "explanation": "Filters the job list to only display suspended/stopped jobs"
+        }
+      ]
+    },
+    {
+      "name": "wait",
+      "synopsis": "wait [pid|jobspec]",
+      "description": "Wait for background processes to complete before continuing",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "wait for all background jobs to finish",
+          "command": "wait",
+          "explanation": "Blocks until every background job in the current shell completes"
+        },
+        {
+          "type": "example",
+          "text": "wait for a specific background process to complete",
+          "command": "wait $!",
+          "explanation": "Waits for the most recently launched background process to finish"
+        },
+        {
+          "type": "example",
+          "text": "run two tasks in parallel and wait for both to finish",
+          "command": "task1 & task2 & wait",
+          "explanation": "Launches both tasks simultaneously and waits until both complete"
+        },
+        {
+          "type": "example",
+          "text": "wait for a specific PID and check its exit status",
+          "command": "wait 5678; echo $?",
+          "explanation": "Waits for process 5678 and then prints its exit code"
+        }
+      ]
+    },
+    {
+      "name": "disown",
+      "synopsis": "disown [-h] [-ar] [jobspec]",
+      "description": "Remove a job from the shell's job table so it is not killed on logout",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "detach a running background job from the shell",
+          "command": "disown %1",
+          "explanation": "Removes job 1 from the job table so it survives shell exit"
+        },
+        {
+          "type": "example",
+          "text": "disown all background jobs at once",
+          "command": "disown -a",
+          "explanation": "Removes all jobs from the shell job table"
+        },
+        {
+          "type": "example",
+          "text": "start a long process and then detach it from the terminal",
+          "command": "./long-task.sh & disown",
+          "explanation": "Runs the task in background and immediately disowns it"
+        },
+        {
+          "type": "example",
+          "text": "prevent a job from receiving SIGHUP without removing it from the job table",
+          "command": "disown -h %1",
+          "explanation": "Marks job 1 so it will not receive SIGHUP when the shell exits"
+        }
+      ]
+    },
+    {
+      "name": "screen",
+      "synopsis": "screen [options] [command [args]]",
+      "description": "Terminal multiplexer that allows persistent sessions",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "start a new named screen session",
+          "command": "screen -S mysession",
+          "explanation": "Creates a new screen session with the name mysession"
+        },
+        {
+          "type": "example",
+          "text": "reattach to an existing screen session",
+          "command": "screen -r mysession",
+          "explanation": "Reconnects to the detached screen session named mysession"
+        },
+        {
+          "type": "example",
+          "text": "list all active screen sessions",
+          "command": "screen -ls",
+          "explanation": "Shows all screen sessions and their states (attached/detached)"
+        },
+        {
+          "type": "example",
+          "text": "force reattach to a screen session that is still attached elsewhere",
+          "command": "screen -D -r mysession",
+          "explanation": "Detaches the session from other terminals and reattaches it here"
+        },
+        {
+          "type": "example",
+          "text": "run a command in a new detached screen session",
+          "command": "screen -dmS backup ./backup.sh",
+          "explanation": "Creates a detached session named backup running the backup script"
+        }
+      ]
+    },
+    {
+      "name": "tmux",
+      "synopsis": "tmux [command [flags]]",
+      "description": "Terminal multiplexer for managing multiple terminal sessions",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "start a new tmux session with a name",
+          "command": "tmux new -s dev",
+          "explanation": "Creates a new tmux session named dev"
+        },
+        {
+          "type": "example",
+          "text": "attach to an existing tmux session",
+          "command": "tmux attach -t dev",
+          "explanation": "Reconnects to the tmux session named dev"
+        },
+        {
+          "type": "example",
+          "text": "list all tmux sessions",
+          "command": "tmux ls",
+          "explanation": "Shows all active tmux sessions with their names and window counts"
+        },
+        {
+          "type": "example",
+          "text": "kill a tmux session by name",
+          "command": "tmux kill-session -t dev",
+          "explanation": "Terminates the tmux session named dev and all its windows"
+        },
+        {
+          "type": "example",
+          "text": "split the current tmux pane horizontally",
+          "command": "tmux split-window -h",
+          "explanation": "Divides the current pane into two side-by-side panes"
+        },
+        {
+          "type": "example",
+          "text": "send a command to a running tmux session from outside",
+          "command": "tmux send-keys -t dev 'make build' Enter",
+          "explanation": "Types and executes a command in the dev session remotely"
+        }
+      ]
+    },
+    {
+      "name": "watch",
+      "synopsis": "watch [options] command",
+      "description": "Execute a command repeatedly and display the output in real time",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "monitor a directory listing every 2 seconds",
+          "command": "watch ls -la /tmp/output",
+          "explanation": "Refreshes the directory listing every 2 seconds on screen"
+        },
+        {
+          "type": "example",
+          "text": "watch disk usage change over time",
+          "command": "watch -n 5 df -h",
+          "explanation": "Updates the disk usage display every 5 seconds"
+        },
+        {
+          "type": "example",
+          "text": "highlight differences between successive outputs",
+          "command": "watch -d free -m",
+          "explanation": "Shows memory usage and highlights what changed since last refresh"
+        },
+        {
+          "type": "example",
+          "text": "run a command repeatedly until it succeeds then stop",
+          "command": "watch -g curl -s http://localhost:8080/health",
+          "explanation": "Keeps running until the output changes, indicating the service responded"
+        },
+        {
+          "type": "example",
+          "text": "monitor the number of connections to a port",
+          "command": "watch -n 1 'ss -tn state established | wc -l'",
+          "explanation": "Updates every second with the count of established TCP connections"
+        }
+      ]
+    },
+    {
+      "name": "timeout",
+      "synopsis": "timeout [options] duration command [args]",
+      "description": "Run a command with a time limit and kill it if it exceeds the limit",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "run a command with a 30-second time limit",
+          "command": "timeout 30s ./slow-script.sh",
+          "explanation": "Kills the script if it has not finished within 30 seconds"
+        },
+        {
+          "type": "example",
+          "text": "set a timeout with a force kill if the process does not stop",
+          "command": "timeout -k 10s 60s ./process.sh",
+          "explanation": "Sends SIGTERM after 60s and SIGKILL 10s later if still running"
+        },
+        {
+          "type": "example",
+          "text": "limit a network request to 5 seconds",
+          "command": "timeout 5 curl http://example.com/api",
+          "explanation": "Terminates the curl request if it takes longer than 5 seconds"
+        },
+        {
+          "type": "example",
+          "text": "run a command with a 2-minute timeout and preserve the exit status",
+          "command": "timeout --preserve-status 2m ./test-suite.sh",
+          "explanation": "Returns the command's exit code instead of the timeout exit code"
+        }
+      ]
+    },
+    {
+      "name": "time",
+      "synopsis": "time command [args]",
+      "description": "Measure how long a command takes to execute",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "measure how long a command takes to run",
+          "command": "time make -j8",
+          "explanation": "Reports real, user, and system time after the build completes"
+        },
+        {
+          "type": "example",
+          "text": "benchmark a script execution time",
+          "command": "time python3 benchmark.py",
+          "explanation": "Shows wall clock and CPU time used by the Python script"
+        },
+        {
+          "type": "example",
+          "text": "time a pipeline of commands",
+          "command": "time (find / -name '*.log' | xargs grep ERROR)",
+          "explanation": "Measures the total time for the entire pipeline"
+        },
+        {
+          "type": "example",
+          "text": "get detailed resource usage information for a command",
+          "command": "/usr/bin/time -v ls -lR /etc",
+          "explanation": "Shows verbose timing including memory usage and context switches"
+        }
+      ]
+    },
+    {
+      "name": "strace",
+      "synopsis": "strace [options] command [args]",
+      "description": "Trace system calls and signals made by a process",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "trace all system calls made by a command",
+          "command": "strace ls /tmp",
+          "explanation": "Shows every system call ls makes while listing /tmp"
+        },
+        {
+          "type": "example",
+          "text": "attach strace to a running process",
+          "command": "strace -p 1234",
+          "explanation": "Begins tracing system calls of the process with PID 1234"
+        },
+        {
+          "type": "example",
+          "text": "trace only file-related system calls",
+          "command": "strace -e trace=file ./myapp",
+          "explanation": "Filters output to show only open, stat, access, and similar file calls"
+        },
+        {
+          "type": "example",
+          "text": "trace a process and show timestamps for each call",
+          "command": "strace -t -p 1234",
+          "explanation": "Adds wall-clock timestamps to each system call trace line"
+        },
+        {
+          "type": "example",
+          "text": "trace network-related system calls only",
+          "command": "strace -e trace=network ./server",
+          "explanation": "Shows only socket, connect, bind, and other network system calls"
+        },
+        {
+          "type": "example",
+          "text": "save strace output to a file for later analysis",
+          "command": "strace -o trace.log -f ./myapp",
+          "explanation": "Writes all trace output including child processes to trace.log"
+        }
+      ]
+    },
+    {
+      "name": "ltrace",
+      "synopsis": "ltrace [options] command [args]",
+      "description": "Trace library calls made by a process",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "trace library calls made by a program",
+          "command": "ltrace ./myapp",
+          "explanation": "Shows all shared library function calls made by the application"
+        },
+        {
+          "type": "example",
+          "text": "attach ltrace to a running process",
+          "command": "ltrace -p 1234",
+          "explanation": "Begins tracing library calls of process 1234"
+        },
+        {
+          "type": "example",
+          "text": "trace both library and system calls",
+          "command": "ltrace -S ./myapp",
+          "explanation": "Shows both library calls and system calls interleaved"
+        },
+        {
+          "type": "example",
+          "text": "count library call statistics instead of tracing each one",
+          "command": "ltrace -c ./myapp",
+          "explanation": "Summarizes library calls with counts and time spent in each"
+        }
+      ]
+    },
+    {
+      "name": "lsof",
+      "synopsis": "lsof [options]",
+      "description": "List open files and the processes that opened them",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all open files on the system",
+          "command": "lsof",
+          "explanation": "Lists every open file, socket, and pipe across all processes"
+        },
+        {
+          "type": "example",
+          "text": "find which process is using a specific port",
+          "command": "lsof -i :8080",
+          "explanation": "Shows the process listening on or connected to port 8080"
+        },
+        {
+          "type": "example",
+          "text": "list all files opened by a specific process",
+          "command": "lsof -p 1234",
+          "explanation": "Shows every file descriptor held by process 1234"
+        },
+        {
+          "type": "example",
+          "text": "find which processes have a specific file open",
+          "command": "lsof /var/log/syslog",
+          "explanation": "Lists all processes that currently have syslog open"
+        },
+        {
+          "type": "example",
+          "text": "show all network connections for a specific process",
+          "command": "lsof -i -a -p 1234",
+          "explanation": "Lists network connections belonging to process 1234"
+        },
+        {
+          "type": "example",
+          "text": "list all open TCP connections",
+          "command": "lsof -iTCP -sTCP:ESTABLISHED",
+          "explanation": "Shows all established TCP connections on the system"
+        }
+      ]
+    },
+    {
+      "name": "fuser",
+      "synopsis": "fuser [options] name [...]",
+      "description": "Identify processes using files or sockets",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find which process is using a file",
+          "command": "fuser /var/log/app.log",
+          "explanation": "Shows the PID of any process that has the file open"
+        },
+        {
+          "type": "example",
+          "text": "find and kill all processes using a mount point",
+          "command": "fuser -km /mnt/usb",
+          "explanation": "Kills every process accessing the USB mount so it can be unmounted"
+        },
+        {
+          "type": "example",
+          "text": "check which process is listening on a TCP port",
+          "command": "fuser -n tcp 80",
+          "explanation": "Shows the PID of the process bound to TCP port 80"
+        },
+        {
+          "type": "example",
+          "text": "show verbose details about processes using a directory",
+          "command": "fuser -v /home/user",
+          "explanation": "Displays user, PID, access type, and command for each process"
+        }
+      ]
+    },
+    {
+      "name": "pstree",
+      "synopsis": "pstree [options] [pid|user]",
+      "description": "Display a tree of processes showing parent-child relationships",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the entire process tree",
+          "command": "pstree",
+          "explanation": "Displays all processes in a tree rooted at init/systemd"
+        },
+        {
+          "type": "example",
+          "text": "show the process tree with PIDs",
+          "command": "pstree -p",
+          "explanation": "Includes the PID of each process in parentheses"
+        },
+        {
+          "type": "example",
+          "text": "display process tree for a specific user",
+          "command": "pstree alice",
+          "explanation": "Shows only the process tree belonging to user alice"
+        },
+        {
+          "type": "example",
+          "text": "show the ancestry of a specific process",
+          "command": "pstree -s -p 1234",
+          "explanation": "Displays the chain of parent processes leading to PID 1234"
+        },
+        {
+          "type": "example",
+          "text": "highlight a specific process in the tree",
+          "command": "pstree -H 1234",
+          "explanation": "Draws the full tree but highlights the path to PID 1234"
+        }
+      ]
+    },
+    {
+      "name": "crontab",
+      "synopsis": "crontab [-u user] [-l | -e | -r]",
+      "description": "Schedule commands to run automatically at specified times",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "edit the current user's cron schedule",
+          "command": "crontab -e",
+          "explanation": "Opens the crontab file in the default editor for editing"
+        },
+        {
+          "type": "example",
+          "text": "list all scheduled cron jobs",
+          "command": "crontab -l",
+          "explanation": "Displays the current user's crontab entries"
+        },
+        {
+          "type": "example",
+          "text": "remove all cron jobs for the current user",
+          "command": "crontab -r",
+          "explanation": "Deletes the entire crontab for the current user"
+        },
+        {
+          "type": "example",
+          "text": "schedule a script to run every day at midnight",
+          "command": "echo '0 0 * * * /home/user/backup.sh' | crontab -",
+          "explanation": "Sets up a single cron job that runs backup.sh at 00:00 daily"
+        },
+        {
+          "type": "example",
+          "text": "view cron jobs for a different user",
+          "command": "sudo crontab -u www-data -l",
+          "explanation": "Lists the crontab entries belonging to the www-data user"
+        }
+      ]
+    },
+    {
+      "name": "at",
+      "synopsis": "at [options] time",
+      "description": "Schedule a one-time command to run at a specified time",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "schedule a command to run at a specific time today",
+          "command": "echo '/usr/local/bin/report.sh' | at 14:30",
+          "explanation": "Runs report.sh at 2:30 PM today"
+        },
+        {
+          "type": "example",
+          "text": "schedule a task to run tomorrow morning",
+          "command": "echo 'systemctl restart app' | at 06:00 tomorrow",
+          "explanation": "Restarts the app service at 6 AM the following day"
+        },
+        {
+          "type": "example",
+          "text": "list all pending at jobs",
+          "command": "atq",
+          "explanation": "Shows all scheduled one-time jobs and when they will run"
+        },
+        {
+          "type": "example",
+          "text": "remove a scheduled at job",
+          "command": "atrm 5",
+          "explanation": "Deletes the pending at job with ID 5"
+        },
+        {
+          "type": "example",
+          "text": "schedule a command to run 30 minutes from now",
+          "command": "echo 'notify-send Done' | at now + 30 minutes",
+          "explanation": "Sends a desktop notification 30 minutes from the current time"
+        }
+      ]
+    },
+    {
+      "name": "batch",
+      "synopsis": "batch",
+      "description": "Schedule a command to run when system load is low enough",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "queue a heavy job to run when the system is idle",
+          "command": "echo './process-data.sh' | batch",
+          "explanation": "Runs the script when system load average drops below the threshold"
+        },
+        {
+          "type": "example",
+          "text": "schedule a batch job with multiple commands",
+          "command": "batch <<'EOF'\ncd /data\n./etl-pipeline.sh\nEOF",
+          "explanation": "Queues multiple commands to execute when the system is not busy"
+        },
+        {
+          "type": "example",
+          "text": "run a resource-intensive compilation when the server is idle",
+          "command": "echo 'make -j$(nproc) all' | batch",
+          "explanation": "Starts the full parallel build only when system load is low"
+        },
+        {
+          "type": "example",
+          "text": "check pending batch jobs",
+          "command": "atq",
+          "explanation": "Lists all queued batch and at jobs waiting to execute"
+        }
+      ]
+    },
+    {
+      "name": "systemd-run",
+      "synopsis": "systemd-run [options] command [args]",
+      "description": "Run a command as a transient systemd service or scope unit",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "run a command as a transient systemd service",
+          "command": "systemd-run --unit=mytask /usr/local/bin/task.sh",
+          "explanation": "Creates a temporary systemd unit named mytask to run the script"
+        },
+        {
+          "type": "example",
+          "text": "run a command with resource limits using systemd",
+          "command": "systemd-run --scope -p MemoryMax=512M ./memory-hungry-app",
+          "explanation": "Limits the application to 512 MB of memory via a systemd scope"
+        },
+        {
+          "type": "example",
+          "text": "run a one-shot timer that executes after a delay",
+          "command": "systemd-run --on-active=1h /usr/local/bin/cleanup.sh",
+          "explanation": "Schedules cleanup.sh to run once, one hour from now"
+        },
+        {
+          "type": "example",
+          "text": "run a command as a different user via systemd",
+          "command": "systemd-run --uid=nobody --gid=nogroup /usr/local/bin/worker.sh",
+          "explanation": "Executes the worker script as the nobody user in a transient unit"
+        },
+        {
+          "type": "example",
+          "text": "create a transient systemd timer that runs periodically",
+          "command": "systemd-run --on-calendar='*:0/15' /usr/local/bin/healthcheck.sh",
+          "explanation": "Runs the health check every 15 minutes using a transient timer"
+        }
+      ]
+    }
+  ]
+}

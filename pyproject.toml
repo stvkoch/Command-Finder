@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=69.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cf"
+version = "0.1.0"
+description = "Find bash commands using natural language"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+dependencies = [
+    "sentence-transformers>=3.0",
+    "sqlite-vec>=0.1.9",
+    "typer>=0.12",
+    "simple-term-menu>=1.6",
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov",
+]
+
+[project.scripts]
+cf = "cf.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+cf = ["data/commands/*.json"]

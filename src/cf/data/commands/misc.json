@@ -1,0 +1,1336 @@
+{
+  "category": "misc",
+  "commands": [
+    {
+      "name": "echo",
+      "synopsis": "echo [options] [string...]",
+      "description": "Display a line of text to standard output",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "print a message to the terminal",
+          "command": "echo \"Hello, world!\"",
+          "explanation": "Outputs the text to stdout"
+        },
+        {
+          "type": "example",
+          "text": "print text without a trailing newline",
+          "command": "echo -n \"Enter your name: \"",
+          "explanation": "Suppresses the newline at the end, useful for prompts"
+        },
+        {
+          "type": "example",
+          "text": "print text with escape sequences like tabs and newlines",
+          "command": "echo -e \"Line1\\nLine2\\tTabbed\"",
+          "explanation": "Interprets backslash escape characters"
+        },
+        {
+          "type": "example",
+          "text": "write text to a file",
+          "command": "echo \"config=value\" > settings.conf",
+          "explanation": "Redirects output to create or overwrite a file"
+        },
+        {
+          "type": "example",
+          "text": "append text to a file",
+          "command": "echo \"new line\" >> logfile.txt",
+          "explanation": "Adds text to the end of an existing file"
+        }
+      ]
+    },
+    {
+      "name": "printf",
+      "synopsis": "printf FORMAT [ARGUMENT...]",
+      "description": "Format and print data with precise control",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "print formatted text with variables",
+          "command": "printf \"Name: %s, Age: %d\\n\" \"Alice\" 30",
+          "explanation": "Uses format specifiers for type-safe output"
+        },
+        {
+          "type": "example",
+          "text": "print a number with leading zeros",
+          "command": "printf \"%05d\\n\" 42",
+          "explanation": "Pads the number with zeros to 5 digits"
+        },
+        {
+          "type": "example",
+          "text": "print a floating point number with precision",
+          "command": "printf \"%.2f\\n\" 3.14159",
+          "explanation": "Rounds and displays with exactly 2 decimal places"
+        },
+        {
+          "type": "example",
+          "text": "create a formatted table row",
+          "command": "printf \"%-20s %10s %8s\\n\" \"Filename\" \"Size\" \"Type\"",
+          "explanation": "Left-aligns the first column and right-aligns the others"
+        }
+      ]
+    },
+    {
+      "name": "read",
+      "synopsis": "read [options] [name...]",
+      "description": "Read a line from standard input into a variable",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "prompt the user for input in a script",
+          "command": "read -p \"Enter your name: \" name",
+          "explanation": "Displays a prompt and stores the input in the name variable"
+        },
+        {
+          "type": "example",
+          "text": "read a password without showing it on screen",
+          "command": "read -sp \"Password: \" password",
+          "explanation": "Silently reads input without echoing characters"
+        },
+        {
+          "type": "example",
+          "text": "read input with a timeout",
+          "command": "read -t 10 -p \"Quick, enter something: \" answer",
+          "explanation": "Waits 10 seconds for input before timing out"
+        },
+        {
+          "type": "example",
+          "text": "read a single character without pressing Enter",
+          "command": "read -n 1 -p \"Continue? (y/n) \" choice",
+          "explanation": "Reads exactly one character of input"
+        },
+        {
+          "type": "example",
+          "text": "read a file line by line",
+          "command": "while IFS= read -r line; do echo \"$line\"; done < file.txt",
+          "explanation": "Processes each line of a file preserving whitespace"
+        }
+      ]
+    },
+    {
+      "name": "test",
+      "synopsis": "test EXPRESSION",
+      "description": "Evaluate conditional expressions for use in shell scripts",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check if a file exists",
+          "command": "test -f /path/to/file && echo \"exists\"",
+          "explanation": "Returns true if the file exists and is a regular file"
+        },
+        {
+          "type": "example",
+          "text": "check if a directory exists",
+          "command": "test -d /path/to/dir && echo \"is a directory\"",
+          "explanation": "Returns true if the path exists and is a directory"
+        },
+        {
+          "type": "example",
+          "text": "compare two strings",
+          "command": "test \"$a\" = \"$b\" && echo \"equal\"",
+          "explanation": "Tests if two strings are identical"
+        },
+        {
+          "type": "example",
+          "text": "check if a string is empty",
+          "command": "test -z \"$var\" && echo \"empty\"",
+          "explanation": "Returns true if the string has zero length"
+        },
+        {
+          "type": "example",
+          "text": "compare two numbers",
+          "command": "test 5 -gt 3 && echo \"greater\"",
+          "explanation": "Tests if the first number is greater than the second"
+        }
+      ]
+    },
+    {
+      "name": "expr",
+      "synopsis": "expr EXPRESSION",
+      "description": "Evaluate expressions for arithmetic and string operations",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "do basic arithmetic in the shell",
+          "command": "expr 5 + 3",
+          "explanation": "Evaluates and prints the sum of 5 and 3"
+        },
+        {
+          "type": "example",
+          "text": "multiply two numbers using expr",
+          "command": "expr 6 \\* 7",
+          "explanation": "The asterisk must be escaped to prevent shell globbing"
+        },
+        {
+          "type": "example",
+          "text": "get the length of a string",
+          "command": "expr length \"hello world\"",
+          "explanation": "Returns the number of characters in the string"
+        },
+        {
+          "type": "example",
+          "text": "extract a substring",
+          "command": "expr substr \"hello world\" 1 5",
+          "explanation": "Extracts 5 characters starting at position 1"
+        }
+      ]
+    },
+    {
+      "name": "bc",
+      "synopsis": "bc [options] [file...]",
+      "description": "An arbitrary precision calculator language",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "do floating point math in the shell",
+          "command": "echo 'scale=2; 22/7' | bc",
+          "explanation": "Calculates 22 divided by 7 with 2 decimal places"
+        },
+        {
+          "type": "example",
+          "text": "convert between number bases",
+          "command": "echo 'obase=16; 255' | bc",
+          "explanation": "Converts decimal 255 to hexadecimal"
+        },
+        {
+          "type": "example",
+          "text": "calculate a square root",
+          "command": "echo 'scale=4; sqrt(2)' | bc -l",
+          "explanation": "Computes the square root with 4 decimal places"
+        },
+        {
+          "type": "example",
+          "text": "do a complex calculation",
+          "command": "echo 'scale=6; (3.14159 * 5^2)' | bc",
+          "explanation": "Calculates the area of a circle with radius 5"
+        }
+      ]
+    },
+    {
+      "name": "dc",
+      "synopsis": "dc [options] [file...]",
+      "description": "Reverse-polish desk calculator",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "add two numbers with reverse-polish notation",
+          "command": "echo '5 3 + p' | dc",
+          "explanation": "Pushes 5 and 3, adds them, and prints the result"
+        },
+        {
+          "type": "example",
+          "text": "multiply numbers using dc",
+          "command": "echo '6 7 * p' | dc",
+          "explanation": "Calculates 6 times 7 using postfix notation"
+        },
+        {
+          "type": "example",
+          "text": "calculate with precision in dc",
+          "command": "echo '4 k 22 7 / p' | dc",
+          "explanation": "Sets 4 decimal places then divides 22 by 7"
+        },
+        {
+          "type": "example",
+          "text": "compute a power using dc",
+          "command": "echo '2 10 ^ p' | dc",
+          "explanation": "Calculates 2 to the power of 10"
+        }
+      ]
+    },
+    {
+      "name": "yes",
+      "synopsis": "yes [string]",
+      "description": "Output a string repeatedly until killed",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "automatically answer yes to all prompts",
+          "command": "yes | sudo apt-get install nginx",
+          "explanation": "Pipes a continuous stream of 'y' to the command"
+        },
+        {
+          "type": "example",
+          "text": "repeat a custom string indefinitely",
+          "command": "yes \"hello\"",
+          "explanation": "Outputs hello on every line until interrupted"
+        },
+        {
+          "type": "example",
+          "text": "generate a stream of empty lines",
+          "command": "yes '' | head -n 100",
+          "explanation": "Produces 100 blank lines"
+        },
+        {
+          "type": "example",
+          "text": "answer no to all prompts in a script",
+          "command": "yes n | ./installer.sh",
+          "explanation": "Pipes 'n' responses to every prompt"
+        }
+      ]
+    },
+    {
+      "name": "seq",
+      "synopsis": "seq [options] LAST or seq FIRST LAST or seq FIRST INCREMENT LAST",
+      "description": "Print a sequence of numbers",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "generate numbers from 1 to 10",
+          "command": "seq 1 10",
+          "explanation": "Prints each number from 1 to 10 on its own line"
+        },
+        {
+          "type": "example",
+          "text": "generate even numbers from 2 to 20",
+          "command": "seq 2 2 20",
+          "explanation": "Starts at 2, increments by 2, stops at 20"
+        },
+        {
+          "type": "example",
+          "text": "generate numbers separated by commas",
+          "command": "seq -s, 1 5",
+          "explanation": "Outputs 1,2,3,4,5 on a single line"
+        },
+        {
+          "type": "example",
+          "text": "generate zero-padded numbers",
+          "command": "seq -w 1 100",
+          "explanation": "Pads with leading zeros so all numbers have equal width"
+        }
+      ]
+    },
+    {
+      "name": "shuf",
+      "synopsis": "shuf [options] [file]",
+      "description": "Generate random permutations",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "shuffle the lines of a file randomly",
+          "command": "shuf file.txt",
+          "explanation": "Outputs the lines of the file in random order"
+        },
+        {
+          "type": "example",
+          "text": "pick a random line from a file",
+          "command": "shuf -n 1 file.txt",
+          "explanation": "Selects one random line from the file"
+        },
+        {
+          "type": "example",
+          "text": "generate a random number in a range",
+          "command": "shuf -i 1-100 -n 1",
+          "explanation": "Picks one random number between 1 and 100"
+        },
+        {
+          "type": "example",
+          "text": "sample 5 random lines from a file",
+          "command": "shuf -n 5 file.txt",
+          "explanation": "Selects 5 random lines without replacement"
+        }
+      ]
+    },
+    {
+      "name": "sleep",
+      "synopsis": "sleep NUMBER[smhd]",
+      "description": "Delay for a specified amount of time",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "pause for 5 seconds in a script",
+          "command": "sleep 5",
+          "explanation": "Waits for 5 seconds before continuing"
+        },
+        {
+          "type": "example",
+          "text": "sleep for 2 minutes",
+          "command": "sleep 2m",
+          "explanation": "Pauses execution for 2 minutes"
+        },
+        {
+          "type": "example",
+          "text": "sleep for half a second",
+          "command": "sleep 0.5",
+          "explanation": "Pauses for 500 milliseconds"
+        },
+        {
+          "type": "example",
+          "text": "delay between retries in a loop",
+          "command": "while ! curl -s http://localhost:8080; do sleep 3; done",
+          "explanation": "Retries a connection every 3 seconds until successful"
+        }
+      ]
+    },
+    {
+      "name": "true",
+      "synopsis": "true",
+      "description": "Do nothing, successfully (return exit code 0)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create an infinite loop",
+          "command": "while true; do echo \"running\"; sleep 1; done",
+          "explanation": "The loop condition always succeeds, running forever"
+        },
+        {
+          "type": "example",
+          "text": "use true as a no-op placeholder",
+          "command": "if [ -f config ]; then true; else echo \"missing\"; fi",
+          "explanation": "Acts as a do-nothing command in the then branch"
+        },
+        {
+          "type": "example",
+          "text": "override a command to always succeed",
+          "command": "some_command || true",
+          "explanation": "Ensures the pipeline succeeds even if some_command fails"
+        },
+        {
+          "type": "example",
+          "text": "create an empty file using redirection",
+          "command": "true > empty_file.txt",
+          "explanation": "Creates or truncates a file to zero bytes"
+        }
+      ]
+    },
+    {
+      "name": "false",
+      "synopsis": "false",
+      "description": "Do nothing, unsuccessfully (return exit code 1)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "force a script to fail at a certain point",
+          "command": "false",
+          "explanation": "Returns a non-zero exit code to signal failure"
+        },
+        {
+          "type": "example",
+          "text": "test error handling in a pipeline",
+          "command": "false && echo \"this won't print\"",
+          "explanation": "The second command is skipped because false returns failure"
+        },
+        {
+          "type": "example",
+          "text": "use as a disabled loop condition",
+          "command": "while false; do echo \"never runs\"; done",
+          "explanation": "The loop body never executes"
+        },
+        {
+          "type": "example",
+          "text": "trigger an ERR trap for testing",
+          "command": "trap 'echo caught' ERR; false",
+          "explanation": "Deliberately triggers the error trap"
+        }
+      ]
+    },
+    {
+      "name": "xdg-open",
+      "synopsis": "xdg-open file|URL",
+      "description": "Open a file or URL with the default application on Linux",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "open a URL in the default browser on Linux",
+          "command": "xdg-open https://example.com",
+          "explanation": "Launches the default web browser with the URL"
+        },
+        {
+          "type": "example",
+          "text": "open a file with its associated application on Linux",
+          "command": "xdg-open document.pdf",
+          "explanation": "Opens the PDF with the default PDF viewer"
+        },
+        {
+          "type": "example",
+          "text": "open the current directory in a file manager",
+          "command": "xdg-open .",
+          "explanation": "Launches the default file manager in the current directory"
+        },
+        {
+          "type": "example",
+          "text": "open an image with the default viewer",
+          "command": "xdg-open photo.jpg",
+          "explanation": "Launches the default image viewer"
+        }
+      ]
+    },
+    {
+      "name": "open",
+      "synopsis": "open [options] file|URL|application",
+      "description": "Open files, directories, and URLs on macOS",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "open a URL in the default browser on macOS",
+          "command": "open https://example.com",
+          "explanation": "Launches the default browser with the URL"
+        },
+        {
+          "type": "example",
+          "text": "open a file with its default application on macOS",
+          "command": "open document.pdf",
+          "explanation": "Opens the file with the associated application"
+        },
+        {
+          "type": "example",
+          "text": "open a file with a specific application",
+          "command": "open -a \"Visual Studio Code\" project/",
+          "explanation": "Opens the project directory in VS Code"
+        },
+        {
+          "type": "example",
+          "text": "reveal a file in Finder",
+          "command": "open -R ~/Downloads/file.zip",
+          "explanation": "Opens Finder and highlights the file"
+        },
+        {
+          "type": "example",
+          "text": "open the current directory in Finder",
+          "command": "open .",
+          "explanation": "Launches Finder showing the current working directory"
+        }
+      ]
+    },
+    {
+      "name": "pbcopy",
+      "synopsis": "pbcopy",
+      "description": "Copy data from stdin to the macOS clipboard",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "copy text to the clipboard on macOS",
+          "command": "echo \"Hello\" | pbcopy",
+          "explanation": "Copies the text to the system clipboard"
+        },
+        {
+          "type": "example",
+          "text": "copy a file's contents to the clipboard",
+          "command": "pbcopy < ~/.ssh/id_rsa.pub",
+          "explanation": "Copies the SSH public key to the clipboard"
+        },
+        {
+          "type": "example",
+          "text": "copy the output of a command to the clipboard",
+          "command": "pwd | pbcopy",
+          "explanation": "Copies the current working directory path to the clipboard"
+        },
+        {
+          "type": "example",
+          "text": "copy a filtered command output to clipboard",
+          "command": "git log --oneline -5 | pbcopy",
+          "explanation": "Copies the last 5 commit messages to the clipboard"
+        }
+      ]
+    },
+    {
+      "name": "pbpaste",
+      "synopsis": "pbpaste",
+      "description": "Output the contents of the macOS clipboard to stdout",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "paste clipboard contents to the terminal",
+          "command": "pbpaste",
+          "explanation": "Outputs whatever is currently on the clipboard"
+        },
+        {
+          "type": "example",
+          "text": "save clipboard contents to a file",
+          "command": "pbpaste > clipboard.txt",
+          "explanation": "Writes the clipboard text to a file"
+        },
+        {
+          "type": "example",
+          "text": "pipe clipboard contents to another command",
+          "command": "pbpaste | wc -l",
+          "explanation": "Counts the number of lines in the clipboard text"
+        },
+        {
+          "type": "example",
+          "text": "sort the contents of the clipboard",
+          "command": "pbpaste | sort | pbcopy",
+          "explanation": "Sorts clipboard lines and puts the result back on the clipboard"
+        }
+      ]
+    },
+    {
+      "name": "defaults",
+      "synopsis": "defaults [command] [domain [key [value]]]",
+      "description": "Read and write macOS user defaults (preferences)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show hidden files in Finder",
+          "command": "defaults write com.apple.finder AppleShowAllFiles -bool true",
+          "explanation": "Enables showing hidden files in Finder"
+        },
+        {
+          "type": "example",
+          "text": "read a preference value",
+          "command": "defaults read com.apple.dock autohide",
+          "explanation": "Shows whether the Dock is set to auto-hide"
+        },
+        {
+          "type": "example",
+          "text": "change the screenshot save location",
+          "command": "defaults write com.apple.screencapture location ~/Screenshots",
+          "explanation": "Saves screenshots to the specified directory"
+        },
+        {
+          "type": "example",
+          "text": "speed up Dock animations",
+          "command": "defaults write com.apple.dock autohide-time-modifier -float 0.2",
+          "explanation": "Makes the Dock appear and disappear faster"
+        },
+        {
+          "type": "example",
+          "text": "list all preferences for an application",
+          "command": "defaults read com.apple.finder",
+          "explanation": "Shows all preference keys and values for Finder"
+        }
+      ]
+    },
+    {
+      "name": "say",
+      "synopsis": "say [options] [text]",
+      "description": "Convert text to audible speech on macOS",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "make the Mac speak some text",
+          "command": "say \"Hello, how are you?\"",
+          "explanation": "Uses the default text-to-speech voice to speak the text"
+        },
+        {
+          "type": "example",
+          "text": "use a specific voice for speech",
+          "command": "say -v Samantha \"Task complete\"",
+          "explanation": "Uses the Samantha voice for the speech"
+        },
+        {
+          "type": "example",
+          "text": "save speech to an audio file",
+          "command": "say -o output.aiff \"This is a test\"",
+          "explanation": "Writes the spoken audio to a file instead of playing it"
+        },
+        {
+          "type": "example",
+          "text": "speak text from a file",
+          "command": "say -f document.txt",
+          "explanation": "Reads the contents of the file aloud"
+        },
+        {
+          "type": "example",
+          "text": "announce when a long command finishes",
+          "command": "make build && say \"Build complete\" || say \"Build failed\"",
+          "explanation": "Speaks a notification when the build finishes"
+        }
+      ]
+    },
+    {
+      "name": "caffeinate",
+      "synopsis": "caffeinate [options] [command]",
+      "description": "Prevent macOS from sleeping",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "prevent the Mac from sleeping",
+          "command": "caffeinate",
+          "explanation": "Keeps the system awake until you press Ctrl+C"
+        },
+        {
+          "type": "example",
+          "text": "keep the Mac awake for a specific duration",
+          "command": "caffeinate -t 3600",
+          "explanation": "Prevents sleep for 3600 seconds (1 hour)"
+        },
+        {
+          "type": "example",
+          "text": "keep the screen on while a command runs",
+          "command": "caffeinate -d make build",
+          "explanation": "Prevents the display from sleeping during the build"
+        },
+        {
+          "type": "example",
+          "text": "prevent sleep while downloading a large file",
+          "command": "caffeinate -s curl -O https://example.com/largefile.iso",
+          "explanation": "Keeps the system awake during the download"
+        }
+      ]
+    },
+    {
+      "name": "alias",
+      "synopsis": "alias [name[=value]]",
+      "description": "Create a shortcut name for a command",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a shortcut for a long command",
+          "command": "alias ll='ls -alF'",
+          "explanation": "Defines ll as an alias for the detailed ls command"
+        },
+        {
+          "type": "example",
+          "text": "list all defined aliases",
+          "command": "alias",
+          "explanation": "Shows every alias currently set in the shell"
+        },
+        {
+          "type": "example",
+          "text": "create an alias for a common git command",
+          "command": "alias gs='git status'",
+          "explanation": "Makes gs a shortcut for git status"
+        },
+        {
+          "type": "example",
+          "text": "create an alias for navigating to a project",
+          "command": "alias proj='cd ~/projects/myapp && ls'",
+          "explanation": "Jumps to the project directory and lists files"
+        }
+      ]
+    },
+    {
+      "name": "unalias",
+      "synopsis": "unalias [-a] [name...]",
+      "description": "Remove alias definitions",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "remove a specific alias",
+          "command": "unalias ll",
+          "explanation": "Deletes the ll alias from the current shell"
+        },
+        {
+          "type": "example",
+          "text": "remove all aliases",
+          "command": "unalias -a",
+          "explanation": "Clears every alias defined in the current shell session"
+        },
+        {
+          "type": "example",
+          "text": "bypass an alias temporarily without removing it",
+          "command": "\\ls",
+          "explanation": "Prefixing with backslash runs the original command, not the alias"
+        },
+        {
+          "type": "example",
+          "text": "check if a name is an alias before removing",
+          "command": "type ll && unalias ll",
+          "explanation": "Verifies what ll refers to, then removes the alias"
+        }
+      ]
+    },
+    {
+      "name": "history",
+      "synopsis": "history [options] [n]",
+      "description": "Display or manipulate the command history list",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all previous commands",
+          "command": "history",
+          "explanation": "Displays the full command history with line numbers"
+        },
+        {
+          "type": "example",
+          "text": "show the last 20 commands",
+          "command": "history 20",
+          "explanation": "Displays only the 20 most recent commands"
+        },
+        {
+          "type": "example",
+          "text": "search command history for a pattern",
+          "command": "history | grep ssh",
+          "explanation": "Filters history to show only commands containing ssh"
+        },
+        {
+          "type": "example",
+          "text": "clear the command history",
+          "command": "history -c",
+          "explanation": "Removes all entries from the current session history"
+        },
+        {
+          "type": "example",
+          "text": "re-run a previous command by its history number",
+          "command": "!42",
+          "explanation": "Executes command number 42 from the history"
+        }
+      ]
+    },
+    {
+      "name": "fc",
+      "synopsis": "fc [options] [first] [last]",
+      "description": "Fix command - list or edit and re-execute commands from history",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "edit and re-run the last command in an editor",
+          "command": "fc",
+          "explanation": "Opens the last command in the default editor for modification"
+        },
+        {
+          "type": "example",
+          "text": "list the last 10 commands with numbers",
+          "command": "fc -l -10",
+          "explanation": "Displays the 10 most recent history entries"
+        },
+        {
+          "type": "example",
+          "text": "re-run the last command with a substitution",
+          "command": "fc -s old=new",
+          "explanation": "Replaces old with new in the previous command and runs it"
+        },
+        {
+          "type": "example",
+          "text": "edit a range of commands from history",
+          "command": "fc 100 110",
+          "explanation": "Opens commands 100 through 110 in the editor for re-execution"
+        }
+      ]
+    },
+    {
+      "name": "source",
+      "synopsis": "source filename [arguments]",
+      "description": "Execute commands from a file in the current shell environment",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "reload the shell configuration",
+          "command": "source ~/.bashrc",
+          "explanation": "Re-reads and applies the bash configuration file"
+        },
+        {
+          "type": "example",
+          "text": "load environment variables from a .env file",
+          "command": "source .env",
+          "explanation": "Exports all variables defined in the .env file into the current shell"
+        },
+        {
+          "type": "example",
+          "text": "activate a Python virtual environment",
+          "command": "source venv/bin/activate",
+          "explanation": "Sets up the virtual environment in the current shell"
+        },
+        {
+          "type": "example",
+          "text": "load a shared library of shell functions",
+          "command": "source /usr/lib/bash/helpers.sh",
+          "explanation": "Makes all functions in the file available in the current shell"
+        }
+      ]
+    },
+    {
+      "name": "eval",
+      "synopsis": "eval [arguments]",
+      "description": "Evaluate arguments as a shell command",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "execute a command stored in a variable",
+          "command": "cmd='ls -la'; eval $cmd",
+          "explanation": "Interprets the string as a command and executes it"
+        },
+        {
+          "type": "example",
+          "text": "set up SSH agent in the current shell",
+          "command": "eval $(ssh-agent -s)",
+          "explanation": "Runs ssh-agent and evaluates its output to set environment variables"
+        },
+        {
+          "type": "example",
+          "text": "dynamically build and execute a command",
+          "command": "eval \"echo \\$HOME\"",
+          "explanation": "Double-evaluates the variable expansion"
+        },
+        {
+          "type": "example",
+          "text": "initialize a tool that outputs shell commands",
+          "command": "eval \"$(direnv hook bash)\"",
+          "explanation": "Executes the shell hook output from direnv"
+        }
+      ]
+    },
+    {
+      "name": "exec",
+      "synopsis": "exec [command [arguments]]",
+      "description": "Replace the current shell with a command",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "replace the current shell with a new one",
+          "command": "exec zsh",
+          "explanation": "Replaces the current bash process with zsh"
+        },
+        {
+          "type": "example",
+          "text": "redirect all script output to a log file",
+          "command": "exec > output.log 2>&1",
+          "explanation": "Sends all subsequent stdout and stderr to the file"
+        },
+        {
+          "type": "example",
+          "text": "replace the shell with an application in a Docker entrypoint",
+          "command": "exec python app.py",
+          "explanation": "Replaces the shell so the app receives signals directly"
+        },
+        {
+          "type": "example",
+          "text": "open a file descriptor for reading",
+          "command": "exec 3< input.txt",
+          "explanation": "Assigns file descriptor 3 to the input file"
+        }
+      ]
+    },
+    {
+      "name": "trap",
+      "synopsis": "trap [command] [signal...]",
+      "description": "Execute a command when the shell receives a signal",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "clean up temporary files when a script exits",
+          "command": "trap 'rm -f /tmp/myapp_*' EXIT",
+          "explanation": "Runs the cleanup command whenever the script exits"
+        },
+        {
+          "type": "example",
+          "text": "handle Ctrl+C gracefully in a script",
+          "command": "trap 'echo \"Interrupted!\"; exit 1' INT",
+          "explanation": "Catches SIGINT and runs custom cleanup before exiting"
+        },
+        {
+          "type": "example",
+          "text": "ignore the hangup signal",
+          "command": "trap '' HUP",
+          "explanation": "Prevents the script from being killed when the terminal closes"
+        },
+        {
+          "type": "example",
+          "text": "debug by printing each command before execution",
+          "command": "trap 'echo \"+ $BASH_COMMAND\"' DEBUG",
+          "explanation": "Shows each command as it runs, similar to set -x"
+        },
+        {
+          "type": "example",
+          "text": "reset a trap to its default behavior",
+          "command": "trap - INT",
+          "explanation": "Restores the default SIGINT handling"
+        }
+      ]
+    },
+    {
+      "name": "xclip",
+      "synopsis": "xclip [options]",
+      "description": "Command-line interface to X selections (clipboard) on Linux",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "copy text to the clipboard on Linux",
+          "command": "echo \"Hello\" | xclip -selection clipboard",
+          "explanation": "Copies text to the system clipboard"
+        },
+        {
+          "type": "example",
+          "text": "copy a file's contents to the clipboard on Linux",
+          "command": "xclip -selection clipboard < ~/.ssh/id_rsa.pub",
+          "explanation": "Reads the file and places its content on the clipboard"
+        },
+        {
+          "type": "example",
+          "text": "paste from the clipboard on Linux",
+          "command": "xclip -selection clipboard -o",
+          "explanation": "Outputs the current clipboard contents to stdout"
+        },
+        {
+          "type": "example",
+          "text": "copy an image to the clipboard",
+          "command": "xclip -selection clipboard -t image/png -i screenshot.png",
+          "explanation": "Places a PNG image on the clipboard"
+        }
+      ]
+    },
+    {
+      "name": "jq",
+      "synopsis": "jq [options] filter [file...]",
+      "description": "Command-line JSON processor",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "pretty-print a JSON file",
+          "command": "jq '.' data.json",
+          "explanation": "Formats and colorizes the JSON output"
+        },
+        {
+          "type": "example",
+          "text": "extract a specific field from JSON",
+          "command": "jq '.name' data.json",
+          "explanation": "Pulls the value of the name key from the JSON"
+        },
+        {
+          "type": "example",
+          "text": "filter an array of objects by a condition",
+          "command": "jq '.[] | select(.age > 30)' people.json",
+          "explanation": "Returns only objects where age is greater than 30"
+        },
+        {
+          "type": "example",
+          "text": "extract values from a nested JSON API response",
+          "command": "curl -s https://api.example.com/data | jq '.results[].name'",
+          "explanation": "Fetches JSON and extracts the name from each result"
+        },
+        {
+          "type": "example",
+          "text": "transform JSON by creating new objects",
+          "command": "jq '{fullName: (.first + \" \" + .last), age: .age}' person.json",
+          "explanation": "Constructs new JSON objects from existing fields"
+        }
+      ]
+    },
+    {
+      "name": "yq",
+      "synopsis": "yq [options] expression [file...]",
+      "description": "Command-line YAML/XML/TOML processor",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "read a value from a YAML file",
+          "command": "yq '.metadata.name' deployment.yaml",
+          "explanation": "Extracts the name from the YAML metadata section"
+        },
+        {
+          "type": "example",
+          "text": "convert YAML to JSON",
+          "command": "yq -o json '.' config.yaml",
+          "explanation": "Reads YAML and outputs it as formatted JSON"
+        },
+        {
+          "type": "example",
+          "text": "update a value in a YAML file in place",
+          "command": "yq -i '.spec.replicas = 3' deployment.yaml",
+          "explanation": "Modifies the replicas count directly in the file"
+        },
+        {
+          "type": "example",
+          "text": "merge two YAML files",
+          "command": "yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' base.yaml override.yaml",
+          "explanation": "Deep-merges the override file into the base file"
+        }
+      ]
+    },
+    {
+      "name": "bat",
+      "synopsis": "bat [options] [file...]",
+      "description": "A cat clone with syntax highlighting and line numbers",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "view a file with syntax highlighting",
+          "command": "bat script.py",
+          "explanation": "Displays the file with colors, line numbers, and git changes"
+        },
+        {
+          "type": "example",
+          "text": "show a file without line numbers or decorations",
+          "command": "bat --plain file.txt",
+          "explanation": "Outputs the file content without any extra formatting"
+        },
+        {
+          "type": "example",
+          "text": "highlight a specific language for stdin",
+          "command": "echo '{\"key\": \"value\"}' | bat -l json",
+          "explanation": "Applies JSON syntax highlighting to piped input"
+        },
+        {
+          "type": "example",
+          "text": "show only a range of lines from a file",
+          "command": "bat --line-range 10:20 largefile.py",
+          "explanation": "Displays only lines 10 through 20"
+        }
+      ]
+    },
+    {
+      "name": "exa",
+      "synopsis": "exa [options] [files...]",
+      "description": "A modern replacement for ls with colors and git integration",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list files with colors and icons",
+          "command": "exa --icons",
+          "explanation": "Shows directory contents with file type icons"
+        },
+        {
+          "type": "example",
+          "text": "show a detailed file listing with git status",
+          "command": "exa -la --git",
+          "explanation": "Long listing showing permissions, size, and git status for each file"
+        },
+        {
+          "type": "example",
+          "text": "show a tree view of the directory",
+          "command": "exa --tree --level=2",
+          "explanation": "Displays a tree structure limited to 2 levels deep"
+        },
+        {
+          "type": "example",
+          "text": "sort files by modification time",
+          "command": "exa -la --sort=modified",
+          "explanation": "Lists files ordered by when they were last changed"
+        }
+      ]
+    },
+    {
+      "name": "eza",
+      "synopsis": "eza [options] [files...]",
+      "description": "A modern replacement for ls (maintained fork of exa)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list files with icons and colors using eza",
+          "command": "eza --icons --color=always",
+          "explanation": "Displays files with type icons and ANSI colors"
+        },
+        {
+          "type": "example",
+          "text": "show a directory tree with git status",
+          "command": "eza --tree --git --level=3",
+          "explanation": "Renders a tree view with git modification indicators"
+        },
+        {
+          "type": "example",
+          "text": "long listing with human-readable sizes",
+          "command": "eza -lah",
+          "explanation": "Detailed listing with all files and human-readable sizes"
+        },
+        {
+          "type": "example",
+          "text": "list files sorted by size",
+          "command": "eza -la --sort=size",
+          "explanation": "Shows files ordered from smallest to largest"
+        }
+      ]
+    },
+    {
+      "name": "man",
+      "synopsis": "man [section] name",
+      "description": "Display the manual page for a command",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "read the manual for a command",
+          "command": "man ls",
+          "explanation": "Opens the manual page for the ls command"
+        },
+        {
+          "type": "example",
+          "text": "look up a system call manual page",
+          "command": "man 2 open",
+          "explanation": "Shows the manual for the open() system call in section 2"
+        },
+        {
+          "type": "example",
+          "text": "search for a keyword across all man pages",
+          "command": "man -k \"copy files\"",
+          "explanation": "Searches manual page descriptions for the keyword"
+        },
+        {
+          "type": "example",
+          "text": "read the manual for a configuration file format",
+          "command": "man 5 crontab",
+          "explanation": "Shows the file format manual for crontab in section 5"
+        }
+      ]
+    },
+    {
+      "name": "info",
+      "synopsis": "info [options] [menu-item...]",
+      "description": "Read Info documents (GNU help system)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "read the GNU info documentation for a tool",
+          "command": "info coreutils",
+          "explanation": "Opens the detailed coreutils Info documentation"
+        },
+        {
+          "type": "example",
+          "text": "go directly to a specific info node",
+          "command": "info grep 'Regular Expressions'",
+          "explanation": "Opens the grep info page at the regex section"
+        },
+        {
+          "type": "example",
+          "text": "read the Bash scripting documentation",
+          "command": "info bash",
+          "explanation": "Opens the comprehensive Bash reference manual"
+        },
+        {
+          "type": "example",
+          "text": "output info documentation as plain text",
+          "command": "info --output=- make",
+          "explanation": "Prints the entire make info document to stdout"
+        }
+      ]
+    },
+    {
+      "name": "help",
+      "synopsis": "help [pattern]",
+      "description": "Display information about shell builtin commands",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "get help on a shell builtin command",
+          "command": "help cd",
+          "explanation": "Shows usage information for the cd builtin"
+        },
+        {
+          "type": "example",
+          "text": "list all available shell builtins",
+          "command": "help",
+          "explanation": "Displays a summary of all bash builtin commands"
+        },
+        {
+          "type": "example",
+          "text": "show detailed help for a builtin",
+          "command": "help -d for",
+          "explanation": "Displays a short description of the for loop builtin"
+        },
+        {
+          "type": "example",
+          "text": "get the synopsis for a builtin command",
+          "command": "help -s declare",
+          "explanation": "Shows only the usage syntax for declare"
+        }
+      ]
+    },
+    {
+      "name": "hash",
+      "synopsis": "hash [options] [name...]",
+      "description": "Manage the shell's hash table of command locations",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show cached command locations",
+          "command": "hash",
+          "explanation": "Lists all commands and their cached paths in the hash table"
+        },
+        {
+          "type": "example",
+          "text": "clear the command hash table",
+          "command": "hash -r",
+          "explanation": "Forces the shell to re-find commands by clearing the cache"
+        },
+        {
+          "type": "example",
+          "text": "find where a command is cached",
+          "command": "hash -t ls",
+          "explanation": "Shows the cached path for the ls command"
+        },
+        {
+          "type": "example",
+          "text": "manually set a command path in the hash table",
+          "command": "hash -p /usr/local/bin/python3 python",
+          "explanation": "Forces python to resolve to a specific path"
+        }
+      ]
+    },
+    {
+      "name": "tput",
+      "synopsis": "tput [options] capname [parameters]",
+      "description": "Query terminal capabilities and send control sequences",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "get the number of columns in the terminal",
+          "command": "tput cols",
+          "explanation": "Returns the current terminal width in characters"
+        },
+        {
+          "type": "example",
+          "text": "get the number of rows in the terminal",
+          "command": "tput lines",
+          "explanation": "Returns the current terminal height in lines"
+        },
+        {
+          "type": "example",
+          "text": "set text color in a script",
+          "command": "tput setaf 1; echo \"Red text\"; tput sgr0",
+          "explanation": "Sets foreground to red, prints text, then resets formatting"
+        },
+        {
+          "type": "example",
+          "text": "make text bold in the terminal",
+          "command": "tput bold; echo \"Bold text\"; tput sgr0",
+          "explanation": "Enables bold mode, prints text, then resets"
+        },
+        {
+          "type": "example",
+          "text": "hide the cursor",
+          "command": "tput civis",
+          "explanation": "Makes the cursor invisible, useful for scripts with visual output"
+        }
+      ]
+    },
+    {
+      "name": "reset",
+      "synopsis": "reset",
+      "description": "Reset the terminal to a sane state",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "fix a messed up terminal after viewing binary data",
+          "command": "reset",
+          "explanation": "Reinitializes the terminal to its default state"
+        },
+        {
+          "type": "example",
+          "text": "reset the terminal when characters look garbled",
+          "command": "reset",
+          "explanation": "Clears the screen and restores normal character encoding"
+        },
+        {
+          "type": "example",
+          "text": "reset terminal settings without clearing the screen",
+          "command": "stty sane",
+          "explanation": "Restores terminal line settings to sensible defaults"
+        },
+        {
+          "type": "example",
+          "text": "fix a terminal stuck in raw mode",
+          "command": "reset",
+          "explanation": "Restores cooked mode, echo, and other terminal settings"
+        }
+      ]
+    },
+    {
+      "name": "clear",
+      "synopsis": "clear",
+      "description": "Clear the terminal screen",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "clear the terminal screen",
+          "command": "clear",
+          "explanation": "Scrolls the terminal so the prompt is at the top"
+        },
+        {
+          "type": "example",
+          "text": "clear screen and scrollback buffer",
+          "command": "clear -x",
+          "explanation": "Clears the visible screen without clearing scrollback history"
+        },
+        {
+          "type": "example",
+          "text": "clear the screen using an escape sequence",
+          "command": "printf '\\033[2J\\033[H'",
+          "explanation": "Sends ANSI escape codes to clear screen and move cursor home"
+        },
+        {
+          "type": "example",
+          "text": "clear the screen in a script",
+          "command": "tput clear",
+          "explanation": "Uses the terminfo capability to clear the terminal"
+        }
+      ]
+    }
+  ]
+}

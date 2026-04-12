@@ -1,0 +1,1167 @@
+{
+  "category": "git",
+  "commands": [
+    {
+      "name": "git init",
+      "synopsis": "git init [directory]",
+      "description": "Create an empty Git repository or reinitialize an existing one",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "start a new git repository in the current directory",
+          "command": "git init",
+          "explanation": "Initializes a new .git directory in the current working directory"
+        },
+        {
+          "type": "example",
+          "text": "create a new git repo in a specific folder",
+          "command": "git init my-project",
+          "explanation": "Creates the directory my-project and initializes a git repo inside it"
+        },
+        {
+          "type": "example",
+          "text": "initialize a bare repository for a server",
+          "command": "git init --bare my-repo.git",
+          "explanation": "Creates a bare repository without a working directory, typically used on servers"
+        },
+        {
+          "type": "example",
+          "text": "start a repo with main as the default branch",
+          "command": "git init -b main",
+          "explanation": "Initializes a repo and sets the initial branch name to main instead of master"
+        },
+        {
+          "type": "example",
+          "text": "reinitialize an existing repository to pick up new templates",
+          "command": "git init",
+          "explanation": "Running git init in an existing repo is safe and can add new templates"
+        }
+      ]
+    },
+    {
+      "name": "git clone",
+      "synopsis": "git clone [options] <repository> [directory]",
+      "description": "Clone a repository into a new directory",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "download a repository from GitHub",
+          "command": "git clone https://github.com/user/repo.git",
+          "explanation": "Clones the remote repository into a local directory named repo"
+        },
+        {
+          "type": "example",
+          "text": "clone a repo into a specific folder name",
+          "command": "git clone https://github.com/user/repo.git my-folder",
+          "explanation": "Clones the repo but names the local directory my-folder"
+        },
+        {
+          "type": "example",
+          "text": "shallow clone only the latest commit to save time",
+          "command": "git clone --depth 1 https://github.com/user/repo.git",
+          "explanation": "Creates a shallow clone with only the most recent commit history"
+        },
+        {
+          "type": "example",
+          "text": "clone a specific branch from a repository",
+          "command": "git clone -b develop https://github.com/user/repo.git",
+          "explanation": "Clones the repo and checks out the develop branch"
+        },
+        {
+          "type": "example",
+          "text": "clone a repo using SSH",
+          "command": "git clone git@github.com:user/repo.git",
+          "explanation": "Clones using SSH protocol for authentication"
+        },
+        {
+          "type": "example",
+          "text": "clone a repo including all submodules",
+          "command": "git clone --recurse-submodules https://github.com/user/repo.git",
+          "explanation": "Clones the repo and initializes all submodules recursively"
+        },
+        {
+          "type": "example",
+          "text": "clone only a single branch to save bandwidth",
+          "command": "git clone --single-branch --branch main https://github.com/user/repo.git",
+          "explanation": "Clones only the main branch without fetching other branches"
+        }
+      ]
+    },
+    {
+      "name": "git add",
+      "synopsis": "git add [options] [pathspec...]",
+      "description": "Add file contents to the staging area (index)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "stage a specific file for commit",
+          "command": "git add filename.txt",
+          "explanation": "Adds filename.txt to the staging area"
+        },
+        {
+          "type": "example",
+          "text": "stage all changed and new files",
+          "command": "git add -A",
+          "explanation": "Stages all changes including new, modified, and deleted files"
+        },
+        {
+          "type": "example",
+          "text": "stage all changes in the current directory",
+          "command": "git add .",
+          "explanation": "Adds all changes in the current directory and subdirectories"
+        },
+        {
+          "type": "example",
+          "text": "interactively choose which hunks to stage",
+          "command": "git add -p",
+          "explanation": "Lets you review and selectively stage parts of files"
+        },
+        {
+          "type": "example",
+          "text": "stage only modified and deleted files, not new ones",
+          "command": "git add -u",
+          "explanation": "Stages modifications and deletions but ignores untracked files"
+        },
+        {
+          "type": "example",
+          "text": "stage all Python files",
+          "command": "git add '*.py'",
+          "explanation": "Uses a glob pattern to stage all Python files"
+        }
+      ]
+    },
+    {
+      "name": "git commit",
+      "synopsis": "git commit [options]",
+      "description": "Record changes to the repository",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "save staged changes with a message",
+          "command": "git commit -m \"Add new feature\"",
+          "explanation": "Creates a commit with the given message"
+        },
+        {
+          "type": "example",
+          "text": "stage all tracked changes and commit in one step",
+          "command": "git commit -am \"Fix bug in parser\"",
+          "explanation": "Automatically stages modified tracked files and commits"
+        },
+        {
+          "type": "example",
+          "text": "change the last commit message",
+          "command": "git commit --amend -m \"Updated message\"",
+          "explanation": "Replaces the most recent commit with a new message"
+        },
+        {
+          "type": "example",
+          "text": "add forgotten files to the last commit",
+          "command": "git commit --amend --no-edit",
+          "explanation": "Adds currently staged files to the previous commit without changing its message"
+        },
+        {
+          "type": "example",
+          "text": "create an empty commit for triggering CI",
+          "command": "git commit --allow-empty -m \"Trigger build\"",
+          "explanation": "Creates a commit with no changes, useful for triggering pipelines"
+        },
+        {
+          "type": "example",
+          "text": "commit with a specific author",
+          "command": "git commit --author=\"Name <email@example.com>\" -m \"msg\"",
+          "explanation": "Overrides the default author for this commit"
+        },
+        {
+          "type": "example",
+          "text": "commit and sign with GPG key",
+          "command": "git commit -S -m \"Signed commit\"",
+          "explanation": "Creates a GPG-signed commit for verification"
+        }
+      ]
+    },
+    {
+      "name": "git push",
+      "synopsis": "git push [options] [remote] [branch]",
+      "description": "Update remote refs along with associated objects",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "upload local commits to the remote repository",
+          "command": "git push",
+          "explanation": "Pushes the current branch to the configured upstream remote"
+        },
+        {
+          "type": "example",
+          "text": "push a branch to origin for the first time",
+          "command": "git push -u origin my-branch",
+          "explanation": "Pushes the branch and sets up tracking for future pushes"
+        },
+        {
+          "type": "example",
+          "text": "force push to overwrite remote history",
+          "command": "git push --force",
+          "explanation": "Overwrites the remote branch with local history, use with caution"
+        },
+        {
+          "type": "example",
+          "text": "safely force push only if no one else has pushed",
+          "command": "git push --force-with-lease",
+          "explanation": "Force pushes but fails if the remote has commits you haven't seen"
+        },
+        {
+          "type": "example",
+          "text": "push all local branches to the remote",
+          "command": "git push --all origin",
+          "explanation": "Pushes every local branch to the origin remote"
+        },
+        {
+          "type": "example",
+          "text": "push tags to the remote repository",
+          "command": "git push --tags",
+          "explanation": "Pushes all local tags to the remote"
+        },
+        {
+          "type": "example",
+          "text": "delete a remote branch",
+          "command": "git push origin --delete old-branch",
+          "explanation": "Removes the specified branch from the remote repository"
+        }
+      ]
+    },
+    {
+      "name": "git pull",
+      "synopsis": "git pull [options] [remote] [branch]",
+      "description": "Fetch from and integrate with another repository or local branch",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "download and merge remote changes",
+          "command": "git pull",
+          "explanation": "Fetches and merges changes from the upstream branch"
+        },
+        {
+          "type": "example",
+          "text": "pull changes and rebase instead of merge",
+          "command": "git pull --rebase",
+          "explanation": "Fetches changes and replays your commits on top"
+        },
+        {
+          "type": "example",
+          "text": "pull from a specific remote branch",
+          "command": "git pull origin main",
+          "explanation": "Fetches and merges changes from origin/main"
+        },
+        {
+          "type": "example",
+          "text": "pull and automatically stash local changes",
+          "command": "git pull --autostash",
+          "explanation": "Stashes local changes before pulling and reapplies them after"
+        },
+        {
+          "type": "example",
+          "text": "pull only if it can fast-forward",
+          "command": "git pull --ff-only",
+          "explanation": "Only updates if the merge can be fast-forwarded, fails otherwise"
+        }
+      ]
+    },
+    {
+      "name": "git fetch",
+      "synopsis": "git fetch [options] [remote] [refspec...]",
+      "description": "Download objects and refs from another repository",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "download remote changes without merging",
+          "command": "git fetch",
+          "explanation": "Fetches all branches from the default remote without modifying working directory"
+        },
+        {
+          "type": "example",
+          "text": "fetch from all remotes",
+          "command": "git fetch --all",
+          "explanation": "Downloads updates from every configured remote"
+        },
+        {
+          "type": "example",
+          "text": "fetch and prune deleted remote branches",
+          "command": "git fetch --prune",
+          "explanation": "Removes local references to branches that no longer exist on the remote"
+        },
+        {
+          "type": "example",
+          "text": "fetch a specific branch from origin",
+          "command": "git fetch origin main",
+          "explanation": "Downloads only the main branch from origin"
+        },
+        {
+          "type": "example",
+          "text": "fetch tags from the remote",
+          "command": "git fetch --tags",
+          "explanation": "Downloads all tags from the remote repository"
+        }
+      ]
+    },
+    {
+      "name": "git merge",
+      "synopsis": "git merge [options] [branch]",
+      "description": "Join two or more development histories together",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "merge another branch into the current one",
+          "command": "git merge feature-branch",
+          "explanation": "Integrates changes from feature-branch into the current branch"
+        },
+        {
+          "type": "example",
+          "text": "merge without creating a merge commit",
+          "command": "git merge --ff-only feature-branch",
+          "explanation": "Only merges if a fast-forward is possible, keeping linear history"
+        },
+        {
+          "type": "example",
+          "text": "always create a merge commit even for fast-forwards",
+          "command": "git merge --no-ff feature-branch",
+          "explanation": "Creates a merge commit even when fast-forward is possible"
+        },
+        {
+          "type": "example",
+          "text": "merge but squash all commits into one",
+          "command": "git merge --squash feature-branch",
+          "explanation": "Combines all feature branch commits into a single staged change"
+        },
+        {
+          "type": "example",
+          "text": "abort a merge that has conflicts",
+          "command": "git merge --abort",
+          "explanation": "Cancels the merge and restores the pre-merge state"
+        },
+        {
+          "type": "example",
+          "text": "continue a merge after resolving conflicts",
+          "command": "git merge --continue",
+          "explanation": "Proceeds with the merge after you have resolved all conflicts"
+        }
+      ]
+    },
+    {
+      "name": "git rebase",
+      "synopsis": "git rebase [options] [upstream [branch]]",
+      "description": "Reapply commits on top of another base tip",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "rebase current branch onto main",
+          "command": "git rebase main",
+          "explanation": "Replays current branch commits on top of main"
+        },
+        {
+          "type": "example",
+          "text": "interactively reorder, squash, or edit commits",
+          "command": "git rebase -i HEAD~5",
+          "explanation": "Opens an editor to manipulate the last 5 commits"
+        },
+        {
+          "type": "example",
+          "text": "abort a rebase that has conflicts",
+          "command": "git rebase --abort",
+          "explanation": "Cancels the rebase and returns to the original state"
+        },
+        {
+          "type": "example",
+          "text": "continue rebase after resolving a conflict",
+          "command": "git rebase --continue",
+          "explanation": "Proceeds with the rebase after conflict resolution"
+        },
+        {
+          "type": "example",
+          "text": "skip a conflicting commit during rebase",
+          "command": "git rebase --skip",
+          "explanation": "Skips the current commit and continues rebasing"
+        },
+        {
+          "type": "example",
+          "text": "rebase onto a specific commit",
+          "command": "git rebase --onto target-branch start-commit end-branch",
+          "explanation": "Replays commits from start-commit to end-branch onto target-branch"
+        }
+      ]
+    },
+    {
+      "name": "git branch",
+      "synopsis": "git branch [options] [branch-name]",
+      "description": "List, create, or delete branches",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all local branches",
+          "command": "git branch",
+          "explanation": "Shows all local branches with the current one highlighted"
+        },
+        {
+          "type": "example",
+          "text": "list all branches including remote ones",
+          "command": "git branch -a",
+          "explanation": "Shows both local and remote tracking branches"
+        },
+        {
+          "type": "example",
+          "text": "create a new branch",
+          "command": "git branch new-feature",
+          "explanation": "Creates a new branch at the current commit without switching to it"
+        },
+        {
+          "type": "example",
+          "text": "delete a branch that has been merged",
+          "command": "git branch -d old-branch",
+          "explanation": "Deletes the branch only if it has been fully merged"
+        },
+        {
+          "type": "example",
+          "text": "force delete a branch even if not merged",
+          "command": "git branch -D unmerged-branch",
+          "explanation": "Forcefully deletes the branch regardless of merge status"
+        },
+        {
+          "type": "example",
+          "text": "rename the current branch",
+          "command": "git branch -m new-name",
+          "explanation": "Renames the current branch to new-name"
+        },
+        {
+          "type": "example",
+          "text": "see which branches contain a specific commit",
+          "command": "git branch --contains abc1234",
+          "explanation": "Lists branches that include the specified commit"
+        }
+      ]
+    },
+    {
+      "name": "git checkout",
+      "synopsis": "git checkout [options] [branch|commit|file]",
+      "description": "Switch branches or restore working tree files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "switch to an existing branch",
+          "command": "git checkout main",
+          "explanation": "Switches the working directory to the main branch"
+        },
+        {
+          "type": "example",
+          "text": "create and switch to a new branch",
+          "command": "git checkout -b new-feature",
+          "explanation": "Creates a new branch and switches to it immediately"
+        },
+        {
+          "type": "example",
+          "text": "discard changes to a specific file",
+          "command": "git checkout -- filename.txt",
+          "explanation": "Restores the file to the last committed version"
+        },
+        {
+          "type": "example",
+          "text": "check out a file from another branch",
+          "command": "git checkout other-branch -- path/to/file",
+          "explanation": "Copies the file from another branch into the current working directory"
+        },
+        {
+          "type": "example",
+          "text": "go to a specific commit in detached HEAD state",
+          "command": "git checkout abc1234",
+          "explanation": "Moves HEAD to the specified commit without being on a branch"
+        },
+        {
+          "type": "example",
+          "text": "create a branch from a remote branch and track it",
+          "command": "git checkout -b local-branch origin/remote-branch",
+          "explanation": "Creates a local branch based on a remote branch"
+        }
+      ]
+    },
+    {
+      "name": "git switch",
+      "synopsis": "git switch [options] <branch>",
+      "description": "Switch branches (modern replacement for git checkout for branch switching)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "switch to another branch",
+          "command": "git switch main",
+          "explanation": "Switches to the main branch"
+        },
+        {
+          "type": "example",
+          "text": "create and switch to a new branch",
+          "command": "git switch -c new-feature",
+          "explanation": "Creates and switches to a new branch"
+        },
+        {
+          "type": "example",
+          "text": "switch back to the previous branch",
+          "command": "git switch -",
+          "explanation": "Toggles back to the previously checked-out branch"
+        },
+        {
+          "type": "example",
+          "text": "switch to a remote branch and track it",
+          "command": "git switch --track origin/feature",
+          "explanation": "Creates a local branch that tracks the remote branch and switches to it"
+        },
+        {
+          "type": "example",
+          "text": "switch to a detached HEAD at a tag",
+          "command": "git switch --detach v1.0",
+          "explanation": "Moves to the tagged commit in detached HEAD state"
+        }
+      ]
+    },
+    {
+      "name": "git log",
+      "synopsis": "git log [options] [revision range] [-- path]",
+      "description": "Show commit logs",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the commit history",
+          "command": "git log",
+          "explanation": "Displays the full commit log for the current branch"
+        },
+        {
+          "type": "example",
+          "text": "show a compact one-line-per-commit history",
+          "command": "git log --oneline",
+          "explanation": "Displays abbreviated commit hashes and messages one per line"
+        },
+        {
+          "type": "example",
+          "text": "show a visual graph of branches and merges",
+          "command": "git log --oneline --graph --all --decorate",
+          "explanation": "Draws an ASCII graph showing branch topology"
+        },
+        {
+          "type": "example",
+          "text": "show commits by a specific author",
+          "command": "git log --author=\"John\"",
+          "explanation": "Filters the log to only show commits by John"
+        },
+        {
+          "type": "example",
+          "text": "show commits from the last week",
+          "command": "git log --since=\"1 week ago\"",
+          "explanation": "Displays only commits made within the last week"
+        },
+        {
+          "type": "example",
+          "text": "show the history of a specific file",
+          "command": "git log --follow -- path/to/file",
+          "explanation": "Shows all commits that modified the file, even across renames"
+        },
+        {
+          "type": "example",
+          "text": "search commit messages for a keyword",
+          "command": "git log --grep=\"bugfix\"",
+          "explanation": "Shows only commits whose messages contain bugfix"
+        }
+      ]
+    },
+    {
+      "name": "git diff",
+      "synopsis": "git diff [options] [commit] [-- path]",
+      "description": "Show changes between commits, working tree, and staging area",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "see what has changed but is not yet staged",
+          "command": "git diff",
+          "explanation": "Shows unstaged modifications in the working directory"
+        },
+        {
+          "type": "example",
+          "text": "see what is staged and ready to commit",
+          "command": "git diff --staged",
+          "explanation": "Shows changes that have been added to the staging area"
+        },
+        {
+          "type": "example",
+          "text": "compare two branches",
+          "command": "git diff main..feature-branch",
+          "explanation": "Shows the differences between the two branches"
+        },
+        {
+          "type": "example",
+          "text": "see a summary of changed files only",
+          "command": "git diff --stat",
+          "explanation": "Shows a compact summary of files changed and lines added/removed"
+        },
+        {
+          "type": "example",
+          "text": "compare a specific file between two commits",
+          "command": "git diff abc123..def456 -- path/to/file",
+          "explanation": "Shows changes to a specific file between two commits"
+        },
+        {
+          "type": "example",
+          "text": "show word-level differences instead of line-level",
+          "command": "git diff --word-diff",
+          "explanation": "Highlights individual changed words rather than whole lines"
+        }
+      ]
+    },
+    {
+      "name": "git status",
+      "synopsis": "git status [options]",
+      "description": "Show the working tree status",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check which files have been modified or staged",
+          "command": "git status",
+          "explanation": "Displays the state of the working directory and staging area"
+        },
+        {
+          "type": "example",
+          "text": "show a short compact status",
+          "command": "git status -s",
+          "explanation": "Displays status in a short format with status codes"
+        },
+        {
+          "type": "example",
+          "text": "show status including the branch tracking info",
+          "command": "git status -sb",
+          "explanation": "Short format status with branch and tracking information"
+        },
+        {
+          "type": "example",
+          "text": "check status but ignore untracked files",
+          "command": "git status -uno",
+          "explanation": "Shows status but omits untracked files from the output"
+        },
+        {
+          "type": "example",
+          "text": "show status with paths relative to the repo root",
+          "command": "git status --porcelain",
+          "explanation": "Machine-readable output format, useful for scripting"
+        }
+      ]
+    },
+    {
+      "name": "git stash",
+      "synopsis": "git stash [command] [options]",
+      "description": "Stash the changes in a dirty working directory away",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "temporarily save my uncommitted changes",
+          "command": "git stash",
+          "explanation": "Saves all modified tracked files and staged changes to a stack"
+        },
+        {
+          "type": "example",
+          "text": "stash changes with a descriptive message",
+          "command": "git stash push -m \"work in progress on login\"",
+          "explanation": "Saves changes with a label for easy identification"
+        },
+        {
+          "type": "example",
+          "text": "restore the most recent stashed changes",
+          "command": "git stash pop",
+          "explanation": "Applies the latest stash and removes it from the stash list"
+        },
+        {
+          "type": "example",
+          "text": "list all stashed changes",
+          "command": "git stash list",
+          "explanation": "Shows all entries in the stash stack"
+        },
+        {
+          "type": "example",
+          "text": "apply a stash without removing it from the list",
+          "command": "git stash apply stash@{0}",
+          "explanation": "Applies the specified stash but keeps it in the stack"
+        },
+        {
+          "type": "example",
+          "text": "stash including untracked files",
+          "command": "git stash -u",
+          "explanation": "Stashes both tracked and untracked files"
+        },
+        {
+          "type": "example",
+          "text": "drop a specific stash entry",
+          "command": "git stash drop stash@{2}",
+          "explanation": "Removes a specific stash entry from the stack"
+        }
+      ]
+    },
+    {
+      "name": "git reset",
+      "synopsis": "git reset [options] [commit]",
+      "description": "Reset current HEAD to the specified state",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "unstage a file but keep the changes",
+          "command": "git reset HEAD filename.txt",
+          "explanation": "Removes the file from the staging area but preserves modifications"
+        },
+        {
+          "type": "example",
+          "text": "undo the last commit but keep changes staged",
+          "command": "git reset --soft HEAD~1",
+          "explanation": "Moves HEAD back one commit, changes remain in staging area"
+        },
+        {
+          "type": "example",
+          "text": "undo the last commit and unstage the changes",
+          "command": "git reset HEAD~1",
+          "explanation": "Moves HEAD back one commit, changes go to the working directory"
+        },
+        {
+          "type": "example",
+          "text": "completely discard the last commit and all changes",
+          "command": "git reset --hard HEAD~1",
+          "explanation": "Permanently removes the last commit and all associated changes"
+        },
+        {
+          "type": "example",
+          "text": "reset to match the remote branch exactly",
+          "command": "git reset --hard origin/main",
+          "explanation": "Discards all local commits and changes, matching the remote"
+        },
+        {
+          "type": "example",
+          "text": "unstage all files",
+          "command": "git reset",
+          "explanation": "Removes all files from the staging area without changing the working directory"
+        }
+      ]
+    },
+    {
+      "name": "git revert",
+      "synopsis": "git revert [options] <commit>",
+      "description": "Create a new commit that undoes a previous commit",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "undo a commit without rewriting history",
+          "command": "git revert abc1234",
+          "explanation": "Creates a new commit that reverses the changes from the specified commit"
+        },
+        {
+          "type": "example",
+          "text": "revert the most recent commit",
+          "command": "git revert HEAD",
+          "explanation": "Undoes the latest commit by creating a new reverting commit"
+        },
+        {
+          "type": "example",
+          "text": "revert a merge commit",
+          "command": "git revert -m 1 abc1234",
+          "explanation": "Reverts a merge commit, keeping the first parent's side"
+        },
+        {
+          "type": "example",
+          "text": "revert without committing immediately",
+          "command": "git revert --no-commit abc1234",
+          "explanation": "Stages the revert changes but does not create a commit"
+        },
+        {
+          "type": "example",
+          "text": "revert a range of commits",
+          "command": "git revert HEAD~3..HEAD",
+          "explanation": "Reverts the last three commits one by one"
+        }
+      ]
+    },
+    {
+      "name": "git cherry-pick",
+      "synopsis": "git cherry-pick [options] <commit>...",
+      "description": "Apply the changes introduced by some existing commits",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "apply a specific commit from another branch",
+          "command": "git cherry-pick abc1234",
+          "explanation": "Copies the specified commit to the current branch"
+        },
+        {
+          "type": "example",
+          "text": "cherry-pick without committing",
+          "command": "git cherry-pick --no-commit abc1234",
+          "explanation": "Applies the changes but does not create a commit"
+        },
+        {
+          "type": "example",
+          "text": "cherry-pick a range of commits",
+          "command": "git cherry-pick abc1234..def5678",
+          "explanation": "Applies a range of commits to the current branch"
+        },
+        {
+          "type": "example",
+          "text": "abort a cherry-pick that has conflicts",
+          "command": "git cherry-pick --abort",
+          "explanation": "Cancels the cherry-pick and restores the original state"
+        },
+        {
+          "type": "example",
+          "text": "continue cherry-pick after resolving conflicts",
+          "command": "git cherry-pick --continue",
+          "explanation": "Proceeds with the cherry-pick after resolving conflicts"
+        }
+      ]
+    },
+    {
+      "name": "git tag",
+      "synopsis": "git tag [options] [tagname] [commit]",
+      "description": "Create, list, delete, or verify tags",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all tags",
+          "command": "git tag",
+          "explanation": "Shows all tags in the repository"
+        },
+        {
+          "type": "example",
+          "text": "create a lightweight tag",
+          "command": "git tag v1.0.0",
+          "explanation": "Creates a simple tag pointing to the current commit"
+        },
+        {
+          "type": "example",
+          "text": "create an annotated tag with a message",
+          "command": "git tag -a v1.0.0 -m \"Release version 1.0.0\"",
+          "explanation": "Creates a tag with metadata including tagger and message"
+        },
+        {
+          "type": "example",
+          "text": "tag a specific older commit",
+          "command": "git tag -a v0.9.0 abc1234 -m \"Retroactive tag\"",
+          "explanation": "Creates an annotated tag on a specific past commit"
+        },
+        {
+          "type": "example",
+          "text": "delete a local tag",
+          "command": "git tag -d v1.0.0",
+          "explanation": "Removes the tag from the local repository"
+        },
+        {
+          "type": "example",
+          "text": "list tags matching a pattern",
+          "command": "git tag -l 'v2.*'",
+          "explanation": "Shows only tags that match the wildcard pattern"
+        }
+      ]
+    },
+    {
+      "name": "git remote",
+      "synopsis": "git remote [options] [command]",
+      "description": "Manage set of tracked repositories",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all configured remotes",
+          "command": "git remote -v",
+          "explanation": "Shows all remotes with their fetch and push URLs"
+        },
+        {
+          "type": "example",
+          "text": "add a new remote repository",
+          "command": "git remote add upstream https://github.com/original/repo.git",
+          "explanation": "Registers a new remote named upstream"
+        },
+        {
+          "type": "example",
+          "text": "remove a remote",
+          "command": "git remote remove origin",
+          "explanation": "Deletes the specified remote and its tracking branches"
+        },
+        {
+          "type": "example",
+          "text": "rename a remote",
+          "command": "git remote rename origin upstream",
+          "explanation": "Changes the name of a remote from origin to upstream"
+        },
+        {
+          "type": "example",
+          "text": "change the URL of an existing remote",
+          "command": "git remote set-url origin https://github.com/user/new-repo.git",
+          "explanation": "Updates the URL for the specified remote"
+        },
+        {
+          "type": "example",
+          "text": "show detailed info about a remote",
+          "command": "git remote show origin",
+          "explanation": "Displays branches, tracking info, and push/pull configuration"
+        }
+      ]
+    },
+    {
+      "name": "git bisect",
+      "synopsis": "git bisect <subcommand> [options]",
+      "description": "Use binary search to find the commit that introduced a bug",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "start binary search for a bug",
+          "command": "git bisect start",
+          "explanation": "Begins the bisect process to find a bad commit"
+        },
+        {
+          "type": "example",
+          "text": "mark the current commit as having the bug",
+          "command": "git bisect bad",
+          "explanation": "Tells bisect the current commit exhibits the bug"
+        },
+        {
+          "type": "example",
+          "text": "mark a known good commit where the bug did not exist",
+          "command": "git bisect good abc1234",
+          "explanation": "Tells bisect this commit is known to be bug-free"
+        },
+        {
+          "type": "example",
+          "text": "end the bisect session and go back to the original branch",
+          "command": "git bisect reset",
+          "explanation": "Finishes bisecting and returns HEAD to the original position"
+        },
+        {
+          "type": "example",
+          "text": "automate bisect with a test script",
+          "command": "git bisect run ./test-script.sh",
+          "explanation": "Runs the script on each step; exit 0 means good, non-zero means bad"
+        }
+      ]
+    },
+    {
+      "name": "git blame",
+      "synopsis": "git blame [options] <file>",
+      "description": "Show what revision and author last modified each line of a file",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "see who last changed each line of a file",
+          "command": "git blame filename.txt",
+          "explanation": "Annotates each line with the commit hash, author, and date"
+        },
+        {
+          "type": "example",
+          "text": "blame a specific range of lines",
+          "command": "git blame -L 10,20 filename.txt",
+          "explanation": "Shows blame information only for lines 10 through 20"
+        },
+        {
+          "type": "example",
+          "text": "ignore whitespace changes in blame",
+          "command": "git blame -w filename.txt",
+          "explanation": "Ignores whitespace when determining the last change"
+        },
+        {
+          "type": "example",
+          "text": "detect lines that were moved or copied from other files",
+          "command": "git blame -C filename.txt",
+          "explanation": "Traces lines to their original source across file copies"
+        },
+        {
+          "type": "example",
+          "text": "show blame with email addresses instead of names",
+          "command": "git blame -e filename.txt",
+          "explanation": "Displays author email addresses in the blame output"
+        }
+      ]
+    },
+    {
+      "name": "git show",
+      "synopsis": "git show [options] <object>",
+      "description": "Show various types of objects (commits, tags, trees, blobs)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "see the details and diff of a specific commit",
+          "command": "git show abc1234",
+          "explanation": "Displays commit info, author, date, message, and the diff"
+        },
+        {
+          "type": "example",
+          "text": "show only the commit message without the diff",
+          "command": "git show --stat abc1234",
+          "explanation": "Shows commit details with a file change summary"
+        },
+        {
+          "type": "example",
+          "text": "view a file at a specific commit",
+          "command": "git show abc1234:path/to/file",
+          "explanation": "Displays the contents of the file as it existed at that commit"
+        },
+        {
+          "type": "example",
+          "text": "show the details of a tag",
+          "command": "git show v1.0.0",
+          "explanation": "Displays the tag message and the commit it points to"
+        },
+        {
+          "type": "example",
+          "text": "show the last commit on the current branch",
+          "command": "git show HEAD",
+          "explanation": "Displays the most recent commit details and diff"
+        }
+      ]
+    },
+    {
+      "name": "git clean",
+      "synopsis": "git clean [options]",
+      "description": "Remove untracked files from the working tree",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "preview which untracked files would be deleted",
+          "command": "git clean -n",
+          "explanation": "Dry run showing which files would be removed"
+        },
+        {
+          "type": "example",
+          "text": "delete all untracked files",
+          "command": "git clean -f",
+          "explanation": "Forcefully removes all untracked files"
+        },
+        {
+          "type": "example",
+          "text": "remove untracked files and directories",
+          "command": "git clean -fd",
+          "explanation": "Removes untracked files and empty untracked directories"
+        },
+        {
+          "type": "example",
+          "text": "remove untracked files including those in .gitignore",
+          "command": "git clean -fdx",
+          "explanation": "Removes all untracked files including ignored ones like build artifacts"
+        },
+        {
+          "type": "example",
+          "text": "interactively select which untracked files to remove",
+          "command": "git clean -i",
+          "explanation": "Walks through each untracked file and asks whether to delete it"
+        }
+      ]
+    },
+    {
+      "name": "git worktree",
+      "synopsis": "git worktree <command> [options]",
+      "description": "Manage multiple working trees attached to the same repository",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a new working directory for a branch",
+          "command": "git worktree add ../hotfix hotfix-branch",
+          "explanation": "Creates a separate working directory checked out to hotfix-branch"
+        },
+        {
+          "type": "example",
+          "text": "list all active worktrees",
+          "command": "git worktree list",
+          "explanation": "Shows all working trees and which branches they have checked out"
+        },
+        {
+          "type": "example",
+          "text": "remove a worktree that is no longer needed",
+          "command": "git worktree remove ../hotfix",
+          "explanation": "Deletes the worktree directory and its administrative files"
+        },
+        {
+          "type": "example",
+          "text": "create a worktree with a new branch",
+          "command": "git worktree add -b new-feature ../feature",
+          "explanation": "Creates a new branch and a worktree for it simultaneously"
+        },
+        {
+          "type": "example",
+          "text": "clean up stale worktree references",
+          "command": "git worktree prune",
+          "explanation": "Removes worktree entries for directories that no longer exist"
+        }
+      ]
+    },
+    {
+      "name": "git submodule",
+      "synopsis": "git submodule [command] [options]",
+      "description": "Initialize, update, or inspect submodules",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "add a submodule to the project",
+          "command": "git submodule add https://github.com/user/lib.git libs/lib",
+          "explanation": "Adds a repository as a submodule in the libs/lib directory"
+        },
+        {
+          "type": "example",
+          "text": "initialize submodules after cloning",
+          "command": "git submodule init",
+          "explanation": "Registers submodule paths from .gitmodules in the local config"
+        },
+        {
+          "type": "example",
+          "text": "download and update all submodules",
+          "command": "git submodule update --init --recursive",
+          "explanation": "Initializes and clones all submodules including nested ones"
+        },
+        {
+          "type": "example",
+          "text": "pull latest changes for all submodules",
+          "command": "git submodule update --remote",
+          "explanation": "Updates each submodule to the latest commit on its tracked branch"
+        },
+        {
+          "type": "example",
+          "text": "show the status of all submodules",
+          "command": "git submodule status",
+          "explanation": "Shows the current commit and state of each submodule"
+        },
+        {
+          "type": "example",
+          "text": "run a command in every submodule",
+          "command": "git submodule foreach 'git pull origin main'",
+          "explanation": "Executes the given command inside each submodule directory"
+        }
+      ]
+    },
+    {
+      "name": "git reflog",
+      "synopsis": "git reflog [options] [ref]",
+      "description": "Record and view reference update history",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "see the history of where HEAD has been",
+          "command": "git reflog",
+          "explanation": "Shows a log of all HEAD movements including resets and rebases"
+        },
+        {
+          "type": "example",
+          "text": "recover a commit that was lost after a reset",
+          "command": "git reflog show HEAD",
+          "explanation": "Lists all recent positions of HEAD to find lost commits"
+        },
+        {
+          "type": "example",
+          "text": "show reflog for a specific branch",
+          "command": "git reflog show main",
+          "explanation": "Displays the movement history of the main branch ref"
+        },
+        {
+          "type": "example",
+          "text": "restore to a reflog entry",
+          "command": "git reset --hard HEAD@{3}",
+          "explanation": "Resets HEAD to where it was 3 moves ago according to the reflog"
+        },
+        {
+          "type": "example",
+          "text": "expire old reflog entries",
+          "command": "git reflog expire --expire=90.days.ago --all",
+          "explanation": "Removes reflog entries older than 90 days"
+        }
+      ]
+    }
+  ]
+}

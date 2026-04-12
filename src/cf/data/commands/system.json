@@ -1,0 +1,1167 @@
+{
+  "category": "system",
+  "commands": [
+    {
+      "name": "uname",
+      "synopsis": "uname [options]",
+      "description": "Print system information about the operating system and hardware",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all system information at once",
+          "command": "uname -a",
+          "explanation": "Displays kernel name, hostname, version, architecture, and OS"
+        },
+        {
+          "type": "example",
+          "text": "find out what kernel version is running",
+          "command": "uname -r",
+          "explanation": "Prints only the kernel release version"
+        },
+        {
+          "type": "example",
+          "text": "check the system hardware architecture",
+          "command": "uname -m",
+          "explanation": "Shows the machine hardware name like x86_64 or arm64"
+        },
+        {
+          "type": "example",
+          "text": "find out the operating system name",
+          "command": "uname -s",
+          "explanation": "Prints the kernel name such as Linux or Darwin"
+        }
+      ]
+    },
+    {
+      "name": "hostname",
+      "synopsis": "hostname [options] [name]",
+      "description": "Show or set the system hostname",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "display the current hostname of the machine",
+          "command": "hostname",
+          "explanation": "Prints the system hostname"
+        },
+        {
+          "type": "example",
+          "text": "show the fully qualified domain name",
+          "command": "hostname -f",
+          "explanation": "Displays the FQDN of the machine"
+        },
+        {
+          "type": "example",
+          "text": "get all IP addresses associated with the hostname",
+          "command": "hostname -I",
+          "explanation": "Lists all network addresses assigned to the host"
+        },
+        {
+          "type": "example",
+          "text": "temporarily change the system hostname",
+          "command": "hostname new-hostname",
+          "explanation": "Sets the hostname until the next reboot"
+        }
+      ]
+    },
+    {
+      "name": "uptime",
+      "synopsis": "uptime [options]",
+      "description": "Show how long the system has been running and load averages",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check how long the server has been running",
+          "command": "uptime",
+          "explanation": "Shows time since boot, number of users, and load averages"
+        },
+        {
+          "type": "example",
+          "text": "show uptime in a human-readable pretty format",
+          "command": "uptime -p",
+          "explanation": "Displays uptime in a friendly format like 'up 3 days, 5 hours'"
+        },
+        {
+          "type": "example",
+          "text": "find out when the system was last booted",
+          "command": "uptime -s",
+          "explanation": "Shows the exact date and time when the system started"
+        },
+        {
+          "type": "example",
+          "text": "check the current system load averages",
+          "command": "uptime",
+          "explanation": "The 1, 5, and 15 minute load averages are shown at the end of output"
+        }
+      ]
+    },
+    {
+      "name": "date",
+      "synopsis": "date [options] [+format]",
+      "description": "Display or set the system date and time",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the current date and time",
+          "command": "date",
+          "explanation": "Displays the current date, time, and timezone"
+        },
+        {
+          "type": "example",
+          "text": "display the date in ISO 8601 format",
+          "command": "date -Iseconds",
+          "explanation": "Shows date and time in ISO format like 2024-01-15T10:30:00+00:00"
+        },
+        {
+          "type": "example",
+          "text": "get the current Unix timestamp",
+          "command": "date +%s",
+          "explanation": "Outputs seconds since the Unix epoch (January 1, 1970)"
+        },
+        {
+          "type": "example",
+          "text": "format the date as year-month-day",
+          "command": "date '+%Y-%m-%d %H:%M:%S'",
+          "explanation": "Displays the date in a custom format like 2024-01-15 14:30:00"
+        },
+        {
+          "type": "example",
+          "text": "convert a Unix timestamp to a human-readable date",
+          "command": "date -d @1700000000",
+          "explanation": "Converts the given epoch timestamp to a readable date"
+        }
+      ]
+    },
+    {
+      "name": "cal",
+      "synopsis": "cal [options] [[month] year]",
+      "description": "Display a calendar in the terminal",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show this month's calendar",
+          "command": "cal",
+          "explanation": "Displays the current month's calendar with today highlighted"
+        },
+        {
+          "type": "example",
+          "text": "show the calendar for an entire year",
+          "command": "cal 2024",
+          "explanation": "Displays all 12 months of the specified year"
+        },
+        {
+          "type": "example",
+          "text": "display a specific month and year",
+          "command": "cal 3 2025",
+          "explanation": "Shows the calendar for March 2025"
+        },
+        {
+          "type": "example",
+          "text": "show the previous, current, and next month together",
+          "command": "cal -3",
+          "explanation": "Displays three months side by side centered on the current month"
+        }
+      ]
+    },
+    {
+      "name": "timedatectl",
+      "synopsis": "timedatectl [command]",
+      "description": "Control the system time, date, and timezone settings",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the current time and timezone configuration",
+          "command": "timedatectl status",
+          "explanation": "Displays local time, UTC time, timezone, and NTP sync status"
+        },
+        {
+          "type": "example",
+          "text": "change the system timezone",
+          "command": "timedatectl set-timezone America/New_York",
+          "explanation": "Sets the system timezone to Eastern Time"
+        },
+        {
+          "type": "example",
+          "text": "enable automatic time synchronization via NTP",
+          "command": "timedatectl set-ntp true",
+          "explanation": "Turns on Network Time Protocol for automatic clock sync"
+        },
+        {
+          "type": "example",
+          "text": "list all available timezones",
+          "command": "timedatectl list-timezones",
+          "explanation": "Shows every timezone that can be set on the system"
+        },
+        {
+          "type": "example",
+          "text": "manually set the system date and time",
+          "command": "timedatectl set-time '2024-06-15 14:30:00'",
+          "explanation": "Sets the system clock to the specified date and time"
+        }
+      ]
+    },
+    {
+      "name": "systemctl",
+      "synopsis": "systemctl [command] [unit]",
+      "description": "Control the systemd system and service manager",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check the status of a service",
+          "command": "systemctl status nginx",
+          "explanation": "Shows whether nginx is running, its PID, and recent log entries"
+        },
+        {
+          "type": "example",
+          "text": "start a stopped service",
+          "command": "systemctl start nginx",
+          "explanation": "Starts the nginx service immediately"
+        },
+        {
+          "type": "example",
+          "text": "enable a service to start automatically at boot",
+          "command": "systemctl enable nginx",
+          "explanation": "Creates symlinks so the service starts on boot"
+        },
+        {
+          "type": "example",
+          "text": "restart a service to apply configuration changes",
+          "command": "systemctl restart nginx",
+          "explanation": "Stops and then starts the service"
+        },
+        {
+          "type": "example",
+          "text": "list all running services",
+          "command": "systemctl list-units --type=service --state=running",
+          "explanation": "Shows all services currently in the running state"
+        },
+        {
+          "type": "example",
+          "text": "check if a service is enabled at boot",
+          "command": "systemctl is-enabled nginx",
+          "explanation": "Returns whether the service is set to start at boot time"
+        }
+      ]
+    },
+    {
+      "name": "service",
+      "synopsis": "service name command",
+      "description": "Run a System V init script to manage services (legacy)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "start a service using the legacy service command",
+          "command": "service apache2 start",
+          "explanation": "Starts the Apache web server"
+        },
+        {
+          "type": "example",
+          "text": "check the status of a service",
+          "command": "service mysql status",
+          "explanation": "Shows whether the MySQL service is running"
+        },
+        {
+          "type": "example",
+          "text": "restart a service to reload its configuration",
+          "command": "service networking restart",
+          "explanation": "Restarts the networking service"
+        },
+        {
+          "type": "example",
+          "text": "list all available services and their statuses",
+          "command": "service --status-all",
+          "explanation": "Shows all init scripts with their running/stopped status"
+        }
+      ]
+    },
+    {
+      "name": "journalctl",
+      "synopsis": "journalctl [options]",
+      "description": "Query and display logs from the systemd journal",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "view recent system logs",
+          "command": "journalctl -n 50",
+          "explanation": "Shows the last 50 log entries from the journal"
+        },
+        {
+          "type": "example",
+          "text": "follow logs in real time like tail -f",
+          "command": "journalctl -f",
+          "explanation": "Continuously displays new log entries as they appear"
+        },
+        {
+          "type": "example",
+          "text": "view logs for a specific service",
+          "command": "journalctl -u nginx.service",
+          "explanation": "Shows all log entries from the nginx service"
+        },
+        {
+          "type": "example",
+          "text": "show logs from the current boot only",
+          "command": "journalctl -b",
+          "explanation": "Filters logs to only show entries since the last boot"
+        },
+        {
+          "type": "example",
+          "text": "view logs within a specific time range",
+          "command": "journalctl --since '2024-01-15 09:00' --until '2024-01-15 17:00'",
+          "explanation": "Shows log entries between the specified start and end times"
+        },
+        {
+          "type": "example",
+          "text": "show only error and critical log messages",
+          "command": "journalctl -p err",
+          "explanation": "Filters log output to error priority and above"
+        }
+      ]
+    },
+    {
+      "name": "dmesg",
+      "synopsis": "dmesg [options]",
+      "description": "Display kernel ring buffer messages",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "view kernel messages with human-readable timestamps",
+          "command": "dmesg -T",
+          "explanation": "Shows kernel log messages with readable date and time"
+        },
+        {
+          "type": "example",
+          "text": "watch kernel messages in real time",
+          "command": "dmesg -w",
+          "explanation": "Continuously displays new kernel messages as they occur"
+        },
+        {
+          "type": "example",
+          "text": "show only error and warning messages from the kernel",
+          "command": "dmesg --level=err,warn",
+          "explanation": "Filters kernel messages to show only errors and warnings"
+        },
+        {
+          "type": "example",
+          "text": "check for hardware detection messages after plugging in a USB device",
+          "command": "dmesg | tail -20",
+          "explanation": "Shows the most recent kernel messages where USB detection appears"
+        },
+        {
+          "type": "example",
+          "text": "clear the kernel ring buffer",
+          "command": "dmesg -C",
+          "explanation": "Clears all messages from the kernel ring buffer"
+        }
+      ]
+    },
+    {
+      "name": "sysctl",
+      "synopsis": "sysctl [options] [variable[=value]]",
+      "description": "Read and modify kernel parameters at runtime",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all kernel parameters",
+          "command": "sysctl -a",
+          "explanation": "Lists all available kernel parameters and their current values"
+        },
+        {
+          "type": "example",
+          "text": "check if IP forwarding is enabled",
+          "command": "sysctl net.ipv4.ip_forward",
+          "explanation": "Displays the current value of the IP forwarding parameter"
+        },
+        {
+          "type": "example",
+          "text": "enable IP forwarding for routing traffic between interfaces",
+          "command": "sysctl -w net.ipv4.ip_forward=1",
+          "explanation": "Temporarily enables IPv4 packet forwarding"
+        },
+        {
+          "type": "example",
+          "text": "reload sysctl settings from the configuration file",
+          "command": "sysctl -p",
+          "explanation": "Loads settings from /etc/sysctl.conf to make changes persistent"
+        },
+        {
+          "type": "example",
+          "text": "increase the maximum number of open file handles system-wide",
+          "command": "sysctl -w fs.file-max=100000",
+          "explanation": "Sets the kernel limit for the total number of open files"
+        }
+      ]
+    },
+    {
+      "name": "lscpu",
+      "synopsis": "lscpu [options]",
+      "description": "Display information about the CPU architecture",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show detailed CPU information",
+          "command": "lscpu",
+          "explanation": "Displays CPU architecture, cores, threads, model, caches, and features"
+        },
+        {
+          "type": "example",
+          "text": "find out how many CPU cores are available",
+          "command": "lscpu | grep '^CPU(s):'",
+          "explanation": "Filters output to show the total number of CPU cores"
+        },
+        {
+          "type": "example",
+          "text": "check if the CPU supports virtualization",
+          "command": "lscpu | grep Virtualization",
+          "explanation": "Shows the virtualization technology supported by the CPU"
+        },
+        {
+          "type": "example",
+          "text": "display CPU info in a parseable format",
+          "command": "lscpu -J",
+          "explanation": "Outputs CPU information in JSON format for scripting"
+        }
+      ]
+    },
+    {
+      "name": "lsblk",
+      "synopsis": "lsblk [options] [device]",
+      "description": "List information about block devices (disks and partitions)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all disks and their partitions",
+          "command": "lsblk",
+          "explanation": "Lists all block devices in a tree format showing disks and partitions"
+        },
+        {
+          "type": "example",
+          "text": "show disk sizes and filesystem types",
+          "command": "lsblk -f",
+          "explanation": "Displays filesystem type, label, UUID, and mount point for each device"
+        },
+        {
+          "type": "example",
+          "text": "list only physical disks without partitions",
+          "command": "lsblk -d",
+          "explanation": "Shows only top-level disk devices without their partitions"
+        },
+        {
+          "type": "example",
+          "text": "show disk sizes in human-readable bytes",
+          "command": "lsblk -b",
+          "explanation": "Displays device sizes in bytes for precise measurements"
+        },
+        {
+          "type": "example",
+          "text": "display specific columns like name, size, and type",
+          "command": "lsblk -o NAME,SIZE,TYPE,MOUNTPOINT",
+          "explanation": "Shows only the selected columns in the output"
+        }
+      ]
+    },
+    {
+      "name": "lspci",
+      "synopsis": "lspci [options]",
+      "description": "List all PCI devices in the system",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all PCI hardware devices",
+          "command": "lspci",
+          "explanation": "Lists all PCI buses and devices connected to them"
+        },
+        {
+          "type": "example",
+          "text": "show detailed information about all PCI devices",
+          "command": "lspci -v",
+          "explanation": "Displays verbose details including drivers and memory regions"
+        },
+        {
+          "type": "example",
+          "text": "find the graphics card model",
+          "command": "lspci | grep -i vga",
+          "explanation": "Filters PCI devices to show only the VGA-compatible graphics controller"
+        },
+        {
+          "type": "example",
+          "text": "show PCI device tree structure",
+          "command": "lspci -t",
+          "explanation": "Displays PCI devices in a tree hierarchy showing bus connections"
+        }
+      ]
+    },
+    {
+      "name": "lsusb",
+      "synopsis": "lsusb [options]",
+      "description": "List USB devices connected to the system",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all connected USB devices",
+          "command": "lsusb",
+          "explanation": "Shows all USB buses and connected devices with vendor and product IDs"
+        },
+        {
+          "type": "example",
+          "text": "show detailed information about all USB devices",
+          "command": "lsusb -v",
+          "explanation": "Displays verbose device descriptors for all USB devices"
+        },
+        {
+          "type": "example",
+          "text": "display USB devices in a tree hierarchy",
+          "command": "lsusb -t",
+          "explanation": "Shows USB device topology as a tree with speed and driver info"
+        },
+        {
+          "type": "example",
+          "text": "find a specific USB device by vendor ID",
+          "command": "lsusb -d 046d:",
+          "explanation": "Filters to show only devices from the specified vendor (e.g., Logitech)"
+        }
+      ]
+    },
+    {
+      "name": "lshw",
+      "synopsis": "lshw [options]",
+      "description": "List detailed hardware configuration of the machine",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show a complete hardware inventory of the system",
+          "command": "lshw",
+          "explanation": "Displays full hardware details including CPU, memory, storage, and network"
+        },
+        {
+          "type": "example",
+          "text": "show hardware summary in a short format",
+          "command": "lshw -short",
+          "explanation": "Provides a concise overview of all hardware components"
+        },
+        {
+          "type": "example",
+          "text": "display only memory and RAM information",
+          "command": "lshw -class memory",
+          "explanation": "Filters output to show memory modules, sizes, and speed"
+        },
+        {
+          "type": "example",
+          "text": "show network hardware details",
+          "command": "lshw -class network",
+          "explanation": "Lists network interface hardware including drivers and capabilities"
+        },
+        {
+          "type": "example",
+          "text": "output hardware info as HTML for a report",
+          "command": "lshw -html > hardware-report.html",
+          "explanation": "Generates an HTML formatted hardware report"
+        }
+      ]
+    },
+    {
+      "name": "dmidecode",
+      "synopsis": "dmidecode [options]",
+      "description": "Read hardware information from the system BIOS/DMI table",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all BIOS and hardware information from DMI tables",
+          "command": "dmidecode",
+          "explanation": "Dumps the full DMI/SMBIOS table with BIOS, system, and hardware data"
+        },
+        {
+          "type": "example",
+          "text": "show RAM module details like size, speed, and type",
+          "command": "dmidecode -t memory",
+          "explanation": "Displays information about installed memory modules"
+        },
+        {
+          "type": "example",
+          "text": "find the system manufacturer and model",
+          "command": "dmidecode -t system",
+          "explanation": "Shows the system manufacturer, product name, serial number, and UUID"
+        },
+        {
+          "type": "example",
+          "text": "check the BIOS version and release date",
+          "command": "dmidecode -t bios",
+          "explanation": "Displays BIOS vendor, version, and release date information"
+        },
+        {
+          "type": "example",
+          "text": "find the maximum supported RAM capacity",
+          "command": "dmidecode -t 16",
+          "explanation": "Shows physical memory array info including maximum capacity"
+        }
+      ]
+    },
+    {
+      "name": "free",
+      "synopsis": "free [options]",
+      "description": "Display amount of free and used memory in the system",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check how much RAM is available on the system",
+          "command": "free -h",
+          "explanation": "Shows total, used, free, and available memory in human-readable units"
+        },
+        {
+          "type": "example",
+          "text": "display memory usage in megabytes",
+          "command": "free -m",
+          "explanation": "Shows memory and swap usage in megabytes"
+        },
+        {
+          "type": "example",
+          "text": "show memory totals only",
+          "command": "free -t -h",
+          "explanation": "Adds a total row combining RAM and swap"
+        },
+        {
+          "type": "example",
+          "text": "continuously monitor memory usage every 2 seconds",
+          "command": "free -h -s 2",
+          "explanation": "Refreshes the memory display at 2-second intervals"
+        }
+      ]
+    },
+    {
+      "name": "vmstat",
+      "synopsis": "vmstat [options] [delay [count]]",
+      "description": "Report virtual memory, CPU, and IO statistics",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show a snapshot of system performance statistics",
+          "command": "vmstat",
+          "explanation": "Displays process, memory, swap, IO, and CPU statistics"
+        },
+        {
+          "type": "example",
+          "text": "monitor system performance every second for 10 iterations",
+          "command": "vmstat 1 10",
+          "explanation": "Samples and displays stats every second for 10 rounds"
+        },
+        {
+          "type": "example",
+          "text": "show disk IO statistics",
+          "command": "vmstat -d",
+          "explanation": "Displays read and write statistics for each disk device"
+        },
+        {
+          "type": "example",
+          "text": "display memory stats in megabytes for readability",
+          "command": "vmstat -S M",
+          "explanation": "Shows memory values in megabytes instead of kilobytes"
+        },
+        {
+          "type": "example",
+          "text": "show active and inactive memory",
+          "command": "vmstat -a",
+          "explanation": "Displays active and inactive memory instead of buffer and cache"
+        }
+      ]
+    },
+    {
+      "name": "iostat",
+      "synopsis": "iostat [options] [interval [count]]",
+      "description": "Report CPU and I/O statistics for devices and partitions",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show CPU and disk IO statistics",
+          "command": "iostat",
+          "explanation": "Displays average CPU utilization and device IO statistics since boot"
+        },
+        {
+          "type": "example",
+          "text": "monitor disk IO in real time every 2 seconds",
+          "command": "iostat -x 2",
+          "explanation": "Shows extended disk statistics updating every 2 seconds"
+        },
+        {
+          "type": "example",
+          "text": "show only disk statistics in megabytes",
+          "command": "iostat -d -m",
+          "explanation": "Displays disk throughput in megabytes per second"
+        },
+        {
+          "type": "example",
+          "text": "monitor a specific disk device",
+          "command": "iostat -x sda 1 5",
+          "explanation": "Shows extended stats for sda every second for 5 samples"
+        },
+        {
+          "type": "example",
+          "text": "show IO stats in human-readable format with timestamps",
+          "command": "iostat -h -t 2",
+          "explanation": "Displays human-readable IO stats with timestamps every 2 seconds"
+        }
+      ]
+    },
+    {
+      "name": "sar",
+      "synopsis": "sar [options] [interval [count]]",
+      "description": "Collect, report, and save system activity information",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show CPU usage statistics for the current day",
+          "command": "sar -u",
+          "explanation": "Displays CPU utilization data collected throughout the day"
+        },
+        {
+          "type": "example",
+          "text": "monitor memory usage over time",
+          "command": "sar -r 1 10",
+          "explanation": "Reports memory utilization every second for 10 intervals"
+        },
+        {
+          "type": "example",
+          "text": "check disk IO activity history",
+          "command": "sar -d",
+          "explanation": "Shows block device activity statistics from collected data"
+        },
+        {
+          "type": "example",
+          "text": "view network interface throughput statistics",
+          "command": "sar -n DEV 1 5",
+          "explanation": "Shows network device statistics every second for 5 samples"
+        },
+        {
+          "type": "example",
+          "text": "show load averages and run queue length",
+          "command": "sar -q 1 10",
+          "explanation": "Displays run queue length and load averages at 1-second intervals"
+        }
+      ]
+    },
+    {
+      "name": "who",
+      "synopsis": "who [options]",
+      "description": "Show who is currently logged into the system",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "see who is currently logged in",
+          "command": "who",
+          "explanation": "Lists all currently logged-in users with their terminals and login times"
+        },
+        {
+          "type": "example",
+          "text": "show logged-in users with idle time and PID",
+          "command": "who -u",
+          "explanation": "Displays users with idle time, PID, and login information"
+        },
+        {
+          "type": "example",
+          "text": "count the number of logged-in users",
+          "command": "who -q",
+          "explanation": "Shows usernames and a count of all logged-in users"
+        },
+        {
+          "type": "example",
+          "text": "show the current user and terminal info",
+          "command": "who am i",
+          "explanation": "Displays information about the current session only"
+        }
+      ]
+    },
+    {
+      "name": "w",
+      "synopsis": "w [options] [user]",
+      "description": "Show who is logged in and what they are doing",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "see who is logged in and what commands they are running",
+          "command": "w",
+          "explanation": "Shows logged-in users, idle time, and their current processes"
+        },
+        {
+          "type": "example",
+          "text": "check what a specific user is doing on the system",
+          "command": "w username",
+          "explanation": "Filters output to show only the specified user's sessions"
+        },
+        {
+          "type": "example",
+          "text": "show logged-in users without the header line",
+          "command": "w -h",
+          "explanation": "Displays user activity without the uptime header"
+        },
+        {
+          "type": "example",
+          "text": "show short output with just user and their process",
+          "command": "w -s",
+          "explanation": "Shows a condensed view without login time and CPU times"
+        }
+      ]
+    },
+    {
+      "name": "last",
+      "synopsis": "last [options] [username]",
+      "description": "Show listing of last logged-in users",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show recent login history",
+          "command": "last",
+          "explanation": "Lists the most recent user logins and system reboots"
+        },
+        {
+          "type": "example",
+          "text": "check when the system was last rebooted",
+          "command": "last reboot",
+          "explanation": "Shows a history of system reboots with timestamps"
+        },
+        {
+          "type": "example",
+          "text": "show login history for a specific user",
+          "command": "last username",
+          "explanation": "Filters login records to show only the specified user"
+        },
+        {
+          "type": "example",
+          "text": "show logins from the past 7 days",
+          "command": "last -t $(date -d '7 days ago' '+%Y%m%d%H%M%S')",
+          "explanation": "Shows login records within the last week"
+        },
+        {
+          "type": "example",
+          "text": "display IP addresses for remote logins",
+          "command": "last -i",
+          "explanation": "Shows the IP address column for each login entry"
+        }
+      ]
+    },
+    {
+      "name": "lastb",
+      "synopsis": "lastb [options] [username]",
+      "description": "Show listing of failed login attempts",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check for failed login attempts to detect intrusions",
+          "command": "lastb",
+          "explanation": "Lists all failed login attempts from the btmp log"
+        },
+        {
+          "type": "example",
+          "text": "show failed login attempts for a specific user",
+          "command": "lastb username",
+          "explanation": "Filters failed attempts to show only the specified user"
+        },
+        {
+          "type": "example",
+          "text": "show failed logins with IP addresses",
+          "command": "lastb -i",
+          "explanation": "Displays the source IP address for each failed login"
+        },
+        {
+          "type": "example",
+          "text": "show the most recent failed logins limited to 20 entries",
+          "command": "lastb -n 20",
+          "explanation": "Shows only the 20 most recent failed login attempts"
+        }
+      ]
+    },
+    {
+      "name": "id",
+      "synopsis": "id [options] [user]",
+      "description": "Display user and group identity information",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show my user ID, group ID, and group memberships",
+          "command": "id",
+          "explanation": "Displays UID, GID, and all groups for the current user"
+        },
+        {
+          "type": "example",
+          "text": "check the user and group info for another user",
+          "command": "id username",
+          "explanation": "Shows UID, GID, and groups for the specified user"
+        },
+        {
+          "type": "example",
+          "text": "get just the numeric user ID",
+          "command": "id -u",
+          "explanation": "Outputs only the effective user ID number"
+        },
+        {
+          "type": "example",
+          "text": "list all group IDs the current user belongs to",
+          "command": "id -G",
+          "explanation": "Shows all supplementary group IDs for the current user"
+        }
+      ]
+    },
+    {
+      "name": "groups",
+      "synopsis": "groups [user]",
+      "description": "Display group memberships for a user",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "see what groups the current user belongs to",
+          "command": "groups",
+          "explanation": "Lists all groups the current user is a member of"
+        },
+        {
+          "type": "example",
+          "text": "check group memberships for another user",
+          "command": "groups username",
+          "explanation": "Shows all groups the specified user belongs to"
+        },
+        {
+          "type": "example",
+          "text": "verify if a user is in the sudo group",
+          "command": "groups username | grep sudo",
+          "explanation": "Checks whether the user has sudo group membership"
+        },
+        {
+          "type": "example",
+          "text": "list groups for multiple users at once",
+          "command": "groups user1 user2 user3",
+          "explanation": "Shows group memberships for each specified user"
+        }
+      ]
+    },
+    {
+      "name": "env",
+      "synopsis": "env [options] [name=value] [command]",
+      "description": "Display or set environment variables and run commands in modified environments",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all environment variables",
+          "command": "env",
+          "explanation": "Prints all current environment variables and their values"
+        },
+        {
+          "type": "example",
+          "text": "run a command with a temporary environment variable",
+          "command": "env DEBUG=true node app.js",
+          "explanation": "Sets DEBUG=true only for the duration of the command"
+        },
+        {
+          "type": "example",
+          "text": "run a command with a clean environment",
+          "command": "env -i /bin/bash",
+          "explanation": "Starts a shell with all environment variables cleared"
+        },
+        {
+          "type": "example",
+          "text": "run a program with a modified PATH",
+          "command": "env PATH=/custom/bin:$PATH my-program",
+          "explanation": "Prepends a directory to PATH for the executed command only"
+        }
+      ]
+    },
+    {
+      "name": "printenv",
+      "synopsis": "printenv [variable]",
+      "description": "Print all or specific environment variables",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the value of a specific environment variable",
+          "command": "printenv HOME",
+          "explanation": "Prints the value of the HOME variable"
+        },
+        {
+          "type": "example",
+          "text": "display all environment variables sorted alphabetically",
+          "command": "printenv | sort",
+          "explanation": "Lists all environment variables in sorted order"
+        },
+        {
+          "type": "example",
+          "text": "check the current PATH directories",
+          "command": "printenv PATH",
+          "explanation": "Shows the directories in the PATH variable"
+        },
+        {
+          "type": "example",
+          "text": "check if a specific environment variable is set",
+          "command": "printenv MY_VAR && echo 'Set' || echo 'Not set'",
+          "explanation": "Tests whether the variable exists and has a value"
+        }
+      ]
+    },
+    {
+      "name": "set",
+      "synopsis": "set [options] [args]",
+      "description": "Set or unset shell options and positional parameters",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all shell variables and functions",
+          "command": "set",
+          "explanation": "Displays all shell variables, functions, and their values"
+        },
+        {
+          "type": "example",
+          "text": "enable strict error handling in a bash script",
+          "command": "set -euo pipefail",
+          "explanation": "Exits on error (-e), undefined variables (-u), and pipe failures"
+        },
+        {
+          "type": "example",
+          "text": "enable debug mode to trace script execution",
+          "command": "set -x",
+          "explanation": "Prints each command and its arguments before executing"
+        },
+        {
+          "type": "example",
+          "text": "disable filename globbing in the shell",
+          "command": "set -f",
+          "explanation": "Prevents wildcard characters from expanding to filenames"
+        }
+      ]
+    },
+    {
+      "name": "export",
+      "synopsis": "export [name[=value]]",
+      "description": "Set environment variables available to child processes",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "set a new environment variable that persists for child processes",
+          "command": "export MY_VAR='hello world'",
+          "explanation": "Creates an environment variable accessible to spawned processes"
+        },
+        {
+          "type": "example",
+          "text": "add a directory to the system PATH",
+          "command": "export PATH=$PATH:/opt/my-app/bin",
+          "explanation": "Appends a new directory to the existing PATH"
+        },
+        {
+          "type": "example",
+          "text": "list all exported environment variables",
+          "command": "export -p",
+          "explanation": "Displays all variables marked for export with their values"
+        },
+        {
+          "type": "example",
+          "text": "set the default text editor",
+          "command": "export EDITOR=vim",
+          "explanation": "Sets vim as the default editor for programs that respect EDITOR"
+        },
+        {
+          "type": "example",
+          "text": "remove a variable from the environment",
+          "command": "export -n MY_VAR",
+          "explanation": "Unexports the variable so it is no longer passed to child processes"
+        }
+      ]
+    },
+    {
+      "name": "ulimit",
+      "synopsis": "ulimit [options] [limit]",
+      "description": "Get and set user resource limits for the shell and its children",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all current resource limits",
+          "command": "ulimit -a",
+          "explanation": "Displays all soft limits including open files, stack size, and CPU time"
+        },
+        {
+          "type": "example",
+          "text": "check the maximum number of open file descriptors",
+          "command": "ulimit -n",
+          "explanation": "Shows the current limit on open files per process"
+        },
+        {
+          "type": "example",
+          "text": "increase the open file limit for the current session",
+          "command": "ulimit -n 65536",
+          "explanation": "Sets the maximum open files to 65536 for this shell session"
+        },
+        {
+          "type": "example",
+          "text": "check the maximum stack size",
+          "command": "ulimit -s",
+          "explanation": "Shows the maximum stack size in kilobytes"
+        },
+        {
+          "type": "example",
+          "text": "show hard limits that cannot be increased by regular users",
+          "command": "ulimit -Ha",
+          "explanation": "Displays all hard resource limits set by the system"
+        }
+      ]
+    },
+    {
+      "name": "locale",
+      "synopsis": "locale [options] [name]",
+      "description": "Get locale-specific information about language and regional settings",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all current locale settings",
+          "command": "locale",
+          "explanation": "Displays the active locale settings for language, numbers, and dates"
+        },
+        {
+          "type": "example",
+          "text": "list all available locales on the system",
+          "command": "locale -a",
+          "explanation": "Shows every locale that is installed and available"
+        },
+        {
+          "type": "example",
+          "text": "check the current character encoding",
+          "command": "locale charmap",
+          "explanation": "Displays the character map name like UTF-8"
+        },
+        {
+          "type": "example",
+          "text": "display all locale categories with their source",
+          "command": "locale -k LC_TIME",
+          "explanation": "Shows all keywords and values for the time locale category"
+        }
+      ]
+    },
+    {
+      "name": "hostnamectl",
+      "synopsis": "hostnamectl [command]",
+      "description": "Query and change the system hostname and related settings",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the current hostname and system info",
+          "command": "hostnamectl",
+          "explanation": "Displays static/transient hostname, OS, kernel, and architecture"
+        },
+        {
+          "type": "example",
+          "text": "permanently change the system hostname",
+          "command": "hostnamectl set-hostname new-server-name",
+          "explanation": "Sets the static hostname that persists across reboots"
+        },
+        {
+          "type": "example",
+          "text": "set a pretty descriptive hostname for display purposes",
+          "command": "hostnamectl set-hostname 'Web Server 01' --pretty",
+          "explanation": "Sets a human-friendly hostname with spaces and special characters"
+        },
+        {
+          "type": "example",
+          "text": "check the operating system and kernel version",
+          "command": "hostnamectl | grep -E 'Operating|Kernel'",
+          "explanation": "Filters output to show OS name and kernel version"
+        },
+        {
+          "type": "example",
+          "text": "view the machine chassis type",
+          "command": "hostnamectl | grep Chassis",
+          "explanation": "Shows whether the system is a desktop, laptop, server, or VM"
+        }
+      ]
+    }
+  ]
+}

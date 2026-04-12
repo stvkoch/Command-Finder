@@ -1,0 +1,1109 @@
+{
+  "category": "filesystem",
+  "commands": [
+    {
+      "name": "ls",
+      "synopsis": "ls [options] [file...]",
+      "description": "List directory contents",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all files in the current directory",
+          "command": "ls",
+          "explanation": "Lists files and directories in the current working directory"
+        },
+        {
+          "type": "example",
+          "text": "show hidden files and dotfiles",
+          "command": "ls -a",
+          "explanation": "The -a flag includes entries starting with a dot"
+        },
+        {
+          "type": "example",
+          "text": "list files with details like size and permissions",
+          "command": "ls -lh",
+          "explanation": "Long format with human-readable file sizes"
+        },
+        {
+          "type": "example",
+          "text": "sort files by modification time newest first",
+          "command": "ls -lt",
+          "explanation": "Long listing sorted by modification time, most recent first"
+        },
+        {
+          "type": "example",
+          "text": "show only directories in current path",
+          "command": "ls -d */",
+          "explanation": "Lists only directories by matching the trailing slash pattern"
+        }
+      ]
+    },
+    {
+      "name": "cp",
+      "synopsis": "cp [options] source dest",
+      "description": "Copy files and directories",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "copy a file to another location",
+          "command": "cp source.txt destination.txt",
+          "explanation": "Creates a duplicate of the source file at the destination path"
+        },
+        {
+          "type": "example",
+          "text": "copy a folder and everything inside it recursively",
+          "command": "cp -r src_dir/ dest_dir/",
+          "explanation": "The -r flag copies directories and their contents recursively"
+        },
+        {
+          "type": "example",
+          "text": "copy a file but don't overwrite if destination exists",
+          "command": "cp -n source.txt destination.txt",
+          "explanation": "The -n flag prevents overwriting existing files"
+        },
+        {
+          "type": "example",
+          "text": "copy files preserving permissions and timestamps",
+          "command": "cp -p source.txt destination.txt",
+          "explanation": "The -p flag preserves mode, ownership, and timestamps"
+        },
+        {
+          "type": "example",
+          "text": "copy multiple files into a directory",
+          "command": "cp file1.txt file2.txt file3.txt target_dir/",
+          "explanation": "Copies multiple source files into the target directory"
+        }
+      ]
+    },
+    {
+      "name": "mv",
+      "synopsis": "mv [options] source dest",
+      "description": "Move or rename files and directories",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "rename a file",
+          "command": "mv oldname.txt newname.txt",
+          "explanation": "Renames a file by moving it to a new name in the same directory"
+        },
+        {
+          "type": "example",
+          "text": "move a file into a different directory",
+          "command": "mv file.txt /path/to/directory/",
+          "explanation": "Relocates the file to the specified directory"
+        },
+        {
+          "type": "example",
+          "text": "move a file but ask before overwriting",
+          "command": "mv -i source.txt destination.txt",
+          "explanation": "The -i flag prompts before overwriting an existing file"
+        },
+        {
+          "type": "example",
+          "text": "rename a directory",
+          "command": "mv old_dir/ new_dir/",
+          "explanation": "Renames a directory by moving it to a new name"
+        },
+        {
+          "type": "example",
+          "text": "move all text files to a folder",
+          "command": "mv *.txt target_dir/",
+          "explanation": "Uses a glob pattern to move all .txt files into the target directory"
+        }
+      ]
+    },
+    {
+      "name": "rm",
+      "synopsis": "rm [options] file...",
+      "description": "Remove files or directories",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "delete a file",
+          "command": "rm file.txt",
+          "explanation": "Permanently removes the specified file"
+        },
+        {
+          "type": "example",
+          "text": "delete a directory and all its contents",
+          "command": "rm -rf directory/",
+          "explanation": "Recursively and forcefully removes a directory and everything in it"
+        },
+        {
+          "type": "example",
+          "text": "remove a file with confirmation prompt",
+          "command": "rm -i file.txt",
+          "explanation": "The -i flag asks for confirmation before deleting"
+        },
+        {
+          "type": "example",
+          "text": "remove all log files in the current directory",
+          "command": "rm *.log",
+          "explanation": "Uses a glob pattern to delete all files ending in .log"
+        },
+        {
+          "type": "example",
+          "text": "delete an empty directory",
+          "command": "rm -d empty_dir/",
+          "explanation": "The -d flag removes empty directories"
+        }
+      ]
+    },
+    {
+      "name": "mkdir",
+      "synopsis": "mkdir [options] directory...",
+      "description": "Create directories",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a new folder",
+          "command": "mkdir new_folder",
+          "explanation": "Creates a single directory with the given name"
+        },
+        {
+          "type": "example",
+          "text": "create nested directories including parent folders that don't exist",
+          "command": "mkdir -p path/to/deep/folder",
+          "explanation": "The -p flag creates intermediate parent directories as needed"
+        },
+        {
+          "type": "example",
+          "text": "create a directory with specific permissions",
+          "command": "mkdir -m 755 my_dir",
+          "explanation": "The -m flag sets the directory permissions on creation"
+        },
+        {
+          "type": "example",
+          "text": "create multiple directories at once",
+          "command": "mkdir dir1 dir2 dir3",
+          "explanation": "Creates several directories in a single command"
+        },
+        {
+          "type": "example",
+          "text": "make a full directory tree structure in one command",
+          "command": "mkdir -p project/{src,tests,docs}",
+          "explanation": "Uses brace expansion with -p to create a project directory structure"
+        }
+      ]
+    },
+    {
+      "name": "rmdir",
+      "synopsis": "rmdir [options] directory...",
+      "description": "Remove empty directories",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "remove an empty directory",
+          "command": "rmdir empty_dir",
+          "explanation": "Deletes a directory only if it contains no files"
+        },
+        {
+          "type": "example",
+          "text": "remove nested empty directories from the bottom up",
+          "command": "rmdir -p a/b/c",
+          "explanation": "Removes c, then b, then a if each becomes empty after the child is removed"
+        },
+        {
+          "type": "example",
+          "text": "delete an empty folder without error if it doesn't exist",
+          "command": "rmdir --ignore-fail-on-non-empty dir",
+          "explanation": "Suppresses errors when the directory is not empty"
+        },
+        {
+          "type": "example",
+          "text": "clean up a chain of empty parent directories",
+          "command": "rmdir -p path/to/empty/dirs",
+          "explanation": "Removes each directory component if it is empty after its child is removed"
+        },
+        {
+          "type": "example",
+          "text": "remove multiple empty directories at once",
+          "command": "rmdir dir1 dir2 dir3",
+          "explanation": "Removes several empty directories in a single command"
+        }
+      ]
+    },
+    {
+      "name": "touch",
+      "synopsis": "touch [options] file...",
+      "description": "Create empty files or update file timestamps",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create an empty file",
+          "command": "touch newfile.txt",
+          "explanation": "Creates the file if it does not exist; updates its timestamp if it does"
+        },
+        {
+          "type": "example",
+          "text": "update the modification time of a file to now",
+          "command": "touch existing_file.txt",
+          "explanation": "Sets the access and modification times to the current time"
+        },
+        {
+          "type": "example",
+          "text": "create multiple empty files at once",
+          "command": "touch file1.txt file2.txt file3.txt",
+          "explanation": "Creates several empty files in a single command"
+        },
+        {
+          "type": "example",
+          "text": "set a specific timestamp on a file",
+          "command": "touch -t 202301151200 file.txt",
+          "explanation": "Sets the timestamp to January 15, 2023 at 12:00 using -t"
+        },
+        {
+          "type": "example",
+          "text": "make a file's timestamp match another file",
+          "command": "touch -r reference.txt target.txt",
+          "explanation": "Copies the timestamp from the reference file to the target file"
+        }
+      ]
+    },
+    {
+      "name": "ln",
+      "synopsis": "ln [options] target link_name",
+      "description": "Create hard and symbolic links",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a symbolic link to a file",
+          "command": "ln -s /path/to/original link_name",
+          "explanation": "Creates a symlink that points to the original file"
+        },
+        {
+          "type": "example",
+          "text": "create a symlink to a directory",
+          "command": "ln -s /path/to/dir link_dir",
+          "explanation": "Creates a symbolic link pointing to a directory"
+        },
+        {
+          "type": "example",
+          "text": "create a hard link to a file",
+          "command": "ln original.txt hardlink.txt",
+          "explanation": "Creates a hard link sharing the same inode as the original"
+        },
+        {
+          "type": "example",
+          "text": "overwrite an existing symlink with a new target",
+          "command": "ln -sf /new/target existing_link",
+          "explanation": "The -f flag forces replacement of the existing link"
+        },
+        {
+          "type": "example",
+          "text": "create a symbolic link with a relative path",
+          "command": "ln -s ../shared/config.yml config.yml",
+          "explanation": "Creates a relative symlink pointing to a file in a parent directory"
+        }
+      ]
+    },
+    {
+      "name": "stat",
+      "synopsis": "stat [options] file...",
+      "description": "Display detailed file or filesystem status",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show detailed metadata about a file",
+          "command": "stat file.txt",
+          "explanation": "Displays size, permissions, inode, timestamps, and other metadata"
+        },
+        {
+          "type": "example",
+          "text": "get just the file size in bytes",
+          "command": "stat -f%z file.txt",
+          "explanation": "Uses the format flag to output only the file size"
+        },
+        {
+          "type": "example",
+          "text": "check the inode number of a file",
+          "command": "stat -f%i file.txt",
+          "explanation": "Prints the inode number using format specifier"
+        },
+        {
+          "type": "example",
+          "text": "display when a file was last modified",
+          "command": "stat -f%m file.txt",
+          "explanation": "Shows the last modification time as a Unix timestamp"
+        },
+        {
+          "type": "example",
+          "text": "show the permissions of a file in octal",
+          "command": "stat -f%Lp file.txt",
+          "explanation": "Displays the file permissions as an octal number"
+        }
+      ]
+    },
+    {
+      "name": "file",
+      "synopsis": "file [options] file...",
+      "description": "Determine file type",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find out what type a file is",
+          "command": "file unknown_file",
+          "explanation": "Inspects file contents to determine its type (text, binary, image, etc.)"
+        },
+        {
+          "type": "example",
+          "text": "check the mime type of a file",
+          "command": "file --mime-type document.pdf",
+          "explanation": "Outputs the MIME type instead of the human-readable description"
+        },
+        {
+          "type": "example",
+          "text": "identify file types for everything in a directory",
+          "command": "file *",
+          "explanation": "Runs file type detection on every file in the current directory"
+        },
+        {
+          "type": "example",
+          "text": "check if a file is a binary or text file",
+          "command": "file script.sh",
+          "explanation": "Reports whether the file contains ASCII text, binary data, etc."
+        },
+        {
+          "type": "example",
+          "text": "get the encoding of a text file",
+          "command": "file --mime-encoding file.txt",
+          "explanation": "Outputs the character encoding (utf-8, ascii, etc.)"
+        }
+      ]
+    },
+    {
+      "name": "basename",
+      "synopsis": "basename string [suffix]",
+      "description": "Strip directory and suffix from filenames",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "get just the filename from a full path",
+          "command": "basename /home/user/documents/report.pdf",
+          "explanation": "Strips the directory path and returns only report.pdf"
+        },
+        {
+          "type": "example",
+          "text": "extract the filename without its extension",
+          "command": "basename /path/to/file.tar.gz .tar.gz",
+          "explanation": "Removes the directory path and the specified suffix"
+        },
+        {
+          "type": "example",
+          "text": "strip the directory from a path in a script",
+          "command": "basename \"$0\"",
+          "explanation": "Returns the script name without the directory path"
+        },
+        {
+          "type": "example",
+          "text": "get the last component of a directory path",
+          "command": "basename /usr/local/bin",
+          "explanation": "Returns bin, the last component of the path"
+        },
+        {
+          "type": "example",
+          "text": "remove the .txt extension from a filename",
+          "command": "basename report.txt .txt",
+          "explanation": "Strips the .txt suffix and returns just report"
+        }
+      ]
+    },
+    {
+      "name": "dirname",
+      "synopsis": "dirname string",
+      "description": "Strip the last component from a file path",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "get the directory part of a file path",
+          "command": "dirname /home/user/documents/report.pdf",
+          "explanation": "Returns /home/user/documents, stripping the filename"
+        },
+        {
+          "type": "example",
+          "text": "find the parent directory of a file",
+          "command": "dirname /var/log/syslog",
+          "explanation": "Outputs /var/log as the parent directory"
+        },
+        {
+          "type": "example",
+          "text": "get the directory the current script is in",
+          "command": "dirname \"$0\"",
+          "explanation": "Returns the directory containing the running script"
+        },
+        {
+          "type": "example",
+          "text": "extract the folder path from a full filepath",
+          "command": "dirname /tmp/data/output.csv",
+          "explanation": "Returns /tmp/data without the filename"
+        },
+        {
+          "type": "example",
+          "text": "get the directory two levels up from a file",
+          "command": "dirname $(dirname /a/b/c/file.txt)",
+          "explanation": "Nesting dirname calls strips two levels, returning /a/b"
+        }
+      ]
+    },
+    {
+      "name": "realpath",
+      "synopsis": "realpath [options] file...",
+      "description": "Resolve the absolute path, resolving symlinks",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "get the absolute path of a file resolving all symlinks",
+          "command": "realpath file.txt",
+          "explanation": "Returns the canonical absolute path with all symlinks resolved"
+        },
+        {
+          "type": "example",
+          "text": "resolve a relative path to its full absolute path",
+          "command": "realpath ../config/settings.yml",
+          "explanation": "Converts a relative path to an absolute canonical path"
+        },
+        {
+          "type": "example",
+          "text": "find the real location a symlink points to",
+          "command": "realpath /usr/bin/python",
+          "explanation": "Follows the symlink chain and returns the final resolved path"
+        },
+        {
+          "type": "example",
+          "text": "get the canonical path without requiring the file to exist",
+          "command": "realpath -m /path/to/nonexistent/file",
+          "explanation": "The -m flag resolves the path even if components do not exist"
+        },
+        {
+          "type": "example",
+          "text": "get the relative path from one directory to another",
+          "command": "realpath --relative-to=/home/user /etc/config",
+          "explanation": "Computes the relative path from the first directory to the second"
+        }
+      ]
+    },
+    {
+      "name": "pwd",
+      "synopsis": "pwd [options]",
+      "description": "Print the current working directory",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show what directory I am currently in",
+          "command": "pwd",
+          "explanation": "Prints the absolute path of the current working directory"
+        },
+        {
+          "type": "example",
+          "text": "print the physical current directory without symlinks",
+          "command": "pwd -P",
+          "explanation": "Resolves symlinks and shows the actual physical directory"
+        },
+        {
+          "type": "example",
+          "text": "get my current location in the filesystem",
+          "command": "pwd",
+          "explanation": "Outputs the full path of where you are"
+        },
+        {
+          "type": "example",
+          "text": "display the working directory including symlink path",
+          "command": "pwd -L",
+          "explanation": "Shows the logical path, preserving symlink names"
+        }
+      ]
+    },
+    {
+      "name": "cd",
+      "synopsis": "cd [directory]",
+      "description": "Change the current working directory",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "go to my home directory",
+          "command": "cd ~",
+          "explanation": "Changes to the user's home directory"
+        },
+        {
+          "type": "example",
+          "text": "go up one directory level",
+          "command": "cd ..",
+          "explanation": "Navigates to the parent directory"
+        },
+        {
+          "type": "example",
+          "text": "go back to the previous directory",
+          "command": "cd -",
+          "explanation": "Returns to the last directory you were in"
+        },
+        {
+          "type": "example",
+          "text": "navigate to a specific folder",
+          "command": "cd /var/log",
+          "explanation": "Changes the working directory to the specified path"
+        },
+        {
+          "type": "example",
+          "text": "change to the root directory",
+          "command": "cd /",
+          "explanation": "Navigates to the filesystem root"
+        }
+      ]
+    },
+    {
+      "name": "tree",
+      "synopsis": "tree [options] [directory...]",
+      "description": "Display directory structure as a tree",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the directory structure as a tree",
+          "command": "tree",
+          "explanation": "Recursively displays the current directory in a tree-like format"
+        },
+        {
+          "type": "example",
+          "text": "show only directories in the tree, no files",
+          "command": "tree -d",
+          "explanation": "The -d flag limits output to directories only"
+        },
+        {
+          "type": "example",
+          "text": "display a tree limited to 2 levels deep",
+          "command": "tree -L 2",
+          "explanation": "The -L flag limits the recursion depth"
+        },
+        {
+          "type": "example",
+          "text": "show the tree with file sizes",
+          "command": "tree -sh",
+          "explanation": "Displays each file's size in human-readable format"
+        },
+        {
+          "type": "example",
+          "text": "show directory tree but ignore node_modules",
+          "command": "tree -I node_modules",
+          "explanation": "The -I flag excludes directories matching the given pattern"
+        }
+      ]
+    },
+    {
+      "name": "du",
+      "synopsis": "du [options] [file...]",
+      "description": "Estimate file and directory space usage",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check how much space a directory takes up",
+          "command": "du -sh directory/",
+          "explanation": "Summarizes total size in human-readable format"
+        },
+        {
+          "type": "example",
+          "text": "find the biggest files and folders in the current directory",
+          "command": "du -sh * | sort -rh | head -10",
+          "explanation": "Shows sizes of top-level items sorted by size, top 10"
+        },
+        {
+          "type": "example",
+          "text": "show disk usage of all subdirectories one level deep",
+          "command": "du -h --max-depth=1",
+          "explanation": "Lists sizes for immediate subdirectories only"
+        },
+        {
+          "type": "example",
+          "text": "get the total size of a folder in megabytes",
+          "command": "du -sm directory/",
+          "explanation": "Summarizes total size in megabytes"
+        },
+        {
+          "type": "example",
+          "text": "see how much disk space each subfolder uses",
+          "command": "du -h --max-depth=1 | sort -rh",
+          "explanation": "Shows subdirectory sizes sorted from largest to smallest"
+        }
+      ]
+    },
+    {
+      "name": "df",
+      "synopsis": "df [options] [file...]",
+      "description": "Report filesystem disk space usage",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check free disk space on all mounted filesystems",
+          "command": "df -h",
+          "explanation": "Shows disk space usage in human-readable format for all mounts"
+        },
+        {
+          "type": "example",
+          "text": "see how much space is left on the root partition",
+          "command": "df -h /",
+          "explanation": "Shows disk usage for the filesystem containing the root directory"
+        },
+        {
+          "type": "example",
+          "text": "display filesystem types alongside disk usage",
+          "command": "df -Th",
+          "explanation": "Includes the filesystem type column in the output"
+        },
+        {
+          "type": "example",
+          "text": "show disk usage in gigabytes",
+          "command": "df -BG",
+          "explanation": "Displays sizes in gigabyte units"
+        },
+        {
+          "type": "example",
+          "text": "check how much disk space a specific mount point has",
+          "command": "df -h /home",
+          "explanation": "Shows usage statistics for the filesystem containing /home"
+        }
+      ]
+    },
+    {
+      "name": "mount",
+      "synopsis": "mount [options] device directory",
+      "description": "Mount a filesystem",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all currently mounted filesystems",
+          "command": "mount",
+          "explanation": "Without arguments, displays all current mounts"
+        },
+        {
+          "type": "example",
+          "text": "mount a USB drive to a directory",
+          "command": "sudo mount /dev/sdb1 /mnt/usb",
+          "explanation": "Attaches the filesystem on the device to the mount point"
+        },
+        {
+          "type": "example",
+          "text": "mount an ISO image file",
+          "command": "sudo mount -o loop image.iso /mnt/iso",
+          "explanation": "Uses a loop device to mount an ISO file as a filesystem"
+        },
+        {
+          "type": "example",
+          "text": "mount a filesystem as read-only",
+          "command": "sudo mount -o ro /dev/sdb1 /mnt/disk",
+          "explanation": "The ro option mounts the filesystem in read-only mode"
+        },
+        {
+          "type": "example",
+          "text": "remount a filesystem with different options",
+          "command": "sudo mount -o remount,rw /",
+          "explanation": "Changes mount options without unmounting and remounting"
+        }
+      ]
+    },
+    {
+      "name": "umount",
+      "synopsis": "umount [options] directory|device",
+      "description": "Unmount a filesystem",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "unmount a USB drive",
+          "command": "sudo umount /mnt/usb",
+          "explanation": "Detaches the filesystem at the given mount point"
+        },
+        {
+          "type": "example",
+          "text": "safely eject a mounted disk",
+          "command": "sudo umount /dev/sdb1",
+          "explanation": "Unmounts the filesystem on the specified device"
+        },
+        {
+          "type": "example",
+          "text": "force unmount a busy filesystem",
+          "command": "sudo umount -f /mnt/stuck",
+          "explanation": "The -f flag forces the unmount even if the filesystem is busy"
+        },
+        {
+          "type": "example",
+          "text": "lazy unmount a filesystem that is in use",
+          "command": "sudo umount -l /mnt/busy",
+          "explanation": "Detaches the filesystem immediately and cleans up references lazily"
+        },
+        {
+          "type": "example",
+          "text": "unmount all filesystems of a specific type",
+          "command": "sudo umount -a -t tmpfs",
+          "explanation": "The -a flag unmounts all and -t filters by filesystem type"
+        }
+      ]
+    },
+    {
+      "name": "mktemp",
+      "synopsis": "mktemp [options] [template]",
+      "description": "Create a temporary file or directory safely",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a temporary file and get its path",
+          "command": "mktemp",
+          "explanation": "Creates a unique temporary file in /tmp and prints its path"
+        },
+        {
+          "type": "example",
+          "text": "create a temporary directory",
+          "command": "mktemp -d",
+          "explanation": "The -d flag creates a temporary directory instead of a file"
+        },
+        {
+          "type": "example",
+          "text": "create a temp file with a custom name pattern",
+          "command": "mktemp /tmp/myapp.XXXXXX",
+          "explanation": "Uses a template where X characters are replaced with random values"
+        },
+        {
+          "type": "example",
+          "text": "make a temporary file with a specific suffix",
+          "command": "mktemp --suffix=.log",
+          "explanation": "Creates a temp file ending with the specified suffix"
+        },
+        {
+          "type": "example",
+          "text": "create a named temporary file in the current directory",
+          "command": "mktemp -p . temp.XXXXXX",
+          "explanation": "The -p flag specifies the directory for the temporary file"
+        }
+      ]
+    },
+    {
+      "name": "install",
+      "synopsis": "install [options] source dest",
+      "description": "Copy files and set attributes in one step",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "copy a binary and set it executable in one step",
+          "command": "install -m 755 myapp /usr/local/bin/myapp",
+          "explanation": "Copies the file and sets permissions to rwxr-xr-x"
+        },
+        {
+          "type": "example",
+          "text": "install a file with specific owner and group",
+          "command": "sudo install -o root -g staff -m 644 config.conf /etc/myapp/",
+          "explanation": "Copies the file setting owner, group, and permissions"
+        },
+        {
+          "type": "example",
+          "text": "create a directory with specific permissions using install",
+          "command": "install -d -m 700 /var/lib/myapp",
+          "explanation": "The -d flag creates all components of the specified directories"
+        },
+        {
+          "type": "example",
+          "text": "copy a script making it executable and owned by root",
+          "command": "sudo install -o root -m 755 script.sh /usr/local/bin/",
+          "explanation": "Installs the script with root ownership and executable permissions"
+        },
+        {
+          "type": "example",
+          "text": "install a config file with backup of the original",
+          "command": "install -b -m 644 new.conf /etc/app/app.conf",
+          "explanation": "The -b flag creates a backup of the destination file before overwriting"
+        }
+      ]
+    },
+    {
+      "name": "shred",
+      "synopsis": "shred [options] file...",
+      "description": "Securely overwrite a file to hide its contents before deleting",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "securely delete a sensitive file so it can't be recovered",
+          "command": "shred -vzu file.txt",
+          "explanation": "Overwrites with random data, zeros, then removes the file; -v shows progress"
+        },
+        {
+          "type": "example",
+          "text": "wipe a file with multiple overwrite passes",
+          "command": "shred -n 10 secret.key",
+          "explanation": "Overwrites the file 10 times with random data"
+        },
+        {
+          "type": "example",
+          "text": "overwrite a disk device to destroy all data",
+          "command": "sudo shred -v /dev/sdb",
+          "explanation": "Overwrites the entire block device with random data"
+        },
+        {
+          "type": "example",
+          "text": "securely erase a file and remove it afterward",
+          "command": "shred -u confidential.doc",
+          "explanation": "The -u flag truncates and removes the file after overwriting"
+        },
+        {
+          "type": "example",
+          "text": "overwrite a file with zeros instead of random data before deleting",
+          "command": "shred -vzu -n 0 file.txt",
+          "explanation": "Uses -n 0 to skip random passes, -z for a single zero pass, then removes"
+        }
+      ]
+    },
+    {
+      "name": "truncate",
+      "synopsis": "truncate [options] file...",
+      "description": "Shrink or extend the size of a file",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "empty a file without deleting it",
+          "command": "truncate -s 0 logfile.log",
+          "explanation": "Sets the file size to 0 bytes, effectively clearing its contents"
+        },
+        {
+          "type": "example",
+          "text": "create a file of a specific size for testing",
+          "command": "truncate -s 1G testfile.img",
+          "explanation": "Creates a sparse file that appears to be 1 gigabyte"
+        },
+        {
+          "type": "example",
+          "text": "shrink a file to a specific size",
+          "command": "truncate -s 100M large_file.dat",
+          "explanation": "Truncates or extends the file to exactly 100 megabytes"
+        },
+        {
+          "type": "example",
+          "text": "reduce a file size by a certain amount",
+          "command": "truncate -s -10M file.dat",
+          "explanation": "The minus sign reduces the file size by 10 megabytes"
+        },
+        {
+          "type": "example",
+          "text": "extend a file by appending empty space",
+          "command": "truncate -s +50M file.dat",
+          "explanation": "The plus sign grows the file by 50 megabytes, padded with null bytes"
+        }
+      ]
+    },
+    {
+      "name": "fallocate",
+      "synopsis": "fallocate [options] file",
+      "description": "Preallocate or deallocate space for a file",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "preallocate a file of a specific size quickly",
+          "command": "fallocate -l 10G largefile.img",
+          "explanation": "Instantly allocates 10 GB of disk space without writing data"
+        },
+        {
+          "type": "example",
+          "text": "create a swap file of a given size",
+          "command": "sudo fallocate -l 4G /swapfile",
+          "explanation": "Allocates space for a 4 GB swap file"
+        },
+        {
+          "type": "example",
+          "text": "punch a hole in a file to free up space in the middle",
+          "command": "fallocate -p -o 1M -l 5M file.dat",
+          "explanation": "Deallocates space within the file without changing its apparent size"
+        },
+        {
+          "type": "example",
+          "text": "quickly create a large test file",
+          "command": "fallocate -l 500M test.bin",
+          "explanation": "Allocates 500 MB almost instantly without writing zeros"
+        }
+      ]
+    },
+    {
+      "name": "sync",
+      "synopsis": "sync [options] [file...]",
+      "description": "Flush filesystem caches to disk",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "flush all pending writes to disk",
+          "command": "sync",
+          "explanation": "Forces all buffered data to be written to the underlying storage"
+        },
+        {
+          "type": "example",
+          "text": "sync a specific file's data to disk",
+          "command": "sync file.dat",
+          "explanation": "Flushes only the specified file's data to disk"
+        },
+        {
+          "type": "example",
+          "text": "ensure all data is written before safely removing a drive",
+          "command": "sync",
+          "explanation": "Writes all cached data ensuring safe hardware removal"
+        },
+        {
+          "type": "example",
+          "text": "flush just the file data without metadata",
+          "command": "sync --data-only file.dat",
+          "explanation": "Syncs only the data, skipping unnecessary metadata updates"
+        },
+        {
+          "type": "example",
+          "text": "force write filesystem buffers before shutdown",
+          "command": "sync; sync",
+          "explanation": "Double sync is a traditional safety measure to ensure all data is flushed"
+        }
+      ]
+    },
+    {
+      "name": "chroot",
+      "synopsis": "chroot [options] newroot [command]",
+      "description": "Run a command with a different root directory",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "change the root directory and run a shell inside it",
+          "command": "sudo chroot /mnt/newroot /bin/bash",
+          "explanation": "Starts a bash shell with /mnt/newroot as the apparent root filesystem"
+        },
+        {
+          "type": "example",
+          "text": "repair a broken linux install by chrooting into it",
+          "command": "sudo chroot /mnt/broken-system",
+          "explanation": "Changes root to the mounted broken system for repair operations"
+        },
+        {
+          "type": "example",
+          "text": "run a command inside a chroot environment",
+          "command": "sudo chroot /srv/jail /usr/bin/env -i /bin/sh",
+          "explanation": "Executes a clean shell in the chroot jail"
+        },
+        {
+          "type": "example",
+          "text": "isolate a process in a sandboxed root filesystem",
+          "command": "sudo chroot /sandbox /app/server",
+          "explanation": "Runs the server with filesystem access limited to /sandbox"
+        },
+        {
+          "type": "example",
+          "text": "run a command as a different user inside a chroot",
+          "command": "sudo chroot --userspec=nobody:nogroup /jail /bin/sh",
+          "explanation": "Changes to the specified user and group before running the command in the chroot"
+        }
+      ]
+    },
+    {
+      "name": "dd",
+      "synopsis": "dd [operand...]",
+      "description": "Convert and copy a file with low-level control",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a bootable USB drive from an ISO image",
+          "command": "sudo dd if=image.iso of=/dev/sdb bs=4M status=progress",
+          "explanation": "Writes the ISO byte-for-byte to the USB device with progress display"
+        },
+        {
+          "type": "example",
+          "text": "clone an entire disk to another disk",
+          "command": "sudo dd if=/dev/sda of=/dev/sdb bs=64K status=progress",
+          "explanation": "Copies every byte from one disk to another"
+        },
+        {
+          "type": "example",
+          "text": "create a disk image backup of a partition",
+          "command": "sudo dd if=/dev/sda1 of=backup.img bs=4M status=progress",
+          "explanation": "Creates a raw image file of the partition"
+        },
+        {
+          "type": "example",
+          "text": "write zeros to a disk to erase it",
+          "command": "sudo dd if=/dev/zero of=/dev/sdb bs=1M status=progress",
+          "explanation": "Overwrites the entire disk with zeros"
+        },
+        {
+          "type": "example",
+          "text": "generate a file filled with random data",
+          "command": "dd if=/dev/urandom of=random.bin bs=1M count=100",
+          "explanation": "Creates a 100 MB file of random bytes"
+        }
+      ]
+    },
+    {
+      "name": "rsync",
+      "synopsis": "rsync [options] source destination",
+      "description": "Efficiently sync files and directories locally or remotely",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "sync a directory to a backup location",
+          "command": "rsync -avh source_dir/ backup_dir/",
+          "explanation": "Archive mode sync with verbose output and human-readable sizes"
+        },
+        {
+          "type": "example",
+          "text": "copy files to a remote server over SSH",
+          "command": "rsync -avz local_dir/ user@host:/remote/path/",
+          "explanation": "Syncs to a remote server with compression enabled"
+        },
+        {
+          "type": "example",
+          "text": "sync files and delete anything in destination not in source",
+          "command": "rsync -avh --delete source/ destination/",
+          "explanation": "Mirrors source exactly, removing extra files from destination"
+        },
+        {
+          "type": "example",
+          "text": "resume an interrupted large file transfer",
+          "command": "rsync -avh --partial --progress largefile.zip user@host:/path/",
+          "explanation": "Keeps partial transfers and shows progress for resumable copy"
+        },
+        {
+          "type": "example",
+          "text": "sync only files that are newer than the destination",
+          "command": "rsync -avhu source/ destination/",
+          "explanation": "The -u flag skips files that are newer on the destination"
+        },
+        {
+          "type": "example",
+          "text": "do a dry run to see what rsync would change without actually copying",
+          "command": "rsync -avhn source/ destination/",
+          "explanation": "The -n flag performs a trial run with no changes made"
+        }
+      ]
+    },
+    {
+      "name": "rename",
+      "synopsis": "rename [options] expression replacement file...",
+      "description": "Rename multiple files using a pattern",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "rename files by replacing a string in their names",
+          "command": "rename 's/old/new/' *.txt",
+          "explanation": "Replaces the first occurrence of 'old' with 'new' in matching filenames"
+        },
+        {
+          "type": "example",
+          "text": "change the extension of multiple files",
+          "command": "rename 's/\\.txt$/.md/' *.txt",
+          "explanation": "Renames all .txt files to .md using a regex substitution"
+        },
+        {
+          "type": "example",
+          "text": "convert filenames to lowercase",
+          "command": "rename 'y/A-Z/a-z/' *",
+          "explanation": "Transliterates uppercase characters to lowercase in all filenames"
+        },
+        {
+          "type": "example",
+          "text": "add a prefix to all files in a directory",
+          "command": "rename 's/^/prefix_/' *",
+          "explanation": "Prepends 'prefix_' to every filename"
+        },
+        {
+          "type": "example",
+          "text": "do a dry run to preview what rename would change",
+          "command": "rename -n 's/foo/bar/' *.txt",
+          "explanation": "The -n flag shows what would be renamed without actually doing it"
+        }
+      ]
+    }
+  ]
+}

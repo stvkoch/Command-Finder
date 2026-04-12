@@ -1,0 +1,697 @@
+{
+  "category": "disk",
+  "commands": [
+    {
+      "name": "fdisk",
+      "synopsis": "fdisk [options] device",
+      "description": "Manipulate MBR disk partition tables",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all disk partitions on the system",
+          "command": "sudo fdisk -l",
+          "explanation": "Displays partition tables for all disks"
+        },
+        {
+          "type": "example",
+          "text": "show partitions for a specific disk",
+          "command": "sudo fdisk -l /dev/sda",
+          "explanation": "Lists partition layout of the specified disk"
+        },
+        {
+          "type": "example",
+          "text": "open the partition editor for a disk",
+          "command": "sudo fdisk /dev/sdb",
+          "explanation": "Enters interactive mode to create, delete, or modify partitions"
+        },
+        {
+          "type": "example",
+          "text": "dump partition table in sector format",
+          "command": "sudo fdisk -l -o Device,Start,End,Sectors,Size,Type /dev/sda",
+          "explanation": "Shows specific partition details with custom columns"
+        }
+      ]
+    },
+    {
+      "name": "gdisk",
+      "synopsis": "gdisk [options] device",
+      "description": "Interactive GPT partition table manipulator",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "partition a disk using GPT",
+          "command": "sudo gdisk /dev/sdb",
+          "explanation": "Opens interactive GPT partitioning tool for the disk"
+        },
+        {
+          "type": "example",
+          "text": "list GPT partitions on a disk",
+          "command": "sudo gdisk -l /dev/sda",
+          "explanation": "Displays the GPT partition table"
+        },
+        {
+          "type": "example",
+          "text": "convert an MBR disk to GPT",
+          "command": "sudo sgdisk -g /dev/sdb",
+          "explanation": "Converts the partition table from MBR to GPT format"
+        },
+        {
+          "type": "example",
+          "text": "backup the GPT partition table",
+          "command": "sudo sgdisk --backup=table.bak /dev/sda",
+          "explanation": "Saves the partition table to a file for recovery"
+        },
+        {
+          "type": "example",
+          "text": "clone partition layout from one disk to another",
+          "command": "sudo sgdisk -R /dev/sdb /dev/sda",
+          "explanation": "Replicates the partition scheme from sda to sdb"
+        }
+      ]
+    },
+    {
+      "name": "parted",
+      "synopsis": "parted [options] [device [command...]]",
+      "description": "A partition manipulation program supporting MBR and GPT",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all partitions on all disks",
+          "command": "sudo parted -l",
+          "explanation": "Displays partition tables for every disk in the system"
+        },
+        {
+          "type": "example",
+          "text": "create a new GPT partition table on a disk",
+          "command": "sudo parted /dev/sdb mklabel gpt",
+          "explanation": "Initializes the disk with a fresh GPT partition table"
+        },
+        {
+          "type": "example",
+          "text": "create a partition using the entire disk",
+          "command": "sudo parted /dev/sdb mkpart primary ext4 0% 100%",
+          "explanation": "Creates a single partition spanning the whole disk"
+        },
+        {
+          "type": "example",
+          "text": "resize a partition",
+          "command": "sudo parted /dev/sda resizepart 2 100%",
+          "explanation": "Expands partition 2 to fill all available space"
+        },
+        {
+          "type": "example",
+          "text": "print partition information for a disk",
+          "command": "sudo parted /dev/sda print",
+          "explanation": "Shows the partition table with sizes and filesystem types"
+        }
+      ]
+    },
+    {
+      "name": "mkfs",
+      "synopsis": "mkfs [options] [-t type] device",
+      "description": "Build a Linux filesystem on a partition",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "format a partition as ext4",
+          "command": "sudo mkfs.ext4 /dev/sdb1",
+          "explanation": "Creates an ext4 filesystem on the partition"
+        },
+        {
+          "type": "example",
+          "text": "create an XFS filesystem",
+          "command": "sudo mkfs.xfs /dev/sdb1",
+          "explanation": "Formats the partition with the XFS filesystem"
+        },
+        {
+          "type": "example",
+          "text": "format a partition as FAT32 for USB drives",
+          "command": "sudo mkfs.vfat -F 32 /dev/sdb1",
+          "explanation": "Creates a FAT32 filesystem, compatible with most devices"
+        },
+        {
+          "type": "example",
+          "text": "create an ext4 filesystem with a label",
+          "command": "sudo mkfs.ext4 -L mydisk /dev/sdb1",
+          "explanation": "Formats and sets a human-readable label on the filesystem"
+        },
+        {
+          "type": "example",
+          "text": "create a Btrfs filesystem",
+          "command": "sudo mkfs.btrfs /dev/sdb1",
+          "explanation": "Formats the partition with the Btrfs copy-on-write filesystem"
+        }
+      ]
+    },
+    {
+      "name": "fsck",
+      "synopsis": "fsck [options] [filesystem...]",
+      "description": "Check and repair a Linux filesystem",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check a filesystem for errors",
+          "command": "sudo fsck /dev/sda1",
+          "explanation": "Scans the filesystem for corruption and reports issues"
+        },
+        {
+          "type": "example",
+          "text": "automatically repair filesystem errors",
+          "command": "sudo fsck -y /dev/sda1",
+          "explanation": "Fixes all errors automatically without prompting"
+        },
+        {
+          "type": "example",
+          "text": "check a filesystem without making changes",
+          "command": "sudo fsck -n /dev/sda1",
+          "explanation": "Performs a read-only check and reports errors without fixing"
+        },
+        {
+          "type": "example",
+          "text": "force a filesystem check even if it appears clean",
+          "command": "sudo fsck -f /dev/sda1",
+          "explanation": "Forces a check even if the filesystem is marked clean"
+        },
+        {
+          "type": "example",
+          "text": "check all filesystems listed in fstab",
+          "command": "sudo fsck -A",
+          "explanation": "Runs checks on all filesystems in /etc/fstab"
+        }
+      ]
+    },
+    {
+      "name": "mount",
+      "synopsis": "mount [options] device directory",
+      "description": "Mount a filesystem to a directory",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "mount a partition to a directory",
+          "command": "sudo mount /dev/sdb1 /mnt/data",
+          "explanation": "Attaches the filesystem on sdb1 to the /mnt/data mount point"
+        },
+        {
+          "type": "example",
+          "text": "mount an ISO image file",
+          "command": "sudo mount -o loop image.iso /mnt/iso",
+          "explanation": "Mounts an ISO file as a loopback device"
+        },
+        {
+          "type": "example",
+          "text": "mount an NFS share",
+          "command": "sudo mount -t nfs server:/share /mnt/nfs",
+          "explanation": "Mounts a remote NFS filesystem"
+        },
+        {
+          "type": "example",
+          "text": "mount a filesystem as read-only",
+          "command": "sudo mount -o ro /dev/sdb1 /mnt/readonly",
+          "explanation": "Attaches the filesystem in read-only mode"
+        },
+        {
+          "type": "example",
+          "text": "show all currently mounted filesystems",
+          "command": "mount | column -t",
+          "explanation": "Lists all mounted filesystems in a formatted table"
+        }
+      ]
+    },
+    {
+      "name": "umount",
+      "synopsis": "umount [options] directory|device",
+      "description": "Unmount a filesystem",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "unmount a filesystem",
+          "command": "sudo umount /mnt/data",
+          "explanation": "Detaches the filesystem from the mount point"
+        },
+        {
+          "type": "example",
+          "text": "force unmount a busy filesystem",
+          "command": "sudo umount -f /mnt/data",
+          "explanation": "Forces unmounting even if the filesystem is in use"
+        },
+        {
+          "type": "example",
+          "text": "lazy unmount a filesystem",
+          "command": "sudo umount -l /mnt/data",
+          "explanation": "Detaches immediately and cleans up when no longer busy"
+        },
+        {
+          "type": "example",
+          "text": "unmount all filesystems of a given type",
+          "command": "sudo umount -a -t nfs",
+          "explanation": "Unmounts all mounted NFS filesystems"
+        }
+      ]
+    },
+    {
+      "name": "lsblk",
+      "synopsis": "lsblk [options] [device...]",
+      "description": "List information about block devices",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all block devices in a tree format",
+          "command": "lsblk",
+          "explanation": "Displays all disks and partitions in a hierarchical tree"
+        },
+        {
+          "type": "example",
+          "text": "show filesystems and mount points",
+          "command": "lsblk -f",
+          "explanation": "Shows filesystem type, label, UUID, and mount point for each device"
+        },
+        {
+          "type": "example",
+          "text": "show disk sizes in bytes",
+          "command": "lsblk -b",
+          "explanation": "Displays sizes in bytes instead of human-readable format"
+        },
+        {
+          "type": "example",
+          "text": "show specific columns only",
+          "command": "lsblk -o NAME,SIZE,TYPE,MOUNTPOINT",
+          "explanation": "Displays only the selected columns"
+        },
+        {
+          "type": "example",
+          "text": "list devices as a flat list without tree",
+          "command": "lsblk -l",
+          "explanation": "Shows devices in a plain list format"
+        }
+      ]
+    },
+    {
+      "name": "blkid",
+      "synopsis": "blkid [options] [device...]",
+      "description": "Locate and print block device attributes",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show UUIDs and filesystem types of all partitions",
+          "command": "sudo blkid",
+          "explanation": "Lists all block devices with their UUIDs and filesystem info"
+        },
+        {
+          "type": "example",
+          "text": "get the UUID of a specific partition",
+          "command": "sudo blkid /dev/sda1",
+          "explanation": "Shows the UUID, type, and label for the partition"
+        },
+        {
+          "type": "example",
+          "text": "output only the UUID value",
+          "command": "sudo blkid -s UUID -o value /dev/sda1",
+          "explanation": "Prints just the UUID string, useful for scripting"
+        },
+        {
+          "type": "example",
+          "text": "find a device by its label",
+          "command": "sudo blkid -L mydisk",
+          "explanation": "Returns the device path that has the given label"
+        }
+      ]
+    },
+    {
+      "name": "tune2fs",
+      "synopsis": "tune2fs [options] device",
+      "description": "Adjust tunable parameters on ext2/ext3/ext4 filesystems",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "set a label on an ext4 partition",
+          "command": "sudo tune2fs -L mydata /dev/sda1",
+          "explanation": "Assigns the label mydata to the filesystem"
+        },
+        {
+          "type": "example",
+          "text": "show filesystem parameters",
+          "command": "sudo tune2fs -l /dev/sda1",
+          "explanation": "Lists all tunable parameters and superblock information"
+        },
+        {
+          "type": "example",
+          "text": "set the maximum mount count before a fsck is forced",
+          "command": "sudo tune2fs -c 50 /dev/sda1",
+          "explanation": "Forces a filesystem check after 50 mounts"
+        },
+        {
+          "type": "example",
+          "text": "set reserved space percentage for root",
+          "command": "sudo tune2fs -m 1 /dev/sda1",
+          "explanation": "Reserves 1% of space for root instead of the default 5%"
+        },
+        {
+          "type": "example",
+          "text": "enable a filesystem feature",
+          "command": "sudo tune2fs -O has_journal /dev/sda1",
+          "explanation": "Adds the journal feature to convert ext2 to ext3"
+        }
+      ]
+    },
+    {
+      "name": "e2fsck",
+      "synopsis": "e2fsck [options] device",
+      "description": "Check an ext2/ext3/ext4 filesystem",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check and repair an ext4 filesystem",
+          "command": "sudo e2fsck -f /dev/sda1",
+          "explanation": "Forces a full check of the ext filesystem"
+        },
+        {
+          "type": "example",
+          "text": "automatically fix errors on an ext partition",
+          "command": "sudo e2fsck -fy /dev/sda1",
+          "explanation": "Forces a check and answers yes to all repair questions"
+        },
+        {
+          "type": "example",
+          "text": "check an ext filesystem in read-only mode",
+          "command": "sudo e2fsck -n /dev/sda1",
+          "explanation": "Reports errors without making any changes"
+        },
+        {
+          "type": "example",
+          "text": "show progress during filesystem check",
+          "command": "sudo e2fsck -fC 0 /dev/sda1",
+          "explanation": "Displays a progress bar during the check"
+        }
+      ]
+    },
+    {
+      "name": "badblocks",
+      "synopsis": "badblocks [options] device",
+      "description": "Search a device for bad blocks",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "scan a disk for bad sectors",
+          "command": "sudo badblocks -v /dev/sda",
+          "explanation": "Performs a read-only scan and reports any bad blocks found"
+        },
+        {
+          "type": "example",
+          "text": "do a non-destructive read-write test for bad blocks",
+          "command": "sudo badblocks -nsv /dev/sdb",
+          "explanation": "Tests blocks by writing and reading without destroying data"
+        },
+        {
+          "type": "example",
+          "text": "write bad blocks list to a file",
+          "command": "sudo badblocks -v /dev/sda -o badblocks.txt",
+          "explanation": "Saves discovered bad block numbers to a file"
+        },
+        {
+          "type": "example",
+          "text": "show progress during a bad block scan",
+          "command": "sudo badblocks -sv /dev/sda",
+          "explanation": "Displays scan progress with verbose output"
+        }
+      ]
+    },
+    {
+      "name": "hdparm",
+      "synopsis": "hdparm [options] device",
+      "description": "Get/set SATA/IDE device parameters",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "test the read speed of a drive",
+          "command": "sudo hdparm -Tt /dev/sda",
+          "explanation": "Benchmarks cached reads and buffered disk reads"
+        },
+        {
+          "type": "example",
+          "text": "show drive information and settings",
+          "command": "sudo hdparm -I /dev/sda",
+          "explanation": "Displays detailed identification info from the drive"
+        },
+        {
+          "type": "example",
+          "text": "enable write caching on a drive",
+          "command": "sudo hdparm -W 1 /dev/sda",
+          "explanation": "Turns on the write cache for improved performance"
+        },
+        {
+          "type": "example",
+          "text": "put a drive into standby mode",
+          "command": "sudo hdparm -y /dev/sda",
+          "explanation": "Sends the drive into low-power standby mode"
+        },
+        {
+          "type": "example",
+          "text": "check if a drive supports TRIM",
+          "command": "sudo hdparm -I /dev/sda | grep TRIM",
+          "explanation": "Checks TRIM support for SSD maintenance"
+        }
+      ]
+    },
+    {
+      "name": "smartctl",
+      "synopsis": "smartctl [options] device",
+      "description": "Control and monitor SMART-enabled storage devices",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check the health status of a drive",
+          "command": "sudo smartctl -H /dev/sda",
+          "explanation": "Reports the overall SMART health assessment"
+        },
+        {
+          "type": "example",
+          "text": "show all SMART information for a drive",
+          "command": "sudo smartctl -a /dev/sda",
+          "explanation": "Displays all SMART data including attributes and error logs"
+        },
+        {
+          "type": "example",
+          "text": "run a short self-test on a drive",
+          "command": "sudo smartctl -t short /dev/sda",
+          "explanation": "Initiates a quick self-test that takes a few minutes"
+        },
+        {
+          "type": "example",
+          "text": "run a long self-test on a drive",
+          "command": "sudo smartctl -t long /dev/sda",
+          "explanation": "Starts a thorough self-test that may take hours"
+        },
+        {
+          "type": "example",
+          "text": "view the results of the last self-test",
+          "command": "sudo smartctl -l selftest /dev/sda",
+          "explanation": "Shows the self-test log with results"
+        }
+      ]
+    },
+    {
+      "name": "mdadm",
+      "synopsis": "mdadm [mode] [options] [device]",
+      "description": "Manage Linux software RAID arrays",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a RAID 1 mirror array",
+          "command": "sudo mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sdb1 /dev/sdc1",
+          "explanation": "Creates a mirrored RAID array from two partitions"
+        },
+        {
+          "type": "example",
+          "text": "check the status of all RAID arrays",
+          "command": "cat /proc/mdstat",
+          "explanation": "Shows the state and progress of all MD arrays"
+        },
+        {
+          "type": "example",
+          "text": "show details of a RAID array",
+          "command": "sudo mdadm --detail /dev/md0",
+          "explanation": "Displays configuration, state, and member disks"
+        },
+        {
+          "type": "example",
+          "text": "add a spare disk to a RAID array",
+          "command": "sudo mdadm --add /dev/md0 /dev/sdd1",
+          "explanation": "Adds a hot spare or replacement disk to the array"
+        },
+        {
+          "type": "example",
+          "text": "remove a failed disk from a RAID array",
+          "command": "sudo mdadm --remove /dev/md0 /dev/sdb1",
+          "explanation": "Removes a failed member from the array"
+        }
+      ]
+    },
+    {
+      "name": "lvs",
+      "synopsis": "lvs [options] [LogicalVolume...]",
+      "description": "Display information about logical volumes",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all logical volumes",
+          "command": "sudo lvs",
+          "explanation": "Shows all logical volumes with size and volume group"
+        },
+        {
+          "type": "example",
+          "text": "show detailed logical volume information",
+          "command": "sudo lvs -a -o +devices",
+          "explanation": "Displays all LVs including hidden ones with their physical devices"
+        },
+        {
+          "type": "example",
+          "text": "show logical volumes in a specific volume group",
+          "command": "sudo lvs vg_data",
+          "explanation": "Lists only the logical volumes in the vg_data group"
+        },
+        {
+          "type": "example",
+          "text": "display LV attributes and segments",
+          "command": "sudo lvdisplay /dev/vg_data/lv_home",
+          "explanation": "Shows comprehensive details about a specific logical volume"
+        }
+      ]
+    },
+    {
+      "name": "vgs",
+      "synopsis": "vgs [options] [VolumeGroup...]",
+      "description": "Display information about volume groups",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all volume groups",
+          "command": "sudo vgs",
+          "explanation": "Shows all volume groups with free space and LV count"
+        },
+        {
+          "type": "example",
+          "text": "show detailed volume group information",
+          "command": "sudo vgdisplay",
+          "explanation": "Displays comprehensive details for all volume groups"
+        },
+        {
+          "type": "example",
+          "text": "show free space in volume groups",
+          "command": "sudo vgs -o vg_name,vg_size,vg_free",
+          "explanation": "Lists volume groups with their total and free space"
+        },
+        {
+          "type": "example",
+          "text": "create a new volume group",
+          "command": "sudo vgcreate vg_data /dev/sdb1 /dev/sdc1",
+          "explanation": "Creates a volume group spanning two physical volumes"
+        }
+      ]
+    },
+    {
+      "name": "pvs",
+      "synopsis": "pvs [options] [PhysicalVolume...]",
+      "description": "Display information about physical volumes",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all physical volumes in LVM",
+          "command": "sudo pvs",
+          "explanation": "Shows all physical volumes with their volume group and free space"
+        },
+        {
+          "type": "example",
+          "text": "show detailed physical volume information",
+          "command": "sudo pvdisplay",
+          "explanation": "Displays comprehensive details for all physical volumes"
+        },
+        {
+          "type": "example",
+          "text": "initialize a disk partition for LVM",
+          "command": "sudo pvcreate /dev/sdb1",
+          "explanation": "Creates a physical volume on the partition for use with LVM"
+        },
+        {
+          "type": "example",
+          "text": "check the allocation map of a physical volume",
+          "command": "sudo pvdisplay --maps /dev/sdb1",
+          "explanation": "Shows which extents are allocated to which logical volumes"
+        }
+      ]
+    },
+    {
+      "name": "lvcreate",
+      "synopsis": "lvcreate [options] VolumeGroup",
+      "description": "Create a logical volume in a volume group",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a logical volume with a specific size",
+          "command": "sudo lvcreate -L 50G -n lv_data vg_data",
+          "explanation": "Creates a 50GB logical volume named lv_data"
+        },
+        {
+          "type": "example",
+          "text": "create a logical volume using all free space",
+          "command": "sudo lvcreate -l 100%FREE -n lv_data vg_data",
+          "explanation": "Uses all remaining space in the volume group"
+        },
+        {
+          "type": "example",
+          "text": "create a thin-provisioned logical volume",
+          "command": "sudo lvcreate -V 100G --thinpool pool0 -n lv_thin vg_data",
+          "explanation": "Creates a thin LV that can grow up to 100GB on demand"
+        },
+        {
+          "type": "example",
+          "text": "create a snapshot of a logical volume",
+          "command": "sudo lvcreate -s -L 10G -n lv_data_snap /dev/vg_data/lv_data",
+          "explanation": "Creates a 10GB snapshot of the specified logical volume"
+        },
+        {
+          "type": "example",
+          "text": "resize a logical volume and its filesystem",
+          "command": "sudo lvresize -r -L +20G /dev/vg_data/lv_data",
+          "explanation": "Extends the logical volume by 20GB and resizes the filesystem"
+        }
+      ]
+    },
+    {
+      "name": "ncdu",
+      "synopsis": "ncdu [options] [directory]",
+      "description": "NCurses disk usage analyzer",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find what is taking up disk space interactively",
+          "command": "ncdu /",
+          "explanation": "Scans the root filesystem and shows an interactive size browser"
+        },
+        {
+          "type": "example",
+          "text": "analyze disk usage of the home directory",
+          "command": "ncdu ~",
+          "explanation": "Scans your home directory for the largest files and folders"
+        },
+        {
+          "type": "example",
+          "text": "scan excluding certain directories",
+          "command": "ncdu / --exclude /mnt --exclude /proc",
+          "explanation": "Skips the specified directories during the scan"
+        },
+        {
+          "type": "example",
+          "text": "export disk usage data to a file for later viewing",
+          "command": "ncdu -o report.json /var",
+          "explanation": "Saves the scan results to a JSON file"
+        },
+        {
+          "type": "example",
+          "text": "view a previously saved ncdu report",
+          "command": "ncdu -f report.json",
+          "explanation": "Opens a saved report without rescanning"
+        }
+      ]
+    }
+  ]
+}

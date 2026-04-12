@@ -1,0 +1,598 @@
+{
+  "category": "package_managers",
+  "commands": [
+    {
+      "name": "apt",
+      "synopsis": "apt [options] command [package...]",
+      "description": "High-level package manager for Debian-based systems",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "update the list of available packages",
+          "command": "sudo apt update",
+          "explanation": "Refreshes the package index from configured repositories"
+        },
+        {
+          "type": "example",
+          "text": "upgrade all installed packages",
+          "command": "sudo apt upgrade -y",
+          "explanation": "Installs the newest versions of all currently installed packages"
+        },
+        {
+          "type": "example",
+          "text": "install a package",
+          "command": "sudo apt install nginx",
+          "explanation": "Downloads and installs nginx and its dependencies"
+        },
+        {
+          "type": "example",
+          "text": "remove a package but keep its config files",
+          "command": "sudo apt remove nginx",
+          "explanation": "Uninstalls the package but leaves configuration files"
+        },
+        {
+          "type": "example",
+          "text": "search for a package by name or description",
+          "command": "apt search image editor",
+          "explanation": "Searches the package database for matching packages"
+        }
+      ]
+    },
+    {
+      "name": "apt-get",
+      "synopsis": "apt-get [options] command [package...]",
+      "description": "Lower-level APT package handling utility",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a package without prompts in a script",
+          "command": "sudo apt-get install -y curl",
+          "explanation": "Non-interactive install suitable for automation and Dockerfiles"
+        },
+        {
+          "type": "example",
+          "text": "completely remove a package and its config",
+          "command": "sudo apt-get purge nginx",
+          "explanation": "Removes the package along with all configuration files"
+        },
+        {
+          "type": "example",
+          "text": "clean up downloaded package files",
+          "command": "sudo apt-get clean",
+          "explanation": "Removes cached .deb files to free disk space"
+        },
+        {
+          "type": "example",
+          "text": "remove unused dependencies",
+          "command": "sudo apt-get autoremove -y",
+          "explanation": "Uninstalls packages that were installed as dependencies but are no longer needed"
+        },
+        {
+          "type": "example",
+          "text": "do a distribution upgrade",
+          "command": "sudo apt-get dist-upgrade",
+          "explanation": "Upgrades packages and handles dependency changes intelligently"
+        }
+      ]
+    },
+    {
+      "name": "dpkg",
+      "synopsis": "dpkg [options] action",
+      "description": "Low-level Debian package manager",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a local .deb package file",
+          "command": "sudo dpkg -i package.deb",
+          "explanation": "Installs a package directly from a .deb file"
+        },
+        {
+          "type": "example",
+          "text": "list all installed packages",
+          "command": "dpkg -l",
+          "explanation": "Shows every installed package with version and description"
+        },
+        {
+          "type": "example",
+          "text": "find which package owns a file",
+          "command": "dpkg -S /usr/bin/vim",
+          "explanation": "Identifies which package installed the given file"
+        },
+        {
+          "type": "example",
+          "text": "list files installed by a package",
+          "command": "dpkg -L nginx",
+          "explanation": "Shows every file installed by the nginx package"
+        }
+      ]
+    },
+    {
+      "name": "yum",
+      "synopsis": "yum [options] command [package...]",
+      "description": "Package manager for RHEL/CentOS 7 and older",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a package on CentOS or RHEL",
+          "command": "sudo yum install httpd",
+          "explanation": "Installs Apache HTTP server and its dependencies"
+        },
+        {
+          "type": "example",
+          "text": "update all packages",
+          "command": "sudo yum update -y",
+          "explanation": "Upgrades all packages to the latest available versions"
+        },
+        {
+          "type": "example",
+          "text": "search for a package",
+          "command": "yum search nodejs",
+          "explanation": "Searches package names and descriptions for matches"
+        },
+        {
+          "type": "example",
+          "text": "remove a package",
+          "command": "sudo yum remove httpd",
+          "explanation": "Uninstalls the specified package"
+        },
+        {
+          "type": "example",
+          "text": "list installed packages",
+          "command": "yum list installed",
+          "explanation": "Shows all currently installed packages"
+        }
+      ]
+    },
+    {
+      "name": "dnf",
+      "synopsis": "dnf [options] command [package...]",
+      "description": "Next-generation package manager for Fedora and RHEL 8+",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a package on Fedora",
+          "command": "sudo dnf install gcc",
+          "explanation": "Installs the GCC compiler and its dependencies"
+        },
+        {
+          "type": "example",
+          "text": "search for available packages",
+          "command": "dnf search python",
+          "explanation": "Searches repositories for packages matching the query"
+        },
+        {
+          "type": "example",
+          "text": "show info about a package",
+          "command": "dnf info nginx",
+          "explanation": "Displays details like version, size, and description"
+        },
+        {
+          "type": "example",
+          "text": "remove a package and its unused dependencies",
+          "command": "sudo dnf autoremove nginx",
+          "explanation": "Removes the package and any orphaned dependencies"
+        },
+        {
+          "type": "example",
+          "text": "list enabled repositories",
+          "command": "dnf repolist",
+          "explanation": "Shows all currently enabled package repositories"
+        }
+      ]
+    },
+    {
+      "name": "pacman",
+      "synopsis": "pacman [options] [targets...]",
+      "description": "Package manager for Arch Linux",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a package on Arch Linux",
+          "command": "sudo pacman -S firefox",
+          "explanation": "Syncs and installs the package from the repositories"
+        },
+        {
+          "type": "example",
+          "text": "update all installed packages",
+          "command": "sudo pacman -Syu",
+          "explanation": "Synchronizes databases and upgrades all packages"
+        },
+        {
+          "type": "example",
+          "text": "search for a package",
+          "command": "pacman -Ss text editor",
+          "explanation": "Searches the sync databases for matching packages"
+        },
+        {
+          "type": "example",
+          "text": "remove a package and its unused dependencies",
+          "command": "sudo pacman -Rns firefox",
+          "explanation": "Removes the package, its config, and orphaned dependencies"
+        },
+        {
+          "type": "example",
+          "text": "list all explicitly installed packages",
+          "command": "pacman -Qe",
+          "explanation": "Shows packages that were explicitly installed by the user"
+        }
+      ]
+    },
+    {
+      "name": "brew",
+      "synopsis": "brew [command] [options] [formula|cask...]",
+      "description": "Package manager for macOS and Linux (Homebrew)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a command-line tool on macOS",
+          "command": "brew install wget",
+          "explanation": "Downloads and installs the formula"
+        },
+        {
+          "type": "example",
+          "text": "install a macOS GUI application",
+          "command": "brew install --cask firefox",
+          "explanation": "Installs a desktop application as a cask"
+        },
+        {
+          "type": "example",
+          "text": "update Homebrew and all installed packages",
+          "command": "brew update && brew upgrade",
+          "explanation": "Fetches the latest formulae and upgrades all packages"
+        },
+        {
+          "type": "example",
+          "text": "search for a package in Homebrew",
+          "command": "brew search node",
+          "explanation": "Searches for formulae and casks matching the query"
+        },
+        {
+          "type": "example",
+          "text": "uninstall a package and clean up",
+          "command": "brew uninstall wget && brew cleanup",
+          "explanation": "Removes the formula and deletes old cached downloads"
+        }
+      ]
+    },
+    {
+      "name": "snap",
+      "synopsis": "snap [command] [options] [snap...]",
+      "description": "Package manager for snap packages on Ubuntu/Linux",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a snap package",
+          "command": "sudo snap install vlc",
+          "explanation": "Installs the snap from the Snap Store"
+        },
+        {
+          "type": "example",
+          "text": "install a classic snap without confinement",
+          "command": "sudo snap install code --classic",
+          "explanation": "Installs VS Code in classic mode with full system access"
+        },
+        {
+          "type": "example",
+          "text": "list installed snaps",
+          "command": "snap list",
+          "explanation": "Shows all installed snap packages and their versions"
+        },
+        {
+          "type": "example",
+          "text": "update all snap packages",
+          "command": "sudo snap refresh",
+          "explanation": "Updates all installed snaps to their latest versions"
+        }
+      ]
+    },
+    {
+      "name": "flatpak",
+      "synopsis": "flatpak [command] [options] [app...]",
+      "description": "Application distribution framework for Linux",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a Flatpak application",
+          "command": "flatpak install flathub org.gimp.GIMP",
+          "explanation": "Installs GIMP from the Flathub repository"
+        },
+        {
+          "type": "example",
+          "text": "run a Flatpak application",
+          "command": "flatpak run org.gimp.GIMP",
+          "explanation": "Launches the installed Flatpak application"
+        },
+        {
+          "type": "example",
+          "text": "list installed Flatpak apps",
+          "command": "flatpak list",
+          "explanation": "Shows all installed Flatpak applications and runtimes"
+        },
+        {
+          "type": "example",
+          "text": "update all Flatpak applications",
+          "command": "flatpak update",
+          "explanation": "Checks for and installs updates for all Flatpak apps"
+        }
+      ]
+    },
+    {
+      "name": "pip",
+      "synopsis": "pip [command] [options] [package...]",
+      "description": "Package installer for Python",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a Python package",
+          "command": "pip install requests",
+          "explanation": "Downloads and installs the package from PyPI"
+        },
+        {
+          "type": "example",
+          "text": "install packages from a requirements file",
+          "command": "pip install -r requirements.txt",
+          "explanation": "Installs all packages listed in the requirements file"
+        },
+        {
+          "type": "example",
+          "text": "upgrade a package to the latest version",
+          "command": "pip install --upgrade pip",
+          "explanation": "Updates the specified package to the newest version"
+        },
+        {
+          "type": "example",
+          "text": "list all installed Python packages",
+          "command": "pip list",
+          "explanation": "Shows all installed packages and their versions"
+        },
+        {
+          "type": "example",
+          "text": "freeze installed packages into a requirements file",
+          "command": "pip freeze > requirements.txt",
+          "explanation": "Exports exact package versions for reproducibility"
+        }
+      ]
+    },
+    {
+      "name": "pip3",
+      "synopsis": "pip3 [command] [options] [package...]",
+      "description": "Package installer specifically for Python 3",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a package for Python 3 specifically",
+          "command": "pip3 install flask",
+          "explanation": "Installs the package into the Python 3 environment"
+        },
+        {
+          "type": "example",
+          "text": "install a package for the current user only",
+          "command": "pip3 install --user numpy",
+          "explanation": "Installs to the user directory without needing sudo"
+        },
+        {
+          "type": "example",
+          "text": "show details about an installed package",
+          "command": "pip3 show flask",
+          "explanation": "Displays version, location, dependencies, and metadata"
+        },
+        {
+          "type": "example",
+          "text": "uninstall a Python package",
+          "command": "pip3 uninstall flask",
+          "explanation": "Removes the specified package"
+        }
+      ]
+    },
+    {
+      "name": "npm",
+      "synopsis": "npm [command] [options] [package...]",
+      "description": "Package manager for Node.js",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install all project dependencies",
+          "command": "npm install",
+          "explanation": "Reads package.json and installs all listed dependencies"
+        },
+        {
+          "type": "example",
+          "text": "add a new package to the project",
+          "command": "npm install express",
+          "explanation": "Installs express and adds it to package.json"
+        },
+        {
+          "type": "example",
+          "text": "install a package as a dev dependency",
+          "command": "npm install --save-dev jest",
+          "explanation": "Adds jest to devDependencies in package.json"
+        },
+        {
+          "type": "example",
+          "text": "install a package globally",
+          "command": "npm install -g typescript",
+          "explanation": "Installs the package system-wide for CLI usage"
+        },
+        {
+          "type": "example",
+          "text": "run a script defined in package.json",
+          "command": "npm run build",
+          "explanation": "Executes the build script from the scripts section"
+        }
+      ]
+    },
+    {
+      "name": "npx",
+      "synopsis": "npx [options] command [args...]",
+      "description": "Execute npm package binaries without installing globally",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "run a package without installing it",
+          "command": "npx create-react-app myapp",
+          "explanation": "Downloads and runs create-react-app temporarily"
+        },
+        {
+          "type": "example",
+          "text": "run a specific version of a package",
+          "command": "npx node@18 -e \"console.log(process.version)\"",
+          "explanation": "Uses a specific Node.js version for a one-off command"
+        },
+        {
+          "type": "example",
+          "text": "run a locally installed binary",
+          "command": "npx jest --watch",
+          "explanation": "Runs the project-local jest binary"
+        },
+        {
+          "type": "example",
+          "text": "execute a GitHub gist as a script",
+          "command": "npx https://gist.github.com/user/abc123",
+          "explanation": "Downloads and runs the gist as a Node.js script"
+        }
+      ]
+    },
+    {
+      "name": "yarn",
+      "synopsis": "yarn [command] [options] [package...]",
+      "description": "Fast, reliable, and secure dependency management for JavaScript",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install all project dependencies with Yarn",
+          "command": "yarn install",
+          "explanation": "Installs dependencies from yarn.lock for deterministic builds"
+        },
+        {
+          "type": "example",
+          "text": "add a package to the project",
+          "command": "yarn add lodash",
+          "explanation": "Installs lodash and adds it to package.json"
+        },
+        {
+          "type": "example",
+          "text": "add a dev dependency",
+          "command": "yarn add --dev eslint",
+          "explanation": "Adds eslint as a development dependency"
+        },
+        {
+          "type": "example",
+          "text": "remove a package",
+          "command": "yarn remove lodash",
+          "explanation": "Uninstalls the package and updates package.json"
+        },
+        {
+          "type": "example",
+          "text": "upgrade all packages to their latest versions",
+          "command": "yarn upgrade --latest",
+          "explanation": "Updates all dependencies to the newest available versions"
+        }
+      ]
+    },
+    {
+      "name": "gem",
+      "synopsis": "gem [command] [options] [gemname...]",
+      "description": "Package manager for Ruby",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a Ruby gem",
+          "command": "gem install rails",
+          "explanation": "Downloads and installs the Rails gem"
+        },
+        {
+          "type": "example",
+          "text": "list installed gems",
+          "command": "gem list",
+          "explanation": "Shows all locally installed gems and their versions"
+        },
+        {
+          "type": "example",
+          "text": "update a gem to the latest version",
+          "command": "gem update bundler",
+          "explanation": "Upgrades bundler to the newest available version"
+        },
+        {
+          "type": "example",
+          "text": "uninstall a gem",
+          "command": "gem uninstall nokogiri",
+          "explanation": "Removes the specified gem from the system"
+        }
+      ]
+    },
+    {
+      "name": "cargo",
+      "synopsis": "cargo [command] [options]",
+      "description": "Package manager and build system for Rust",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a new Rust project",
+          "command": "cargo new myproject",
+          "explanation": "Scaffolds a new Rust binary project with Cargo.toml"
+        },
+        {
+          "type": "example",
+          "text": "build the Rust project",
+          "command": "cargo build --release",
+          "explanation": "Compiles the project with optimizations enabled"
+        },
+        {
+          "type": "example",
+          "text": "run the Rust project",
+          "command": "cargo run",
+          "explanation": "Compiles and immediately executes the binary"
+        },
+        {
+          "type": "example",
+          "text": "install a Rust binary crate globally",
+          "command": "cargo install ripgrep",
+          "explanation": "Compiles and installs the binary to ~/.cargo/bin"
+        },
+        {
+          "type": "example",
+          "text": "run tests for the project",
+          "command": "cargo test",
+          "explanation": "Compiles and runs all tests in the project"
+        }
+      ]
+    },
+    {
+      "name": "go install",
+      "synopsis": "go install [packages]",
+      "description": "Compile and install Go packages and binaries",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "install a Go tool globally",
+          "command": "go install golang.org/x/tools/gopls@latest",
+          "explanation": "Downloads, compiles, and installs the binary to GOPATH/bin"
+        },
+        {
+          "type": "example",
+          "text": "install a specific version of a Go tool",
+          "command": "go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.0",
+          "explanation": "Installs a pinned version of the linter"
+        },
+        {
+          "type": "example",
+          "text": "install all dependencies for a Go module",
+          "command": "go mod download",
+          "explanation": "Downloads all module dependencies to the local cache"
+        },
+        {
+          "type": "example",
+          "text": "add a dependency to a Go project",
+          "command": "go get github.com/gin-gonic/gin",
+          "explanation": "Adds the package as a dependency and downloads it"
+        },
+        {
+          "type": "example",
+          "text": "tidy up Go module dependencies",
+          "command": "go mod tidy",
+          "explanation": "Removes unused dependencies and adds missing ones"
+        }
+      ]
+    }
+  ]
+}

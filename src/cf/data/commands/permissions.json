@@ -1,0 +1,728 @@
+{
+  "category": "permissions",
+  "commands": [
+    {
+      "name": "chmod",
+      "synopsis": "chmod [options] mode file [...]",
+      "description": "Change file access permissions",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "make a script executable",
+          "command": "chmod +x script.sh",
+          "explanation": "Adds execute permission for owner, group, and others"
+        },
+        {
+          "type": "example",
+          "text": "set read and write for owner only, no access for anyone else",
+          "command": "chmod 600 secret.key",
+          "explanation": "Sets permissions to rw------- protecting the file from other users"
+        },
+        {
+          "type": "example",
+          "text": "make a directory and its contents readable by everyone",
+          "command": "chmod -R a+r /var/www/html",
+          "explanation": "Recursively adds read permission for all users on every file and directory"
+        },
+        {
+          "type": "example",
+          "text": "remove write permission for group and others",
+          "command": "chmod go-w important-file.txt",
+          "explanation": "Strips write access from group and other users"
+        },
+        {
+          "type": "example",
+          "text": "set standard web directory permissions",
+          "command": "chmod 755 /var/www/html",
+          "explanation": "Owner can read/write/execute, everyone else can read and execute"
+        },
+        {
+          "type": "example",
+          "text": "set the setuid bit on a program",
+          "command": "chmod u+s /usr/local/bin/myapp",
+          "explanation": "Allows the program to run with the file owner's privileges"
+        }
+      ]
+    },
+    {
+      "name": "chown",
+      "synopsis": "chown [options] owner[:group] file [...]",
+      "description": "Change file owner and group",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "change the owner of a file",
+          "command": "sudo chown alice report.pdf",
+          "explanation": "Sets alice as the owner of report.pdf"
+        },
+        {
+          "type": "example",
+          "text": "change owner and group of a file at once",
+          "command": "sudo chown www-data:www-data /var/www/index.html",
+          "explanation": "Sets both owner and group to www-data"
+        },
+        {
+          "type": "example",
+          "text": "recursively change ownership of a directory tree",
+          "command": "sudo chown -R deploy:deploy /opt/app",
+          "explanation": "Changes owner and group of /opt/app and everything inside it"
+        },
+        {
+          "type": "example",
+          "text": "change only the group of a file",
+          "command": "sudo chown :developers project.conf",
+          "explanation": "Changes the group to developers without modifying the owner"
+        },
+        {
+          "type": "example",
+          "text": "change ownership of a symbolic link itself",
+          "command": "sudo chown -h alice /usr/local/bin/mylink",
+          "explanation": "Changes the owner of the symlink rather than the file it points to"
+        }
+      ]
+    },
+    {
+      "name": "chgrp",
+      "synopsis": "chgrp [options] group file [...]",
+      "description": "Change the group ownership of a file",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "change the group of a file",
+          "command": "chgrp developers project.conf",
+          "explanation": "Sets the group of project.conf to developers"
+        },
+        {
+          "type": "example",
+          "text": "recursively change group for an entire directory",
+          "command": "chgrp -R staff /shared/docs",
+          "explanation": "Changes the group to staff for all files under /shared/docs"
+        },
+        {
+          "type": "example",
+          "text": "change group of a symlink without following it",
+          "command": "chgrp -h webteam /var/www/current",
+          "explanation": "Changes the group of the symbolic link itself"
+        },
+        {
+          "type": "example",
+          "text": "change group and show what was modified",
+          "command": "chgrp -v marketing *.pptx",
+          "explanation": "Changes the group of all PowerPoint files and reports each change"
+        }
+      ]
+    },
+    {
+      "name": "umask",
+      "synopsis": "umask [-S] [mask]",
+      "description": "Set the default permission mask for newly created files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check the current umask value",
+          "command": "umask",
+          "explanation": "Displays the current permission mask in octal notation"
+        },
+        {
+          "type": "example",
+          "text": "set a restrictive umask so new files are private",
+          "command": "umask 077",
+          "explanation": "New files will be accessible only by the owner (no group/other access)"
+        },
+        {
+          "type": "example",
+          "text": "show the current umask in symbolic format",
+          "command": "umask -S",
+          "explanation": "Displays the effective permissions for new files in human-readable form"
+        },
+        {
+          "type": "example",
+          "text": "set umask so new files are readable by group members",
+          "command": "umask 027",
+          "explanation": "Owner gets full access, group gets read/execute, others get nothing"
+        },
+        {
+          "type": "example",
+          "text": "set a permissive umask for shared development work",
+          "command": "umask 002",
+          "explanation": "New files will be writable by the group, read-only for others"
+        }
+      ]
+    },
+    {
+      "name": "sudo",
+      "synopsis": "sudo [options] command [args]",
+      "description": "Execute a command as another user, typically root",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "run a command as root",
+          "command": "sudo apt update",
+          "explanation": "Executes apt update with superuser privileges"
+        },
+        {
+          "type": "example",
+          "text": "run a command as a different user",
+          "command": "sudo -u postgres psql",
+          "explanation": "Opens PostgreSQL shell as the postgres user"
+        },
+        {
+          "type": "example",
+          "text": "open a root shell",
+          "command": "sudo -i",
+          "explanation": "Starts an interactive login shell as root"
+        },
+        {
+          "type": "example",
+          "text": "edit a system file safely with sudo",
+          "command": "sudo -e /etc/hosts",
+          "explanation": "Opens the file in your editor with root write access using sudoedit"
+        },
+        {
+          "type": "example",
+          "text": "check what sudo commands the current user is allowed to run",
+          "command": "sudo -l",
+          "explanation": "Lists the allowed and forbidden commands for the invoking user"
+        },
+        {
+          "type": "example",
+          "text": "run a command preserving the user's environment variables",
+          "command": "sudo -E ./deploy.sh",
+          "explanation": "Executes the script as root while keeping the current environment"
+        }
+      ]
+    },
+    {
+      "name": "su",
+      "synopsis": "su [options] [user]",
+      "description": "Switch to another user account",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "switch to the root user",
+          "command": "su -",
+          "explanation": "Opens a login shell as root with root's environment"
+        },
+        {
+          "type": "example",
+          "text": "switch to another user account",
+          "command": "su - alice",
+          "explanation": "Switches to alice's account with a full login shell"
+        },
+        {
+          "type": "example",
+          "text": "run a single command as another user",
+          "command": "su -c 'whoami' alice",
+          "explanation": "Executes whoami as alice without starting an interactive shell"
+        },
+        {
+          "type": "example",
+          "text": "switch user preserving the current environment",
+          "command": "su alice",
+          "explanation": "Switches to alice but keeps the current working directory and environment"
+        }
+      ]
+    },
+    {
+      "name": "visudo",
+      "synopsis": "visudo [options]",
+      "description": "Safely edit the sudoers file with syntax checking",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "edit the sudoers file safely",
+          "command": "sudo visudo",
+          "explanation": "Opens the sudoers file in an editor and validates syntax before saving"
+        },
+        {
+          "type": "example",
+          "text": "edit a specific sudoers drop-in file",
+          "command": "sudo visudo -f /etc/sudoers.d/deploy",
+          "explanation": "Edits a separate sudoers file fragment with validation"
+        },
+        {
+          "type": "example",
+          "text": "check the sudoers file for syntax errors without editing",
+          "command": "sudo visudo -c",
+          "explanation": "Validates the sudoers file and reports any parse errors"
+        },
+        {
+          "type": "example",
+          "text": "check a specific sudoers file for syntax errors",
+          "command": "sudo visudo -c -f /etc/sudoers.d/custom",
+          "explanation": "Validates only the specified sudoers fragment file"
+        }
+      ]
+    },
+    {
+      "name": "setfacl",
+      "synopsis": "setfacl [options] [{-m|-x} acl_spec] file [...]",
+      "description": "Set file access control lists for fine-grained permissions",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "grant a specific user read access to a file",
+          "command": "setfacl -m u:bob:r report.csv",
+          "explanation": "Adds an ACL entry giving user bob read permission on report.csv"
+        },
+        {
+          "type": "example",
+          "text": "give a group read and write access to a directory",
+          "command": "setfacl -m g:devteam:rw /shared/project",
+          "explanation": "Adds an ACL entry granting the devteam group read/write access"
+        },
+        {
+          "type": "example",
+          "text": "set default ACL so new files inherit permissions",
+          "command": "setfacl -d -m g:devteam:rw /shared/project",
+          "explanation": "New files created in the directory will automatically have devteam read/write access"
+        },
+        {
+          "type": "example",
+          "text": "remove all ACL entries from a file",
+          "command": "setfacl -b document.pdf",
+          "explanation": "Strips all extended ACL entries, leaving only standard permissions"
+        },
+        {
+          "type": "example",
+          "text": "recursively apply ACL permissions to a directory tree",
+          "command": "setfacl -R -m u:alice:rx /opt/shared",
+          "explanation": "Grants alice read and execute access to all files in the directory tree"
+        }
+      ]
+    },
+    {
+      "name": "getfacl",
+      "synopsis": "getfacl [options] file [...]",
+      "description": "Display file access control lists",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "view the ACL permissions on a file",
+          "command": "getfacl report.csv",
+          "explanation": "Shows the full access control list including owner, group, and extended ACLs"
+        },
+        {
+          "type": "example",
+          "text": "check ACLs on multiple files at once",
+          "command": "getfacl /shared/project/*",
+          "explanation": "Displays ACLs for every file in the project directory"
+        },
+        {
+          "type": "example",
+          "text": "show only the effective permissions in the ACL",
+          "command": "getfacl -e /shared/data",
+          "explanation": "Displays the ACL with effective rights mask applied"
+        },
+        {
+          "type": "example",
+          "text": "recursively show ACLs for a directory tree",
+          "command": "getfacl -R /shared/project",
+          "explanation": "Lists ACLs for every file and subdirectory under the project folder"
+        }
+      ]
+    },
+    {
+      "name": "chattr",
+      "synopsis": "chattr [options] [+-=attribute] file [...]",
+      "description": "Change file attributes on a Linux file system",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "make a file immutable so it cannot be modified or deleted",
+          "command": "sudo chattr +i /etc/resolv.conf",
+          "explanation": "Sets the immutable flag preventing any changes including by root"
+        },
+        {
+          "type": "example",
+          "text": "make a file append-only for logging",
+          "command": "sudo chattr +a /var/log/audit.log",
+          "explanation": "Only allows appending to the file, preventing modification of existing content"
+        },
+        {
+          "type": "example",
+          "text": "remove the immutable attribute from a file",
+          "command": "sudo chattr -i /etc/resolv.conf",
+          "explanation": "Clears the immutable flag so the file can be modified again"
+        },
+        {
+          "type": "example",
+          "text": "recursively set the no-dump attribute on a directory",
+          "command": "sudo chattr -R +d /tmp/cache",
+          "explanation": "Marks all files in the cache directory to be excluded from dumps"
+        }
+      ]
+    },
+    {
+      "name": "lsattr",
+      "synopsis": "lsattr [options] [file ...]",
+      "description": "List file attributes on a Linux file system",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the special attributes of a file",
+          "command": "lsattr /etc/resolv.conf",
+          "explanation": "Displays ext2/ext3/ext4 attributes like immutable or append-only"
+        },
+        {
+          "type": "example",
+          "text": "list attributes for all files in a directory",
+          "command": "lsattr /etc/",
+          "explanation": "Shows the attributes for every file in the /etc directory"
+        },
+        {
+          "type": "example",
+          "text": "recursively list attributes for a directory tree",
+          "command": "lsattr -R /var/www",
+          "explanation": "Shows attributes for all files and subdirectories recursively"
+        },
+        {
+          "type": "example",
+          "text": "show attributes of directories themselves rather than their contents",
+          "command": "lsattr -d /var/log",
+          "explanation": "Displays attributes of the directory entry itself"
+        }
+      ]
+    },
+    {
+      "name": "passwd",
+      "synopsis": "passwd [options] [username]",
+      "description": "Change a user's password",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "change your own password",
+          "command": "passwd",
+          "explanation": "Prompts for the current password then asks for a new one"
+        },
+        {
+          "type": "example",
+          "text": "change another user's password as root",
+          "command": "sudo passwd alice",
+          "explanation": "Sets a new password for alice without requiring the old one"
+        },
+        {
+          "type": "example",
+          "text": "lock a user account to prevent login",
+          "command": "sudo passwd -l bob",
+          "explanation": "Disables password authentication for bob's account"
+        },
+        {
+          "type": "example",
+          "text": "unlock a previously locked user account",
+          "command": "sudo passwd -u bob",
+          "explanation": "Re-enables password authentication for bob's account"
+        },
+        {
+          "type": "example",
+          "text": "force a user to change their password at next login",
+          "command": "sudo passwd -e alice",
+          "explanation": "Expires alice's password so she must set a new one on next login"
+        },
+        {
+          "type": "example",
+          "text": "check the password status of a user account",
+          "command": "sudo passwd -S alice",
+          "explanation": "Shows whether the account is locked, the last change date, and expiry info"
+        }
+      ]
+    },
+    {
+      "name": "useradd",
+      "synopsis": "useradd [options] username",
+      "description": "Create a new user account",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a new user with a home directory",
+          "command": "sudo useradd -m -s /bin/bash alice",
+          "explanation": "Creates user alice with a home directory and bash as the default shell"
+        },
+        {
+          "type": "example",
+          "text": "create a system user for running a service",
+          "command": "sudo useradd -r -s /usr/sbin/nologin appservice",
+          "explanation": "Creates a system account that cannot log in interactively"
+        },
+        {
+          "type": "example",
+          "text": "create a user and add them to supplementary groups",
+          "command": "sudo useradd -m -G sudo,docker alice",
+          "explanation": "Creates alice with membership in the sudo and docker groups"
+        },
+        {
+          "type": "example",
+          "text": "create a user with a specific home directory and UID",
+          "command": "sudo useradd -m -d /opt/deploy -u 1500 deploy",
+          "explanation": "Creates the deploy user with a custom home directory and user ID"
+        },
+        {
+          "type": "example",
+          "text": "create a user with an expiration date",
+          "command": "sudo useradd -m -e 2026-12-31 contractor",
+          "explanation": "Creates a user account that automatically expires at year end"
+        }
+      ]
+    },
+    {
+      "name": "userdel",
+      "synopsis": "userdel [options] username",
+      "description": "Delete a user account",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "delete a user account",
+          "command": "sudo userdel bob",
+          "explanation": "Removes the user bob but leaves their home directory intact"
+        },
+        {
+          "type": "example",
+          "text": "delete a user and remove their home directory",
+          "command": "sudo userdel -r bob",
+          "explanation": "Removes bob's account along with their home directory and mail spool"
+        },
+        {
+          "type": "example",
+          "text": "force delete a user even if they are currently logged in",
+          "command": "sudo userdel -f bob",
+          "explanation": "Forces removal of the account even if the user has active processes"
+        },
+        {
+          "type": "example",
+          "text": "delete a user and clean up all their files",
+          "command": "sudo userdel -rf bob",
+          "explanation": "Forcibly removes the user, their home directory, and their mail spool"
+        }
+      ]
+    },
+    {
+      "name": "usermod",
+      "synopsis": "usermod [options] username",
+      "description": "Modify an existing user account",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "add a user to an additional group",
+          "command": "sudo usermod -aG docker alice",
+          "explanation": "Appends alice to the docker group without removing other group memberships"
+        },
+        {
+          "type": "example",
+          "text": "change a user's login shell",
+          "command": "sudo usermod -s /bin/zsh alice",
+          "explanation": "Sets zsh as alice's default login shell"
+        },
+        {
+          "type": "example",
+          "text": "lock a user account to prevent login",
+          "command": "sudo usermod -L bob",
+          "explanation": "Locks bob's password so the account cannot be used for login"
+        },
+        {
+          "type": "example",
+          "text": "change a user's home directory and move their files",
+          "command": "sudo usermod -d /new/home/alice -m alice",
+          "explanation": "Moves alice's home directory and its contents to the new location"
+        },
+        {
+          "type": "example",
+          "text": "rename a user account",
+          "command": "sudo usermod -l newname oldname",
+          "explanation": "Changes the login name from oldname to newname"
+        }
+      ]
+    },
+    {
+      "name": "groupadd",
+      "synopsis": "groupadd [options] group",
+      "description": "Create a new group",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a new group",
+          "command": "sudo groupadd developers",
+          "explanation": "Creates a new group named developers with an auto-assigned GID"
+        },
+        {
+          "type": "example",
+          "text": "create a group with a specific GID",
+          "command": "sudo groupadd -g 1500 webteam",
+          "explanation": "Creates the webteam group with GID 1500"
+        },
+        {
+          "type": "example",
+          "text": "create a system group for a service",
+          "command": "sudo groupadd -r appservice",
+          "explanation": "Creates a system group with a GID in the system range"
+        },
+        {
+          "type": "example",
+          "text": "force create a group even if the name already exists as a user",
+          "command": "sudo groupadd -f shared",
+          "explanation": "Creates the group or exits successfully if it already exists"
+        }
+      ]
+    },
+    {
+      "name": "groupdel",
+      "synopsis": "groupdel [options] group",
+      "description": "Delete a group",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "delete a group",
+          "command": "sudo groupdel oldteam",
+          "explanation": "Removes the group oldteam from the system"
+        },
+        {
+          "type": "example",
+          "text": "force delete a group even if users have it as a supplementary group",
+          "command": "sudo groupdel -f oldteam",
+          "explanation": "Forcibly removes the group regardless of existing members"
+        },
+        {
+          "type": "example",
+          "text": "check if a group exists before deleting it",
+          "command": "getent group oldteam && sudo groupdel oldteam",
+          "explanation": "Only attempts deletion if the group exists, avoiding errors"
+        },
+        {
+          "type": "example",
+          "text": "remove a group and verify it was deleted",
+          "command": "sudo groupdel testgroup && grep testgroup /etc/group",
+          "explanation": "Deletes the group and confirms it no longer appears in /etc/group"
+        }
+      ]
+    },
+    {
+      "name": "groupmod",
+      "synopsis": "groupmod [options] group",
+      "description": "Modify a group definition",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "rename a group",
+          "command": "sudo groupmod -n newname oldname",
+          "explanation": "Changes the group name from oldname to newname"
+        },
+        {
+          "type": "example",
+          "text": "change a group's GID",
+          "command": "sudo groupmod -g 2000 developers",
+          "explanation": "Changes the GID of the developers group to 2000"
+        },
+        {
+          "type": "example",
+          "text": "set a password on a group",
+          "command": "sudo groupmod -p $(openssl passwd -6 secretpass) restricted",
+          "explanation": "Sets an encrypted password that non-members must enter to use newgrp"
+        },
+        {
+          "type": "example",
+          "text": "rename a group and change its GID at the same time",
+          "command": "sudo groupmod -n engineering -g 3000 devops",
+          "explanation": "Renames devops to engineering and changes its GID to 3000"
+        }
+      ]
+    },
+    {
+      "name": "newgrp",
+      "synopsis": "newgrp [-] [group]",
+      "description": "Log in to a new group, changing the current group ID",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "switch your active group for the current session",
+          "command": "newgrp developers",
+          "explanation": "Changes the effective group to developers so new files belong to that group"
+        },
+        {
+          "type": "example",
+          "text": "switch to a group with a fresh login environment",
+          "command": "newgrp - docker",
+          "explanation": "Changes to the docker group and reinitializes the shell environment"
+        },
+        {
+          "type": "example",
+          "text": "temporarily work with docker group permissions after being added",
+          "command": "newgrp docker",
+          "explanation": "Activates docker group membership without needing to log out and back in"
+        },
+        {
+          "type": "example",
+          "text": "reset to your default primary group",
+          "command": "newgrp",
+          "explanation": "Returns your effective group back to your primary login group"
+        }
+      ]
+    },
+    {
+      "name": "chpasswd",
+      "synopsis": "chpasswd [options]",
+      "description": "Update passwords in batch from standard input",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "set passwords for multiple users at once",
+          "command": "echo -e 'alice:newpass1\\nbob:newpass2' | sudo chpasswd",
+          "explanation": "Updates passwords for alice and bob in one batch operation"
+        },
+        {
+          "type": "example",
+          "text": "set a password from a file containing user:password pairs",
+          "command": "sudo chpasswd < /root/passwords.txt",
+          "explanation": "Reads username:password pairs from the file and applies them"
+        },
+        {
+          "type": "example",
+          "text": "set a password using an encrypted hash",
+          "command": "echo 'alice:$6$rounds=5000$...' | sudo chpasswd -e",
+          "explanation": "Sets the password from a pre-encrypted hash rather than plaintext"
+        },
+        {
+          "type": "example",
+          "text": "bulk reset passwords using SHA-512 encryption",
+          "command": "echo 'bob:temppass123' | sudo chpasswd -c SHA512",
+          "explanation": "Sets bob's password and encrypts it with SHA-512"
+        }
+      ]
+    },
+    {
+      "name": "adduser",
+      "synopsis": "adduser [options] user",
+      "description": "Add a user to the system interactively with sensible defaults",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a new user interactively with all prompts",
+          "command": "sudo adduser alice",
+          "explanation": "Walks through creating a user with home directory, password, and user info"
+        },
+        {
+          "type": "example",
+          "text": "add an existing user to a group",
+          "command": "sudo adduser alice docker",
+          "explanation": "Adds alice to the docker group"
+        },
+        {
+          "type": "example",
+          "text": "create a system user for running a service",
+          "command": "sudo adduser --system --no-create-home appservice",
+          "explanation": "Creates a system user without a home directory or login shell"
+        },
+        {
+          "type": "example",
+          "text": "create a user with a specific home directory",
+          "command": "sudo adduser --home /opt/deploy deploy",
+          "explanation": "Creates the deploy user with /opt/deploy as the home directory"
+        },
+        {
+          "type": "example",
+          "text": "create a user non-interactively for scripting",
+          "command": "sudo adduser --disabled-password --gecos '' ci-runner",
+          "explanation": "Creates user ci-runner with no password and no interactive prompts"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,511 @@
+{
+  "category": "search",
+  "commands": [
+    {
+      "name": "find",
+      "synopsis": "find [path...] [expression]",
+      "description": "Search for files in a directory hierarchy",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find all files with a specific extension",
+          "command": "find . -name '*.py'",
+          "explanation": "Recursively finds all Python files starting from the current directory"
+        },
+        {
+          "type": "example",
+          "text": "find files modified in the last 24 hours",
+          "command": "find /var/log -mtime -1",
+          "explanation": "Finds files under /var/log that were modified within the last day"
+        },
+        {
+          "type": "example",
+          "text": "find and delete all temporary files",
+          "command": "find . -name '*.tmp' -delete",
+          "explanation": "Finds and removes all .tmp files recursively"
+        },
+        {
+          "type": "example",
+          "text": "find files larger than a certain size",
+          "command": "find / -size +100M -type f",
+          "explanation": "Finds regular files larger than 100 megabytes"
+        },
+        {
+          "type": "example",
+          "text": "find empty directories",
+          "command": "find . -type d -empty",
+          "explanation": "Lists all directories that contain no files or subdirectories"
+        },
+        {
+          "type": "example",
+          "text": "find files and execute a command on each one",
+          "command": "find . -name '*.log' -exec gzip {} \\;",
+          "explanation": "Compresses every .log file found"
+        }
+      ]
+    },
+    {
+      "name": "locate",
+      "synopsis": "locate [options] pattern",
+      "description": "Find files by name using a pre-built database",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "quickly find a file by name anywhere on the system",
+          "command": "locate myconfig.yaml",
+          "explanation": "Searches the file database for paths matching 'myconfig.yaml'"
+        },
+        {
+          "type": "example",
+          "text": "find files matching a pattern ignoring case",
+          "command": "locate -i readme",
+          "explanation": "Case-insensitive search for any file with 'readme' in its path"
+        },
+        {
+          "type": "example",
+          "text": "update the file database before searching",
+          "command": "sudo updatedb && locate report.pdf",
+          "explanation": "Refreshes the database then searches for report.pdf"
+        },
+        {
+          "type": "example",
+          "text": "limit the number of results returned",
+          "command": "locate -n 10 '*.conf'",
+          "explanation": "Returns at most 10 matching results"
+        },
+        {
+          "type": "example",
+          "text": "count how many files match a pattern",
+          "command": "locate -c '*.jpg'",
+          "explanation": "Prints the number of matching entries instead of listing them"
+        }
+      ]
+    },
+    {
+      "name": "which",
+      "synopsis": "which [options] command",
+      "description": "Locate the executable for a command in your PATH",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find out where a command is installed",
+          "command": "which python3",
+          "explanation": "Shows the full path of the python3 executable"
+        },
+        {
+          "type": "example",
+          "text": "check if a command exists on the system",
+          "command": "which docker && echo 'Docker is installed'",
+          "explanation": "Tests whether docker is available in PATH"
+        },
+        {
+          "type": "example",
+          "text": "find all locations of a command in PATH",
+          "command": "which -a python",
+          "explanation": "Lists every matching executable found in all PATH directories"
+        },
+        {
+          "type": "example",
+          "text": "verify which version of a tool you are running",
+          "command": "which node",
+          "explanation": "Shows the path to confirm you are using the intended installation"
+        }
+      ]
+    },
+    {
+      "name": "whereis",
+      "synopsis": "whereis [options] command",
+      "description": "Locate the binary, source, and manual page for a command",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find the binary, source, and man page for a command",
+          "command": "whereis gcc",
+          "explanation": "Shows the paths to the gcc binary, source, and man page if available"
+        },
+        {
+          "type": "example",
+          "text": "find only the binary location of a command",
+          "command": "whereis -b ls",
+          "explanation": "Restricts output to just the binary path"
+        },
+        {
+          "type": "example",
+          "text": "find only the man page location",
+          "command": "whereis -m bash",
+          "explanation": "Shows only where the manual pages for bash are located"
+        },
+        {
+          "type": "example",
+          "text": "find all known paths for a program",
+          "command": "whereis python",
+          "explanation": "Lists binary, source, and manual page paths for python"
+        }
+      ]
+    },
+    {
+      "name": "whatis",
+      "synopsis": "whatis command",
+      "description": "Display one-line manual page descriptions",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "get a quick description of what a command does",
+          "command": "whatis curl",
+          "explanation": "Shows the brief description from curl's man page"
+        },
+        {
+          "type": "example",
+          "text": "look up several commands at once",
+          "command": "whatis ls cat grep",
+          "explanation": "Shows one-line descriptions for ls, cat, and grep"
+        },
+        {
+          "type": "example",
+          "text": "check what a command does before using it",
+          "command": "whatis rsync",
+          "explanation": "Displays a brief summary of rsync from the manual database"
+        },
+        {
+          "type": "example",
+          "text": "search for a description using a wildcard pattern",
+          "command": "whatis -w 'git*'",
+          "explanation": "Shows descriptions for all commands matching the git wildcard"
+        }
+      ]
+    },
+    {
+      "name": "apropos",
+      "synopsis": "apropos [options] keyword",
+      "description": "Search the manual page names and descriptions for a keyword",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find commands related to a topic",
+          "command": "apropos compress",
+          "explanation": "Lists all man pages whose descriptions mention 'compress'"
+        },
+        {
+          "type": "example",
+          "text": "search for commands that deal with user accounts",
+          "command": "apropos 'user account'",
+          "explanation": "Finds commands related to user account management"
+        },
+        {
+          "type": "example",
+          "text": "find all commands related to network",
+          "command": "apropos network",
+          "explanation": "Lists man pages mentioning 'network' in name or description"
+        },
+        {
+          "type": "example",
+          "text": "search for a command when you forgot its name",
+          "command": "apropos 'disk usage'",
+          "explanation": "Helps rediscover commands like du or df by searching descriptions"
+        },
+        {
+          "type": "example",
+          "text": "use a regex to search man page descriptions",
+          "command": "apropos -r '^copy'",
+          "explanation": "Searches using a regular expression to find commands starting with 'copy'"
+        }
+      ]
+    },
+    {
+      "name": "type",
+      "synopsis": "type [options] name",
+      "description": "Describe how a command name would be interpreted by the shell",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check if a command is a builtin, alias, or external program",
+          "command": "type ls",
+          "explanation": "Tells you whether ls is an alias, shell builtin, or file on disk"
+        },
+        {
+          "type": "example",
+          "text": "see all definitions for a command name",
+          "command": "type -a echo",
+          "explanation": "Lists every interpretation of 'echo' including builtins and binaries"
+        },
+        {
+          "type": "example",
+          "text": "check if a name is a shell function",
+          "command": "type my_function",
+          "explanation": "Shows whether my_function is defined as a shell function and its body"
+        },
+        {
+          "type": "example",
+          "text": "get just the type classification of a command",
+          "command": "type -t cd",
+          "explanation": "Outputs a single word like 'builtin', 'alias', 'function', or 'file'"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "synopsis": "command [options] command_name [args]",
+      "description": "Run a command bypassing shell functions and aliases",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "run the real command instead of an alias or function",
+          "command": "command ls",
+          "explanation": "Executes the actual ls binary, ignoring any alias or function named ls"
+        },
+        {
+          "type": "example",
+          "text": "check if a command exists in a script",
+          "command": "command -v git > /dev/null && echo 'git is available'",
+          "explanation": "Tests whether git is available without running it"
+        },
+        {
+          "type": "example",
+          "text": "get the path of a command without running it",
+          "command": "command -v python3",
+          "explanation": "Prints the path or alias definition without executing anything"
+        },
+        {
+          "type": "example",
+          "text": "bypass a function override in a shell script",
+          "command": "command echo 'using real echo'",
+          "explanation": "Ensures the builtin or binary echo is used even if a function named echo exists"
+        }
+      ]
+    },
+    {
+      "name": "fd",
+      "synopsis": "fd [options] [pattern] [path...]",
+      "description": "A fast and user-friendly alternative to find",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find files matching a pattern with a simpler syntax than find",
+          "command": "fd 'config' src/",
+          "explanation": "Finds all files and directories containing 'config' in their name under src/"
+        },
+        {
+          "type": "example",
+          "text": "find only files with a specific extension",
+          "command": "fd -e json",
+          "explanation": "Finds all JSON files recursively from the current directory"
+        },
+        {
+          "type": "example",
+          "text": "find hidden files that are normally ignored",
+          "command": "fd -H '.env'",
+          "explanation": "Includes hidden files in the search to find dotenv files"
+        },
+        {
+          "type": "example",
+          "text": "find files and run a command on each one",
+          "command": "fd -e py -x black {}",
+          "explanation": "Finds all Python files and runs the black formatter on each"
+        },
+        {
+          "type": "example",
+          "text": "find files excluding certain directories",
+          "command": "fd -E node_modules -E .git 'test'",
+          "explanation": "Searches for files matching 'test' while excluding node_modules and .git"
+        }
+      ]
+    },
+    {
+      "name": "rg",
+      "synopsis": "rg [options] pattern [path...]",
+      "description": "Ripgrep - recursively search file contents using regex, very fast",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "search for a string across all files in a project",
+          "command": "rg 'TODO' src/",
+          "explanation": "Searches all files under src/ for the string 'TODO', respecting .gitignore"
+        },
+        {
+          "type": "example",
+          "text": "search only in files of a specific type",
+          "command": "rg -t py 'import requests'",
+          "explanation": "Restricts the search to Python files only"
+        },
+        {
+          "type": "example",
+          "text": "show context lines around each match",
+          "command": "rg -C 3 'error' logs/",
+          "explanation": "Shows 3 lines of context before and after each match"
+        },
+        {
+          "type": "example",
+          "text": "search for a pattern and replace it across files",
+          "command": "rg 'oldFunc' --files-with-matches | xargs sed -i 's/oldFunc/newFunc/g'",
+          "explanation": "Finds files containing 'oldFunc' then uses sed to replace it"
+        },
+        {
+          "type": "example",
+          "text": "count the number of matches per file",
+          "command": "rg -c 'console.log' src/",
+          "explanation": "Shows how many matches each file contains"
+        },
+        {
+          "type": "example",
+          "text": "search for a literal string that contains special regex characters",
+          "command": "rg -F 'price[$i]'",
+          "explanation": "Treats the pattern as a literal string, disabling regex interpretation"
+        }
+      ]
+    },
+    {
+      "name": "ag",
+      "synopsis": "ag [options] pattern [path...]",
+      "description": "The Silver Searcher - a fast code searching tool similar to ack",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "search for a pattern in all source files",
+          "command": "ag 'function.*export' src/",
+          "explanation": "Searches for the regex pattern in all files under src/"
+        },
+        {
+          "type": "example",
+          "text": "search only in specific file types",
+          "command": "ag --js 'addEventListener'",
+          "explanation": "Restricts the search to JavaScript files"
+        },
+        {
+          "type": "example",
+          "text": "search for a whole word match only",
+          "command": "ag -w 'class' .",
+          "explanation": "Matches the word 'class' but not 'subclass' or 'classify'"
+        },
+        {
+          "type": "example",
+          "text": "list just the filenames containing matches",
+          "command": "ag -l 'deprecated' lib/",
+          "explanation": "Shows only the file paths instead of the full matching lines"
+        },
+        {
+          "type": "example",
+          "text": "search ignoring certain directories",
+          "command": "ag --ignore-dir=vendor 'config'",
+          "explanation": "Skips the vendor directory while searching"
+        }
+      ]
+    },
+    {
+      "name": "fzf",
+      "synopsis": "fzf [options]",
+      "description": "A command-line fuzzy finder for interactive filtering",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "interactively search and select a file to open",
+          "command": "vim $(fzf)",
+          "explanation": "Opens fzf to fuzzy-find a file then opens the selection in vim"
+        },
+        {
+          "type": "example",
+          "text": "fuzzy search through command history",
+          "command": "history | fzf",
+          "explanation": "Pipes shell history into fzf for interactive searching"
+        },
+        {
+          "type": "example",
+          "text": "preview files while searching through them",
+          "command": "fzf --preview 'cat {}'",
+          "explanation": "Shows a preview of the highlighted file while browsing"
+        },
+        {
+          "type": "example",
+          "text": "fuzzy find and switch to a git branch",
+          "command": "git branch | fzf | xargs git checkout",
+          "explanation": "Interactively pick a branch from the list and check it out"
+        },
+        {
+          "type": "example",
+          "text": "select multiple items from a list",
+          "command": "find . -name '*.log' | fzf -m | xargs rm",
+          "explanation": "Allows selecting multiple log files with Tab then deletes them"
+        }
+      ]
+    },
+    {
+      "name": "xargs",
+      "synopsis": "xargs [options] [command [initial-args]]",
+      "description": "Build and execute commands from standard input",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "delete files from a list",
+          "command": "cat files_to_remove.txt | xargs rm",
+          "explanation": "Reads filenames from the file and passes them as arguments to rm"
+        },
+        {
+          "type": "example",
+          "text": "run a command on each line of input separately",
+          "command": "cat urls.txt | xargs -I{} curl -O {}",
+          "explanation": "Downloads each URL from the file by replacing {} with each line"
+        },
+        {
+          "type": "example",
+          "text": "run multiple processes in parallel",
+          "command": "find . -name '*.png' | xargs -P4 -I{} convert {} -resize 50% {}",
+          "explanation": "Resizes PNG images using 4 parallel processes"
+        },
+        {
+          "type": "example",
+          "text": "handle filenames with spaces safely",
+          "command": "find . -name '*.txt' -print0 | xargs -0 wc -l",
+          "explanation": "Uses null delimiter to safely handle filenames containing spaces"
+        },
+        {
+          "type": "example",
+          "text": "limit how many arguments are passed at once",
+          "command": "cat hosts.txt | xargs -n1 ping -c1",
+          "explanation": "Passes one host at a time to ping instead of all at once"
+        }
+      ]
+    },
+    {
+      "name": "parallel",
+      "synopsis": "parallel [options] command [arguments]",
+      "description": "Execute jobs in parallel using multiple CPU cores",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "run a command on multiple files in parallel",
+          "command": "parallel gzip ::: *.log",
+          "explanation": "Compresses all log files in parallel, one per CPU core"
+        },
+        {
+          "type": "example",
+          "text": "process a list of inputs from a file in parallel",
+          "command": "parallel -a urls.txt curl -O",
+          "explanation": "Downloads each URL from the file using all available CPU cores"
+        },
+        {
+          "type": "example",
+          "text": "control how many jobs run simultaneously",
+          "command": "parallel -j4 convert {} {.}.png ::: *.jpg",
+          "explanation": "Converts JPG to PNG with at most 4 concurrent jobs"
+        },
+        {
+          "type": "example",
+          "text": "run the same command with different arguments in parallel",
+          "command": "parallel echo 'Processing {}' ::: file1 file2 file3",
+          "explanation": "Runs the echo command for each argument simultaneously"
+        },
+        {
+          "type": "example",
+          "text": "pipe input and process each line in parallel",
+          "command": "cat tasks.txt | parallel ./process.sh {}",
+          "explanation": "Executes process.sh for each line of tasks.txt in parallel"
+        },
+        {
+          "type": "example",
+          "text": "show a progress bar while processing files in parallel",
+          "command": "parallel --bar gzip ::: *.csv",
+          "explanation": "Compresses CSV files in parallel with a progress indicator"
+        }
+      ]
+    }
+  ]
+}

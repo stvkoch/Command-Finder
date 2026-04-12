@@ -1,0 +1,902 @@
+{
+  "category": "text_processing",
+  "commands": [
+    {
+      "name": "grep",
+      "synopsis": "grep [options] pattern [file...]",
+      "description": "Search for lines matching a pattern in files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find all lines containing a word in a file",
+          "command": "grep 'error' logfile.txt",
+          "explanation": "Searches logfile.txt for lines containing the word 'error'"
+        },
+        {
+          "type": "example",
+          "text": "search for a string across all files in a directory recursively",
+          "command": "grep -r 'TODO' src/",
+          "explanation": "Recursively searches all files under src/ for lines containing 'TODO'"
+        },
+        {
+          "type": "example",
+          "text": "search case insensitively for a pattern",
+          "command": "grep -i 'warning' *.log",
+          "explanation": "Matches 'warning', 'WARNING', 'Warning', etc. in all .log files"
+        },
+        {
+          "type": "example",
+          "text": "show line numbers for matches",
+          "command": "grep -n 'function' script.js",
+          "explanation": "Displays matching lines with their line numbers"
+        },
+        {
+          "type": "example",
+          "text": "show only filenames that contain a match",
+          "command": "grep -rl 'password' config/",
+          "explanation": "Lists only the names of files that contain 'password'"
+        },
+        {
+          "type": "example",
+          "text": "find lines that do not match a pattern",
+          "command": "grep -v '^#' config.ini",
+          "explanation": "Shows all lines that are not comments (don't start with #)"
+        }
+      ]
+    },
+    {
+      "name": "sed",
+      "synopsis": "sed [options] 'command' [file...]",
+      "description": "Stream editor for filtering and transforming text",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "replace a word in a file",
+          "command": "sed 's/old/new/g' file.txt",
+          "explanation": "Replaces all occurrences of 'old' with 'new' and prints to stdout"
+        },
+        {
+          "type": "example",
+          "text": "edit a file in place replacing text",
+          "command": "sed -i '' 's/foo/bar/g' file.txt",
+          "explanation": "Modifies the file directly, replacing every 'foo' with 'bar'"
+        },
+        {
+          "type": "example",
+          "text": "delete lines matching a pattern",
+          "command": "sed '/^$/d' file.txt",
+          "explanation": "Removes all blank lines from the output"
+        },
+        {
+          "type": "example",
+          "text": "print only specific lines from a file",
+          "command": "sed -n '10,20p' file.txt",
+          "explanation": "Prints only lines 10 through 20"
+        },
+        {
+          "type": "example",
+          "text": "insert a line before a matching line",
+          "command": "sed '/pattern/i\\new line of text' file.txt",
+          "explanation": "Inserts 'new line of text' before every line matching 'pattern'"
+        }
+      ]
+    },
+    {
+      "name": "awk",
+      "synopsis": "awk [options] 'program' [file...]",
+      "description": "Pattern scanning and text processing language",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "print a specific column from a file",
+          "command": "awk '{print $2}' data.txt",
+          "explanation": "Prints the second whitespace-delimited field of each line"
+        },
+        {
+          "type": "example",
+          "text": "sum up numbers in a column",
+          "command": "awk '{sum += $1} END {print sum}' numbers.txt",
+          "explanation": "Adds up all values in the first column and prints the total"
+        },
+        {
+          "type": "example",
+          "text": "filter rows where a column meets a condition",
+          "command": "awk '$3 > 100' data.csv",
+          "explanation": "Prints lines where the third field is greater than 100"
+        },
+        {
+          "type": "example",
+          "text": "use a custom field separator like comma",
+          "command": "awk -F',' '{print $1, $3}' data.csv",
+          "explanation": "Uses comma as delimiter and prints the first and third columns"
+        },
+        {
+          "type": "example",
+          "text": "count the number of lines in a file",
+          "command": "awk 'END {print NR}' file.txt",
+          "explanation": "Prints the total number of records (lines) processed"
+        }
+      ]
+    },
+    {
+      "name": "cut",
+      "synopsis": "cut [options] [file...]",
+      "description": "Remove sections from each line of files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "extract a specific column from a CSV",
+          "command": "cut -d',' -f2 data.csv",
+          "explanation": "Uses comma as delimiter and extracts the second field"
+        },
+        {
+          "type": "example",
+          "text": "get the first 10 characters of each line",
+          "command": "cut -c1-10 file.txt",
+          "explanation": "Extracts characters 1 through 10 from every line"
+        },
+        {
+          "type": "example",
+          "text": "extract multiple fields from a tab-separated file",
+          "command": "cut -f1,3,5 data.tsv",
+          "explanation": "Extracts fields 1, 3, and 5 using the default tab delimiter"
+        },
+        {
+          "type": "example",
+          "text": "get everything after the first field",
+          "command": "cut -d':' -f2- /etc/passwd",
+          "explanation": "Extracts from the second field to the end using colon as delimiter"
+        },
+        {
+          "type": "example",
+          "text": "extract a range of bytes from each line",
+          "command": "cut -b1-5 file.bin",
+          "explanation": "Extracts bytes 1 through 5 from each line"
+        }
+      ]
+    },
+    {
+      "name": "tr",
+      "synopsis": "tr [options] set1 [set2]",
+      "description": "Translate or delete characters",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "convert lowercase to uppercase",
+          "command": "echo 'hello' | tr 'a-z' 'A-Z'",
+          "explanation": "Translates all lowercase letters to uppercase"
+        },
+        {
+          "type": "example",
+          "text": "delete specific characters from text",
+          "command": "echo 'a1b2c3' | tr -d '0-9'",
+          "explanation": "Removes all digits, leaving only letters"
+        },
+        {
+          "type": "example",
+          "text": "squeeze repeated characters into one",
+          "command": "echo 'hello    world' | tr -s ' '",
+          "explanation": "Collapses multiple consecutive spaces into a single space"
+        },
+        {
+          "type": "example",
+          "text": "replace newlines with spaces to make one line",
+          "command": "tr '\\n' ' ' < file.txt",
+          "explanation": "Converts a multi-line file into a single line"
+        },
+        {
+          "type": "example",
+          "text": "replace tabs with spaces",
+          "command": "tr '\\t' ' ' < file.txt",
+          "explanation": "Converts every tab character into a space"
+        }
+      ]
+    },
+    {
+      "name": "sort",
+      "synopsis": "sort [options] [file...]",
+      "description": "Sort lines of text files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "sort a file alphabetically",
+          "command": "sort names.txt",
+          "explanation": "Sorts all lines in alphabetical order"
+        },
+        {
+          "type": "example",
+          "text": "sort numbers in numeric order",
+          "command": "sort -n scores.txt",
+          "explanation": "Sorts lines numerically rather than lexicographically"
+        },
+        {
+          "type": "example",
+          "text": "sort in reverse order",
+          "command": "sort -r file.txt",
+          "explanation": "Sorts lines in descending order"
+        },
+        {
+          "type": "example",
+          "text": "sort by a specific column",
+          "command": "sort -t',' -k2 data.csv",
+          "explanation": "Sorts a CSV by the second column using comma as the delimiter"
+        },
+        {
+          "type": "example",
+          "text": "remove duplicate lines while sorting",
+          "command": "sort -u file.txt",
+          "explanation": "Sorts and removes duplicate lines in one step"
+        }
+      ]
+    },
+    {
+      "name": "uniq",
+      "synopsis": "uniq [options] [input [output]]",
+      "description": "Report or omit repeated lines",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "remove consecutive duplicate lines",
+          "command": "sort file.txt | uniq",
+          "explanation": "Sorts first then removes duplicates since uniq only works on adjacent lines"
+        },
+        {
+          "type": "example",
+          "text": "count how many times each line appears",
+          "command": "sort file.txt | uniq -c",
+          "explanation": "Prefixes each unique line with the number of occurrences"
+        },
+        {
+          "type": "example",
+          "text": "show only the lines that appear more than once",
+          "command": "sort file.txt | uniq -d",
+          "explanation": "Prints only the duplicated lines"
+        },
+        {
+          "type": "example",
+          "text": "show only lines that are unique and never repeated",
+          "command": "sort file.txt | uniq -u",
+          "explanation": "Prints only the lines that appear exactly once"
+        },
+        {
+          "type": "example",
+          "text": "find the most frequent lines in a file",
+          "command": "sort file.txt | uniq -c | sort -rn | head",
+          "explanation": "Counts occurrences, sorts by frequency, and shows the top entries"
+        }
+      ]
+    },
+    {
+      "name": "wc",
+      "synopsis": "wc [options] [file...]",
+      "description": "Print newline, word, and byte counts for files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "count the number of lines in a file",
+          "command": "wc -l file.txt",
+          "explanation": "Prints the line count of the file"
+        },
+        {
+          "type": "example",
+          "text": "count the number of words in a file",
+          "command": "wc -w essay.txt",
+          "explanation": "Prints the total word count"
+        },
+        {
+          "type": "example",
+          "text": "count the number of characters in a file",
+          "command": "wc -m file.txt",
+          "explanation": "Prints the character count"
+        },
+        {
+          "type": "example",
+          "text": "get line counts for all files in a directory",
+          "command": "wc -l *.py",
+          "explanation": "Shows line count per Python file and a total"
+        }
+      ]
+    },
+    {
+      "name": "head",
+      "synopsis": "head [options] [file...]",
+      "description": "Output the first part of files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the first 10 lines of a file",
+          "command": "head file.txt",
+          "explanation": "Displays the first 10 lines by default"
+        },
+        {
+          "type": "example",
+          "text": "show the first N lines of a file",
+          "command": "head -n 20 file.txt",
+          "explanation": "Displays the first 20 lines"
+        },
+        {
+          "type": "example",
+          "text": "show everything except the last N lines",
+          "command": "head -n -5 file.txt",
+          "explanation": "Prints all lines except the last 5"
+        },
+        {
+          "type": "example",
+          "text": "show the first few bytes of a file",
+          "command": "head -c 100 file.bin",
+          "explanation": "Displays the first 100 bytes of the file"
+        }
+      ]
+    },
+    {
+      "name": "tail",
+      "synopsis": "tail [options] [file...]",
+      "description": "Output the last part of files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the last 10 lines of a file",
+          "command": "tail file.txt",
+          "explanation": "Displays the last 10 lines by default"
+        },
+        {
+          "type": "example",
+          "text": "show the last N lines of a file",
+          "command": "tail -n 50 log.txt",
+          "explanation": "Displays the last 50 lines"
+        },
+        {
+          "type": "example",
+          "text": "follow a log file in real time as it grows",
+          "command": "tail -f /var/log/syslog",
+          "explanation": "Continuously outputs new lines appended to the file"
+        },
+        {
+          "type": "example",
+          "text": "show everything starting from a specific line",
+          "command": "tail -n +100 file.txt",
+          "explanation": "Prints from line 100 to the end of the file"
+        },
+        {
+          "type": "example",
+          "text": "follow a log file and stop when process dies",
+          "command": "tail -f --pid=1234 app.log",
+          "explanation": "Follows the log until the process with PID 1234 terminates"
+        }
+      ]
+    },
+    {
+      "name": "tee",
+      "synopsis": "tee [options] [file...]",
+      "description": "Read from stdin and write to stdout and files simultaneously",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "save command output to a file while still seeing it",
+          "command": "ls -la | tee listing.txt",
+          "explanation": "Writes the directory listing to both the screen and listing.txt"
+        },
+        {
+          "type": "example",
+          "text": "append output to a file instead of overwriting",
+          "command": "echo 'new entry' | tee -a log.txt",
+          "explanation": "Appends the text to log.txt rather than replacing its contents"
+        },
+        {
+          "type": "example",
+          "text": "write output to multiple files at once",
+          "command": "cat data.txt | tee copy1.txt copy2.txt > /dev/null",
+          "explanation": "Writes the same content to both copy1.txt and copy2.txt"
+        },
+        {
+          "type": "example",
+          "text": "pipe through tee to log intermediate results in a pipeline",
+          "command": "grep 'ERROR' app.log | tee errors.txt | wc -l",
+          "explanation": "Saves matching lines to errors.txt and also counts them"
+        }
+      ]
+    },
+    {
+      "name": "paste",
+      "synopsis": "paste [options] [file...]",
+      "description": "Merge lines of files side by side",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "merge two files side by side with tabs",
+          "command": "paste names.txt scores.txt",
+          "explanation": "Combines corresponding lines from both files separated by tabs"
+        },
+        {
+          "type": "example",
+          "text": "merge files with a custom delimiter",
+          "command": "paste -d',' file1.txt file2.txt",
+          "explanation": "Joins lines from both files using a comma as the separator"
+        },
+        {
+          "type": "example",
+          "text": "convert a column of data into a single comma-separated line",
+          "command": "paste -sd',' file.txt",
+          "explanation": "Joins all lines into one line separated by commas"
+        },
+        {
+          "type": "example",
+          "text": "arrange a single column into multiple columns",
+          "command": "paste - - - < file.txt",
+          "explanation": "Arranges input into three columns by reading from stdin three times"
+        }
+      ]
+    },
+    {
+      "name": "join",
+      "synopsis": "join [options] file1 file2",
+      "description": "Join lines of two sorted files on a common field",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "join two sorted files on the first column",
+          "command": "join file1.txt file2.txt",
+          "explanation": "Merges lines from both files that share a matching first field"
+        },
+        {
+          "type": "example",
+          "text": "join files on a different column",
+          "command": "join -1 2 -2 1 file1.txt file2.txt",
+          "explanation": "Joins on the second field of file1 and first field of file2"
+        },
+        {
+          "type": "example",
+          "text": "join with a custom delimiter",
+          "command": "join -t',' file1.csv file2.csv",
+          "explanation": "Uses comma as both input and output field separator"
+        },
+        {
+          "type": "example",
+          "text": "show unmatched lines from the first file",
+          "command": "join -a1 file1.txt file2.txt",
+          "explanation": "Includes lines from file1 that have no match in file2"
+        }
+      ]
+    },
+    {
+      "name": "comm",
+      "synopsis": "comm [options] file1 file2",
+      "description": "Compare two sorted files line by line",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find lines unique to the first file",
+          "command": "comm -23 file1.txt file2.txt",
+          "explanation": "Shows only lines present in file1 but not file2"
+        },
+        {
+          "type": "example",
+          "text": "find lines common to both files",
+          "command": "comm -12 file1.txt file2.txt",
+          "explanation": "Shows only lines that appear in both files"
+        },
+        {
+          "type": "example",
+          "text": "find lines unique to the second file",
+          "command": "comm -13 file1.txt file2.txt",
+          "explanation": "Shows only lines present in file2 but not file1"
+        },
+        {
+          "type": "example",
+          "text": "compare two sorted files showing all three columns",
+          "command": "comm file1.txt file2.txt",
+          "explanation": "Displays three columns: unique to file1, unique to file2, and common"
+        }
+      ]
+    },
+    {
+      "name": "diff",
+      "synopsis": "diff [options] file1 file2",
+      "description": "Compare files line by line and show differences",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "compare two files and show the differences",
+          "command": "diff file1.txt file2.txt",
+          "explanation": "Shows lines that differ between the two files"
+        },
+        {
+          "type": "example",
+          "text": "show differences side by side",
+          "command": "diff -y file1.txt file2.txt",
+          "explanation": "Displays both files in parallel with differences marked"
+        },
+        {
+          "type": "example",
+          "text": "generate a unified diff for patching",
+          "command": "diff -u original.c modified.c > changes.patch",
+          "explanation": "Creates a unified format diff suitable for the patch command"
+        },
+        {
+          "type": "example",
+          "text": "compare two directories recursively",
+          "command": "diff -r dir1/ dir2/",
+          "explanation": "Compares all corresponding files in both directory trees"
+        },
+        {
+          "type": "example",
+          "text": "ignore whitespace differences when comparing",
+          "command": "diff -w file1.txt file2.txt",
+          "explanation": "Treats all sequences of whitespace as equal"
+        }
+      ]
+    },
+    {
+      "name": "patch",
+      "synopsis": "patch [options] [original [patchfile]]",
+      "description": "Apply a diff file to an original file",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "apply a patch file to source code",
+          "command": "patch < changes.patch",
+          "explanation": "Applies the changes described in the patch file"
+        },
+        {
+          "type": "example",
+          "text": "apply a patch with a directory strip level",
+          "command": "patch -p1 < feature.patch",
+          "explanation": "Strips one leading directory from paths in the patch"
+        },
+        {
+          "type": "example",
+          "text": "reverse a previously applied patch",
+          "command": "patch -R < changes.patch",
+          "explanation": "Undoes the changes made by the patch"
+        },
+        {
+          "type": "example",
+          "text": "do a dry run to check if a patch applies cleanly",
+          "command": "patch --dry-run < changes.patch",
+          "explanation": "Tests whether the patch can be applied without actually modifying files"
+        }
+      ]
+    },
+    {
+      "name": "column",
+      "synopsis": "column [options] [file...]",
+      "description": "Format input into multiple columns or a table",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "format data as a nicely aligned table",
+          "command": "column -t data.txt",
+          "explanation": "Auto-aligns columns based on whitespace delimiters"
+        },
+        {
+          "type": "example",
+          "text": "format a CSV as a readable table",
+          "command": "column -t -s',' data.csv",
+          "explanation": "Uses comma as the input separator and aligns into columns"
+        },
+        {
+          "type": "example",
+          "text": "arrange a list into multiple columns for display",
+          "command": "ls | column",
+          "explanation": "Arranges the input into columns to fill the terminal width"
+        },
+        {
+          "type": "example",
+          "text": "format colon-delimited data as a table",
+          "command": "column -t -s':' /etc/passwd",
+          "explanation": "Displays the passwd file in a readable tabular format"
+        }
+      ]
+    },
+    {
+      "name": "fold",
+      "synopsis": "fold [options] [file...]",
+      "description": "Wrap each input line to fit a specified width",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "wrap long lines to 80 characters",
+          "command": "fold -w 80 longlines.txt",
+          "explanation": "Breaks lines at 80 characters, possibly mid-word"
+        },
+        {
+          "type": "example",
+          "text": "wrap lines at word boundaries instead of mid-word",
+          "command": "fold -s -w 72 document.txt",
+          "explanation": "Breaks at the last space within 72 characters to avoid splitting words"
+        },
+        {
+          "type": "example",
+          "text": "limit output width to a specific number of bytes",
+          "command": "fold -b -w 100 file.txt",
+          "explanation": "Counts bytes instead of columns when determining line width"
+        },
+        {
+          "type": "example",
+          "text": "reformat a paragraph to a narrower width",
+          "command": "cat paragraph.txt | fold -s -w 60",
+          "explanation": "Wraps the paragraph text to 60 characters at word boundaries"
+        }
+      ]
+    },
+    {
+      "name": "fmt",
+      "synopsis": "fmt [options] [file...]",
+      "description": "Simple text formatter that reflows paragraphs",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "reformat a text file to 75 character width",
+          "command": "fmt -w 75 article.txt",
+          "explanation": "Reflows paragraphs so lines are at most 75 characters wide"
+        },
+        {
+          "type": "example",
+          "text": "reflow a paragraph to standard width",
+          "command": "fmt document.txt",
+          "explanation": "Reformats paragraphs to the default width of approximately 75 characters"
+        },
+        {
+          "type": "example",
+          "text": "format text with uniform spacing between words",
+          "command": "fmt -u notes.txt",
+          "explanation": "Ensures uniform spacing of one space between words and two after sentences"
+        },
+        {
+          "type": "example",
+          "text": "format text for a narrow terminal",
+          "command": "fmt -w 40 readme.txt",
+          "explanation": "Reflows text to fit within 40 columns"
+        }
+      ]
+    },
+    {
+      "name": "expand",
+      "synopsis": "expand [options] [file...]",
+      "description": "Convert tabs to spaces",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "convert all tabs to spaces in a file",
+          "command": "expand file.txt",
+          "explanation": "Replaces each tab with the appropriate number of spaces to reach the next tab stop"
+        },
+        {
+          "type": "example",
+          "text": "convert tabs using a custom tab width",
+          "command": "expand -t 4 code.py",
+          "explanation": "Uses a tab width of 4 spaces instead of the default 8"
+        },
+        {
+          "type": "example",
+          "text": "convert only leading tabs to spaces",
+          "command": "expand -i file.txt",
+          "explanation": "Replaces only tabs at the beginning of lines, leaving others intact"
+        },
+        {
+          "type": "example",
+          "text": "standardize indentation from tabs to 2 spaces",
+          "command": "expand -t 2 source.js",
+          "explanation": "Converts every tab to 2 spaces for consistent indentation"
+        }
+      ]
+    },
+    {
+      "name": "unexpand",
+      "synopsis": "unexpand [options] [file...]",
+      "description": "Convert spaces to tabs",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "convert leading spaces back to tabs",
+          "command": "unexpand file.txt",
+          "explanation": "Replaces leading spaces with tabs based on the default tab stop of 8"
+        },
+        {
+          "type": "example",
+          "text": "convert all spaces to tabs not just leading",
+          "command": "unexpand -a file.txt",
+          "explanation": "Converts all sequences of spaces (not just leading) to tabs"
+        },
+        {
+          "type": "example",
+          "text": "convert spaces to tabs with a custom tab width",
+          "command": "unexpand -t 4 code.py",
+          "explanation": "Uses a tab stop of 4 when converting spaces to tabs"
+        },
+        {
+          "type": "example",
+          "text": "change indentation from 2 spaces to tabs",
+          "command": "unexpand --first-only -t 2 source.js",
+          "explanation": "Converts leading 2-space indentation to tabs"
+        }
+      ]
+    },
+    {
+      "name": "nl",
+      "synopsis": "nl [options] [file...]",
+      "description": "Number lines of files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "add line numbers to a file",
+          "command": "nl file.txt",
+          "explanation": "Numbers non-empty lines and prints the file with line numbers"
+        },
+        {
+          "type": "example",
+          "text": "number all lines including blank ones",
+          "command": "nl -ba file.txt",
+          "explanation": "Assigns a number to every line, even blank lines"
+        },
+        {
+          "type": "example",
+          "text": "number lines with a custom format",
+          "command": "nl -nrz -w4 file.txt",
+          "explanation": "Uses right-justified zero-padded 4-digit line numbers"
+        },
+        {
+          "type": "example",
+          "text": "number lines starting from a specific number",
+          "command": "nl -v 100 file.txt",
+          "explanation": "Starts numbering from 100 instead of 1"
+        }
+      ]
+    },
+    {
+      "name": "rev",
+      "synopsis": "rev [file...]",
+      "description": "Reverse characters in each line",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "reverse each line of a file",
+          "command": "rev file.txt",
+          "explanation": "Reverses the character order of every line"
+        },
+        {
+          "type": "example",
+          "text": "reverse a string",
+          "command": "echo 'hello world' | rev",
+          "explanation": "Outputs 'dlrow olleh'"
+        },
+        {
+          "type": "example",
+          "text": "get the last field when you don't know how many fields there are",
+          "command": "echo 'a/b/c/d' | rev | cut -d'/' -f1 | rev",
+          "explanation": "Reverses, takes the first field, then reverses again to extract the last field"
+        },
+        {
+          "type": "example",
+          "text": "check if a string is a palindrome",
+          "command": "word='racecar'; [ \"$word\" = \"$(echo $word | rev)\" ] && echo 'palindrome'",
+          "explanation": "Compares the string with its reverse to check for palindrome"
+        }
+      ]
+    },
+    {
+      "name": "tac",
+      "synopsis": "tac [options] [file...]",
+      "description": "Concatenate and print files in reverse line order",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "print a file with lines in reverse order",
+          "command": "tac file.txt",
+          "explanation": "Prints the last line first and the first line last"
+        },
+        {
+          "type": "example",
+          "text": "reverse the order of log entries",
+          "command": "tac access.log | head -20",
+          "explanation": "Shows the 20 most recent log entries by reversing and taking the top"
+        },
+        {
+          "type": "example",
+          "text": "reverse paragraphs separated by blank lines",
+          "command": "tac -s '' document.txt",
+          "explanation": "Reverses the order of paragraph blocks separated by empty lines"
+        },
+        {
+          "type": "example",
+          "text": "reverse lines from a pipe",
+          "command": "seq 1 10 | tac",
+          "explanation": "Prints numbers 10 down to 1"
+        }
+      ]
+    },
+    {
+      "name": "strings",
+      "synopsis": "strings [options] [file...]",
+      "description": "Find printable strings in binary files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "extract readable text from a binary file",
+          "command": "strings program.bin",
+          "explanation": "Finds and prints all sequences of printable characters in the binary"
+        },
+        {
+          "type": "example",
+          "text": "find strings longer than a minimum length in a binary",
+          "command": "strings -n 10 executable",
+          "explanation": "Shows only strings that are at least 10 characters long"
+        },
+        {
+          "type": "example",
+          "text": "search for URLs inside a binary file",
+          "command": "strings binary | grep 'http'",
+          "explanation": "Extracts text strings and filters for those containing 'http'"
+        },
+        {
+          "type": "example",
+          "text": "show the byte offset of each string found",
+          "command": "strings -t x program.bin",
+          "explanation": "Displays each string preceded by its hexadecimal offset in the file"
+        }
+      ]
+    },
+    {
+      "name": "iconv",
+      "synopsis": "iconv [options] [file...]",
+      "description": "Convert text between character encodings",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "convert a file from Latin-1 to UTF-8",
+          "command": "iconv -f ISO-8859-1 -t UTF-8 input.txt > output.txt",
+          "explanation": "Converts the file encoding from ISO-8859-1 (Latin-1) to UTF-8"
+        },
+        {
+          "type": "example",
+          "text": "list all available character encodings",
+          "command": "iconv -l",
+          "explanation": "Prints all supported encoding names"
+        },
+        {
+          "type": "example",
+          "text": "convert UTF-8 to ASCII and discard unconvertible characters",
+          "command": "iconv -f UTF-8 -t ASCII//TRANSLIT input.txt",
+          "explanation": "Transliterates characters that have no ASCII equivalent"
+        },
+        {
+          "type": "example",
+          "text": "convert a file from Windows encoding to UTF-8",
+          "command": "iconv -f WINDOWS-1252 -t UTF-8 legacy.txt > modern.txt",
+          "explanation": "Converts Windows-1252 encoded text to standard UTF-8"
+        }
+      ]
+    },
+    {
+      "name": "dos2unix",
+      "synopsis": "dos2unix [options] [file...]",
+      "description": "Convert line endings between DOS/Windows and Unix formats",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "convert Windows line endings to Unix",
+          "command": "dos2unix file.txt",
+          "explanation": "Removes carriage return characters (\\r) from line endings"
+        },
+        {
+          "type": "example",
+          "text": "convert Unix line endings to Windows format",
+          "command": "unix2dos file.txt",
+          "explanation": "Adds carriage return (\\r) before each newline"
+        },
+        {
+          "type": "example",
+          "text": "convert line endings and save to a different file",
+          "command": "dos2unix -n input.txt output.txt",
+          "explanation": "Converts line endings and writes to a new file, keeping the original intact"
+        },
+        {
+          "type": "example",
+          "text": "convert all files in a directory from DOS to Unix format",
+          "command": "find . -name '*.txt' -exec dos2unix {} +",
+          "explanation": "Recursively finds all .txt files and converts their line endings"
+        }
+      ]
+    }
+  ]
+}

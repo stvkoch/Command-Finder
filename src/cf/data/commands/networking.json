@@ -1,0 +1,981 @@
+{
+  "category": "networking",
+  "commands": [
+    {
+      "name": "curl",
+      "synopsis": "curl [options] [URL]",
+      "description": "Transfer data to or from a server using various protocols",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "download a file from a URL",
+          "command": "curl -O https://example.com/file.tar.gz",
+          "explanation": "Downloads a file preserving the remote filename"
+        },
+        {
+          "type": "example",
+          "text": "make a POST request with JSON data",
+          "command": "curl -X POST -H 'Content-Type: application/json' -d '{\"key\":\"value\"}' https://api.example.com/endpoint",
+          "explanation": "Sends a JSON payload via POST to an API endpoint"
+        },
+        {
+          "type": "example",
+          "text": "follow redirects and show response headers",
+          "command": "curl -LI https://example.com",
+          "explanation": "Follows redirects (-L) and displays only response headers (-I)"
+        },
+        {
+          "type": "example",
+          "text": "send a request with a bearer token for authentication",
+          "command": "curl -H 'Authorization: Bearer TOKEN' https://api.example.com/data",
+          "explanation": "Includes an authorization header with a bearer token"
+        },
+        {
+          "type": "example",
+          "text": "upload a file using multipart form data",
+          "command": "curl -F 'file=@/path/to/file.png' https://example.com/upload",
+          "explanation": "Uploads a file as multipart/form-data to the server"
+        }
+      ]
+    },
+    {
+      "name": "wget",
+      "synopsis": "wget [options] [URL]",
+      "description": "Non-interactive network downloader for retrieving files via HTTP, HTTPS, and FTP",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "download a file in the background",
+          "command": "wget -b https://example.com/largefile.iso",
+          "explanation": "Downloads a file in the background, logging progress to wget-log"
+        },
+        {
+          "type": "example",
+          "text": "mirror an entire website for offline browsing",
+          "command": "wget --mirror --convert-links --page-requisites https://example.com",
+          "explanation": "Recursively downloads an entire site with links converted for local viewing"
+        },
+        {
+          "type": "example",
+          "text": "resume a partially downloaded file",
+          "command": "wget -c https://example.com/largefile.iso",
+          "explanation": "Continues a previously interrupted download from where it left off"
+        },
+        {
+          "type": "example",
+          "text": "download a list of URLs from a file",
+          "command": "wget -i urls.txt",
+          "explanation": "Reads URLs from a text file and downloads each one"
+        },
+        {
+          "type": "example",
+          "text": "limit download speed to avoid saturating bandwidth",
+          "command": "wget --limit-rate=500k https://example.com/file.zip",
+          "explanation": "Restricts download speed to 500 kilobytes per second"
+        }
+      ]
+    },
+    {
+      "name": "ssh",
+      "synopsis": "ssh [options] [user@]hostname [command]",
+      "description": "Securely connect to a remote machine over an encrypted connection",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "connect to a remote server as a specific user",
+          "command": "ssh user@192.168.1.100",
+          "explanation": "Opens an SSH session to the remote host as the given user"
+        },
+        {
+          "type": "example",
+          "text": "set up a local port forward to access a remote service",
+          "command": "ssh -L 8080:localhost:80 user@remote-server",
+          "explanation": "Forwards local port 8080 to port 80 on the remote server"
+        },
+        {
+          "type": "example",
+          "text": "run a command on a remote server without opening a shell",
+          "command": "ssh user@server 'df -h'",
+          "explanation": "Executes the command remotely and returns output to the local terminal"
+        },
+        {
+          "type": "example",
+          "text": "connect using a specific private key file",
+          "command": "ssh -i ~/.ssh/my_key.pem user@server",
+          "explanation": "Authenticates using the specified identity file instead of the default key"
+        },
+        {
+          "type": "example",
+          "text": "create a SOCKS proxy tunnel through a remote server",
+          "command": "ssh -D 9090 user@server",
+          "explanation": "Sets up a dynamic SOCKS proxy on local port 9090 tunneled through the remote server"
+        }
+      ]
+    },
+    {
+      "name": "scp",
+      "synopsis": "scp [options] source destination",
+      "description": "Securely copy files between local and remote hosts over SSH",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "copy a file from local machine to a remote server",
+          "command": "scp /path/to/file.txt user@server:/remote/path/",
+          "explanation": "Uploads a local file to the specified path on the remote server"
+        },
+        {
+          "type": "example",
+          "text": "download a file from a remote server to the local machine",
+          "command": "scp user@server:/remote/file.txt /local/path/",
+          "explanation": "Copies a file from the remote server to a local directory"
+        },
+        {
+          "type": "example",
+          "text": "copy an entire directory recursively to a remote server",
+          "command": "scp -r /local/dir user@server:/remote/path/",
+          "explanation": "Recursively copies the directory and its contents to the remote host"
+        },
+        {
+          "type": "example",
+          "text": "copy a file between two remote servers",
+          "command": "scp user1@server1:/path/file.txt user2@server2:/path/",
+          "explanation": "Transfers a file directly between two remote hosts"
+        },
+        {
+          "type": "example",
+          "text": "copy a file using a specific SSH port",
+          "command": "scp -P 2222 file.txt user@server:/path/",
+          "explanation": "Uses a non-default SSH port for the transfer"
+        }
+      ]
+    },
+    {
+      "name": "sftp",
+      "synopsis": "sftp [options] [user@]host[:path]",
+      "description": "Interactive secure file transfer program over SSH",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "start an interactive SFTP session with a remote server",
+          "command": "sftp user@server",
+          "explanation": "Opens an interactive SFTP session for browsing and transferring files"
+        },
+        {
+          "type": "example",
+          "text": "download a remote file directly without interactive mode",
+          "command": "sftp user@server:/remote/path/file.txt /local/path/",
+          "explanation": "Fetches a specific remote file to a local directory"
+        },
+        {
+          "type": "example",
+          "text": "use a batch file to automate SFTP transfers",
+          "command": "sftp -b commands.txt user@server",
+          "explanation": "Executes SFTP commands from a batch file non-interactively"
+        },
+        {
+          "type": "example",
+          "text": "connect to SFTP on a non-standard port",
+          "command": "sftp -P 2222 user@server",
+          "explanation": "Connects to the SFTP server on a custom SSH port"
+        }
+      ]
+    },
+    {
+      "name": "rsync",
+      "synopsis": "rsync [options] source destination",
+      "description": "Fast and versatile file synchronization tool for local and remote transfers",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "sync a local directory to a remote server with progress",
+          "command": "rsync -avz --progress /local/dir/ user@server:/remote/dir/",
+          "explanation": "Archives, compresses, and syncs files showing transfer progress"
+        },
+        {
+          "type": "example",
+          "text": "sync files and delete those that no longer exist in source",
+          "command": "rsync -av --delete /source/ /destination/",
+          "explanation": "Mirrors source to destination, removing extra files at the destination"
+        },
+        {
+          "type": "example",
+          "text": "do a dry run to see what would be transferred without making changes",
+          "command": "rsync -avn /source/ /destination/",
+          "explanation": "Simulates the sync and shows what would happen without actually copying"
+        },
+        {
+          "type": "example",
+          "text": "sync files excluding certain patterns like log files",
+          "command": "rsync -av --exclude='*.log' --exclude='.git' /source/ /dest/",
+          "explanation": "Syncs files while skipping log files and git directories"
+        },
+        {
+          "type": "example",
+          "text": "resume an interrupted transfer with partial files",
+          "command": "rsync -avz --partial --progress /source/ user@server:/dest/",
+          "explanation": "Keeps partially transferred files so the sync can resume later"
+        }
+      ]
+    },
+    {
+      "name": "ping",
+      "synopsis": "ping [options] destination",
+      "description": "Send ICMP echo requests to test network connectivity to a host",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check if a server is reachable",
+          "command": "ping -c 4 google.com",
+          "explanation": "Sends 4 ICMP echo requests to test connectivity to google.com"
+        },
+        {
+          "type": "example",
+          "text": "ping a host continuously until interrupted",
+          "command": "ping google.com",
+          "explanation": "Continuously pings the host until you press Ctrl+C"
+        },
+        {
+          "type": "example",
+          "text": "ping with a specific packet size to test MTU",
+          "command": "ping -s 1472 -c 4 192.168.1.1",
+          "explanation": "Sends pings with a specific payload size to test maximum transmission unit"
+        },
+        {
+          "type": "example",
+          "text": "ping with a short interval for quick connectivity testing",
+          "command": "ping -i 0.2 -c 20 192.168.1.1",
+          "explanation": "Pings every 0.2 seconds for faster results"
+        },
+        {
+          "type": "example",
+          "text": "ping only using IPv6",
+          "command": "ping6 google.com",
+          "explanation": "Sends ICMPv6 echo requests to test IPv6 connectivity"
+        }
+      ]
+    },
+    {
+      "name": "traceroute",
+      "synopsis": "traceroute [options] host",
+      "description": "Trace the route packets take to reach a network host",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "trace the network path to a remote host",
+          "command": "traceroute google.com",
+          "explanation": "Shows each router hop between your machine and the destination"
+        },
+        {
+          "type": "example",
+          "text": "trace route using TCP instead of UDP to bypass firewalls",
+          "command": "traceroute -T google.com",
+          "explanation": "Uses TCP SYN packets which are more likely to pass through firewalls"
+        },
+        {
+          "type": "example",
+          "text": "trace route without resolving hostnames for faster output",
+          "command": "traceroute -n google.com",
+          "explanation": "Shows only IP addresses instead of resolving DNS names at each hop"
+        },
+        {
+          "type": "example",
+          "text": "limit the number of hops to trace",
+          "command": "traceroute -m 15 google.com",
+          "explanation": "Sets the maximum number of hops (TTL) to 15"
+        }
+      ]
+    },
+    {
+      "name": "dig",
+      "synopsis": "dig [@server] [name] [type]",
+      "description": "DNS lookup utility for querying name servers",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "look up the IP address of a domain",
+          "command": "dig example.com",
+          "explanation": "Queries DNS for A records of the domain"
+        },
+        {
+          "type": "example",
+          "text": "find the mail servers for a domain",
+          "command": "dig example.com MX",
+          "explanation": "Queries for MX (mail exchange) records"
+        },
+        {
+          "type": "example",
+          "text": "get just the answer without extra info",
+          "command": "dig +short example.com",
+          "explanation": "Returns only the IP address without verbose DNS information"
+        },
+        {
+          "type": "example",
+          "text": "query a specific DNS server for a domain",
+          "command": "dig @8.8.8.8 example.com",
+          "explanation": "Uses Google's DNS server to resolve the domain"
+        },
+        {
+          "type": "example",
+          "text": "do a reverse DNS lookup from an IP address",
+          "command": "dig -x 8.8.8.8",
+          "explanation": "Finds the hostname associated with the given IP address"
+        }
+      ]
+    },
+    {
+      "name": "nslookup",
+      "synopsis": "nslookup [host] [server]",
+      "description": "Query internet name servers interactively or non-interactively",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "look up the DNS records for a domain",
+          "command": "nslookup example.com",
+          "explanation": "Queries the default DNS server for the domain's address"
+        },
+        {
+          "type": "example",
+          "text": "query a specific DNS server for a domain",
+          "command": "nslookup example.com 8.8.8.8",
+          "explanation": "Uses a specified DNS server to resolve the domain"
+        },
+        {
+          "type": "example",
+          "text": "find the name servers for a domain",
+          "command": "nslookup -type=ns example.com",
+          "explanation": "Queries for NS records to find authoritative name servers"
+        },
+        {
+          "type": "example",
+          "text": "do a reverse DNS lookup on an IP address",
+          "command": "nslookup 93.184.216.34",
+          "explanation": "Finds the hostname for the given IP address via reverse DNS"
+        }
+      ]
+    },
+    {
+      "name": "host",
+      "synopsis": "host [options] name [server]",
+      "description": "Simple DNS lookup utility",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "quickly find the IP address of a domain",
+          "command": "host example.com",
+          "explanation": "Performs a simple DNS lookup and shows the IP address"
+        },
+        {
+          "type": "example",
+          "text": "find all DNS record types for a domain",
+          "command": "host -a example.com",
+          "explanation": "Queries for all record types including A, AAAA, MX, NS, and TXT"
+        },
+        {
+          "type": "example",
+          "text": "look up the TXT records for a domain",
+          "command": "host -t TXT example.com",
+          "explanation": "Queries specifically for TXT records, useful for SPF and DKIM"
+        },
+        {
+          "type": "example",
+          "text": "do a reverse lookup from IP to hostname",
+          "command": "host 8.8.8.8",
+          "explanation": "Performs a reverse DNS query on the IP address"
+        }
+      ]
+    },
+    {
+      "name": "nc",
+      "synopsis": "nc [options] [hostname] [port]",
+      "description": "Netcat - versatile networking utility for reading and writing across network connections",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check if a specific port is open on a remote host",
+          "command": "nc -zv example.com 443",
+          "explanation": "Tests connectivity to port 443 without sending data"
+        },
+        {
+          "type": "example",
+          "text": "scan a range of ports on a host",
+          "command": "nc -zv example.com 20-100",
+          "explanation": "Scans ports 20 through 100 to see which are open"
+        },
+        {
+          "type": "example",
+          "text": "set up a simple TCP listener on a port",
+          "command": "nc -l 8080",
+          "explanation": "Listens on port 8080 for incoming connections"
+        },
+        {
+          "type": "example",
+          "text": "transfer a file over the network using netcat",
+          "command": "nc -l 9999 > received_file.txt",
+          "explanation": "Listens on port 9999 and saves incoming data to a file"
+        },
+        {
+          "type": "example",
+          "text": "send a file to a listening netcat instance",
+          "command": "nc target-host 9999 < file.txt",
+          "explanation": "Sends the contents of file.txt to the target host on port 9999"
+        }
+      ]
+    },
+    {
+      "name": "ss",
+      "synopsis": "ss [options] [filter]",
+      "description": "Utility to investigate sockets and display network connections",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all listening TCP ports",
+          "command": "ss -tlnp",
+          "explanation": "Lists all TCP listening sockets with port numbers and process info"
+        },
+        {
+          "type": "example",
+          "text": "show all established connections",
+          "command": "ss -t state established",
+          "explanation": "Displays only currently established TCP connections"
+        },
+        {
+          "type": "example",
+          "text": "find which process is using a specific port",
+          "command": "ss -tlnp | grep :8080",
+          "explanation": "Filters listening sockets to find what is using port 8080"
+        },
+        {
+          "type": "example",
+          "text": "show summary statistics of all socket types",
+          "command": "ss -s",
+          "explanation": "Displays a summary of socket counts by type and state"
+        },
+        {
+          "type": "example",
+          "text": "list all UDP sockets with process information",
+          "command": "ss -ulnp",
+          "explanation": "Shows all UDP listening sockets with associated processes"
+        }
+      ]
+    },
+    {
+      "name": "netstat",
+      "synopsis": "netstat [options]",
+      "description": "Display network connections, routing tables, and interface statistics",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all active network connections and listening ports",
+          "command": "netstat -tulnp",
+          "explanation": "Lists all TCP and UDP connections with port numbers and process IDs"
+        },
+        {
+          "type": "example",
+          "text": "display the routing table",
+          "command": "netstat -rn",
+          "explanation": "Shows the kernel routing table with numeric addresses"
+        },
+        {
+          "type": "example",
+          "text": "show network interface statistics",
+          "command": "netstat -i",
+          "explanation": "Displays statistics for all network interfaces"
+        },
+        {
+          "type": "example",
+          "text": "show only listening sockets",
+          "command": "netstat -ln",
+          "explanation": "Lists all sockets in the listening state"
+        },
+        {
+          "type": "example",
+          "text": "continuously display network connections every 2 seconds",
+          "command": "netstat -c",
+          "explanation": "Refreshes and displays connection info continuously"
+        }
+      ]
+    },
+    {
+      "name": "ip",
+      "synopsis": "ip [options] object command",
+      "description": "Show and manipulate routing, network devices, interfaces, and tunnels",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all IP addresses assigned to network interfaces",
+          "command": "ip addr show",
+          "explanation": "Displays IP addresses for all network interfaces"
+        },
+        {
+          "type": "example",
+          "text": "bring a network interface up or down",
+          "command": "ip link set eth0 up",
+          "explanation": "Enables the eth0 network interface"
+        },
+        {
+          "type": "example",
+          "text": "add a static IP address to an interface",
+          "command": "ip addr add 192.168.1.50/24 dev eth0",
+          "explanation": "Assigns the IP 192.168.1.50 with a /24 subnet to eth0"
+        },
+        {
+          "type": "example",
+          "text": "show the routing table",
+          "command": "ip route show",
+          "explanation": "Displays all routes in the kernel routing table"
+        },
+        {
+          "type": "example",
+          "text": "add a default gateway",
+          "command": "ip route add default via 192.168.1.1",
+          "explanation": "Sets the default gateway to 192.168.1.1"
+        }
+      ]
+    },
+    {
+      "name": "ifconfig",
+      "synopsis": "ifconfig [interface] [options]",
+      "description": "Configure or display network interface parameters (legacy tool)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show all network interfaces and their IP addresses",
+          "command": "ifconfig",
+          "explanation": "Displays configuration for all active network interfaces"
+        },
+        {
+          "type": "example",
+          "text": "show details for a specific network interface",
+          "command": "ifconfig eth0",
+          "explanation": "Shows IP address, MAC address, and stats for eth0"
+        },
+        {
+          "type": "example",
+          "text": "assign an IP address to an interface",
+          "command": "ifconfig eth0 192.168.1.50 netmask 255.255.255.0",
+          "explanation": "Sets the IP and subnet mask on the specified interface"
+        },
+        {
+          "type": "example",
+          "text": "disable a network interface",
+          "command": "ifconfig eth0 down",
+          "explanation": "Brings the eth0 interface down"
+        }
+      ]
+    },
+    {
+      "name": "arp",
+      "synopsis": "arp [options] [hostname]",
+      "description": "Manipulate or display the system ARP cache",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the ARP table of known MAC addresses on the network",
+          "command": "arp -a",
+          "explanation": "Displays all entries in the ARP cache with hostnames"
+        },
+        {
+          "type": "example",
+          "text": "display the ARP table with numeric addresses only",
+          "command": "arp -n",
+          "explanation": "Shows ARP entries without resolving hostnames"
+        },
+        {
+          "type": "example",
+          "text": "delete an entry from the ARP cache",
+          "command": "arp -d 192.168.1.50",
+          "explanation": "Removes the ARP entry for the specified IP address"
+        },
+        {
+          "type": "example",
+          "text": "add a static ARP entry",
+          "command": "arp -s 192.168.1.50 00:11:22:33:44:55",
+          "explanation": "Manually maps an IP address to a MAC address in the ARP table"
+        }
+      ]
+    },
+    {
+      "name": "route",
+      "synopsis": "route [options] [command] [target]",
+      "description": "Show or manipulate the IP routing table",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "display the current routing table",
+          "command": "route -n",
+          "explanation": "Shows the kernel routing table with numeric addresses"
+        },
+        {
+          "type": "example",
+          "text": "add a default gateway",
+          "command": "route add default gw 192.168.1.1",
+          "explanation": "Sets the default gateway for outbound traffic"
+        },
+        {
+          "type": "example",
+          "text": "add a route to a specific network via a gateway",
+          "command": "route add -net 10.0.0.0/8 gw 192.168.1.1",
+          "explanation": "Routes traffic for the 10.0.0.0/8 network through the specified gateway"
+        },
+        {
+          "type": "example",
+          "text": "delete a route from the routing table",
+          "command": "route del -net 10.0.0.0/8",
+          "explanation": "Removes the route entry for the specified network"
+        }
+      ]
+    },
+    {
+      "name": "nmap",
+      "synopsis": "nmap [scan type] [options] target",
+      "description": "Network exploration tool and security scanner",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "scan a host for open ports",
+          "command": "nmap 192.168.1.1",
+          "explanation": "Performs a TCP SYN scan of the most common 1000 ports"
+        },
+        {
+          "type": "example",
+          "text": "detect what operating system a remote host is running",
+          "command": "nmap -O 192.168.1.1",
+          "explanation": "Uses TCP/IP fingerprinting to identify the OS"
+        },
+        {
+          "type": "example",
+          "text": "scan an entire subnet to discover live hosts",
+          "command": "nmap -sn 192.168.1.0/24",
+          "explanation": "Performs a ping scan to find which hosts are up without port scanning"
+        },
+        {
+          "type": "example",
+          "text": "detect service versions running on open ports",
+          "command": "nmap -sV 192.168.1.1",
+          "explanation": "Probes open ports to determine the service and version running"
+        },
+        {
+          "type": "example",
+          "text": "run a comprehensive scan with OS detection, scripts, and version info",
+          "command": "nmap -A 192.168.1.1",
+          "explanation": "Enables OS detection, version scanning, script scanning, and traceroute"
+        },
+        {
+          "type": "example",
+          "text": "scan specific ports on a target",
+          "command": "nmap -p 22,80,443 192.168.1.1",
+          "explanation": "Scans only the specified ports on the target host"
+        }
+      ]
+    },
+    {
+      "name": "tcpdump",
+      "synopsis": "tcpdump [options] [expression]",
+      "description": "Capture and analyze network traffic on an interface",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "capture all traffic on a specific network interface",
+          "command": "tcpdump -i eth0",
+          "explanation": "Captures and displays all packets on the eth0 interface"
+        },
+        {
+          "type": "example",
+          "text": "capture traffic to or from a specific host",
+          "command": "tcpdump host 192.168.1.100",
+          "explanation": "Filters packets involving the specified IP address"
+        },
+        {
+          "type": "example",
+          "text": "capture only HTTP traffic on port 80",
+          "command": "tcpdump -i any port 80",
+          "explanation": "Captures packets on port 80 across all interfaces"
+        },
+        {
+          "type": "example",
+          "text": "save captured packets to a file for later analysis",
+          "command": "tcpdump -i eth0 -w capture.pcap",
+          "explanation": "Writes raw packets to a pcap file that can be opened in Wireshark"
+        },
+        {
+          "type": "example",
+          "text": "capture DNS traffic to debug name resolution",
+          "command": "tcpdump -i any port 53",
+          "explanation": "Captures all DNS query and response packets"
+        }
+      ]
+    },
+    {
+      "name": "iptables",
+      "synopsis": "iptables [options] [chain] [rule]",
+      "description": "Administration tool for IPv4 packet filtering and NAT",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all current firewall rules",
+          "command": "iptables -L -n -v",
+          "explanation": "Displays all rules with numeric addresses and packet counters"
+        },
+        {
+          "type": "example",
+          "text": "block all incoming traffic from a specific IP",
+          "command": "iptables -A INPUT -s 10.0.0.5 -j DROP",
+          "explanation": "Appends a rule to drop all packets from the given source IP"
+        },
+        {
+          "type": "example",
+          "text": "allow incoming SSH connections on port 22",
+          "command": "iptables -A INPUT -p tcp --dport 22 -j ACCEPT",
+          "explanation": "Permits inbound TCP traffic on port 22"
+        },
+        {
+          "type": "example",
+          "text": "flush all firewall rules to start fresh",
+          "command": "iptables -F",
+          "explanation": "Removes all rules from all chains"
+        },
+        {
+          "type": "example",
+          "text": "set up NAT masquerading for internet sharing",
+          "command": "iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE",
+          "explanation": "Enables NAT on outgoing interface for routing traffic from internal network"
+        }
+      ]
+    },
+    {
+      "name": "ufw",
+      "synopsis": "ufw [options] [rule]",
+      "description": "Uncomplicated Firewall - simplified interface for managing firewall rules",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "enable the firewall with default deny incoming",
+          "command": "ufw enable",
+          "explanation": "Activates the firewall; default policy denies incoming traffic"
+        },
+        {
+          "type": "example",
+          "text": "allow SSH connections through the firewall",
+          "command": "ufw allow 22/tcp",
+          "explanation": "Opens port 22 for incoming TCP connections"
+        },
+        {
+          "type": "example",
+          "text": "show current firewall rules and status",
+          "command": "ufw status verbose",
+          "explanation": "Displays active rules, default policies, and firewall state"
+        },
+        {
+          "type": "example",
+          "text": "allow traffic from a specific IP address only",
+          "command": "ufw allow from 192.168.1.100",
+          "explanation": "Permits all connections from the specified IP"
+        },
+        {
+          "type": "example",
+          "text": "deny incoming traffic on a specific port",
+          "command": "ufw deny 3306/tcp",
+          "explanation": "Blocks incoming TCP connections on port 3306 (MySQL)"
+        }
+      ]
+    },
+    {
+      "name": "lsof",
+      "synopsis": "lsof [options]",
+      "description": "List open files and network connections associated with processes",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find which process is listening on a specific port",
+          "command": "lsof -i :8080",
+          "explanation": "Shows the process bound to port 8080"
+        },
+        {
+          "type": "example",
+          "text": "show all network connections for a specific process",
+          "command": "lsof -i -a -p 1234",
+          "explanation": "Lists all network connections opened by process ID 1234"
+        },
+        {
+          "type": "example",
+          "text": "list all established TCP connections",
+          "command": "lsof -i TCP -s TCP:ESTABLISHED",
+          "explanation": "Shows all currently established TCP connections"
+        },
+        {
+          "type": "example",
+          "text": "find all processes listening on any port",
+          "command": "lsof -i -P -n | grep LISTEN",
+          "explanation": "Lists all listening network sockets with numeric ports and addresses"
+        },
+        {
+          "type": "example",
+          "text": "show all open network connections on the system",
+          "command": "lsof -i",
+          "explanation": "Lists all open Internet sockets"
+        }
+      ]
+    },
+    {
+      "name": "mtr",
+      "synopsis": "mtr [options] hostname",
+      "description": "Network diagnostic tool combining ping and traceroute functionality",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "run a continuous traceroute with live latency stats",
+          "command": "mtr google.com",
+          "explanation": "Displays a continuously updating traceroute with packet loss and latency"
+        },
+        {
+          "type": "example",
+          "text": "generate a text report of network path quality",
+          "command": "mtr --report -c 100 google.com",
+          "explanation": "Sends 100 probes and outputs a summary report of the route"
+        },
+        {
+          "type": "example",
+          "text": "run mtr without resolving hostnames for faster output",
+          "command": "mtr -n google.com",
+          "explanation": "Shows only IP addresses at each hop without DNS resolution"
+        },
+        {
+          "type": "example",
+          "text": "use TCP mode for mtr to test through strict firewalls",
+          "command": "mtr --tcp -P 443 google.com",
+          "explanation": "Uses TCP on port 443 instead of ICMP for firewall-friendly probing"
+        }
+      ]
+    },
+    {
+      "name": "whois",
+      "synopsis": "whois [options] name",
+      "description": "Query domain registration and IP address allocation information",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "look up domain registration information",
+          "command": "whois example.com",
+          "explanation": "Shows registrar, creation date, expiration, and contact info for the domain"
+        },
+        {
+          "type": "example",
+          "text": "find out who owns an IP address",
+          "command": "whois 8.8.8.8",
+          "explanation": "Queries the IP allocation registry for ownership information"
+        },
+        {
+          "type": "example",
+          "text": "check when a domain expires",
+          "command": "whois example.com | grep -i expir",
+          "explanation": "Filters whois output to find the domain expiration date"
+        },
+        {
+          "type": "example",
+          "text": "look up a domain using a specific whois server",
+          "command": "whois -h whois.verisign-grs.com example.com",
+          "explanation": "Queries a particular whois server for domain information"
+        }
+      ]
+    },
+    {
+      "name": "telnet",
+      "synopsis": "telnet [options] [host [port]]",
+      "description": "User interface to the TELNET protocol for testing network services",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "test if a remote port is open and accepting connections",
+          "command": "telnet example.com 80",
+          "explanation": "Attempts to connect to port 80 to verify it is open"
+        },
+        {
+          "type": "example",
+          "text": "test an SMTP mail server connection",
+          "command": "telnet mail.example.com 25",
+          "explanation": "Connects to the SMTP port to manually test the mail server"
+        },
+        {
+          "type": "example",
+          "text": "check if a Redis server is responding",
+          "command": "telnet localhost 6379",
+          "explanation": "Connects to the default Redis port to verify the service is running"
+        },
+        {
+          "type": "example",
+          "text": "manually send an HTTP request to test a web server",
+          "command": "telnet example.com 80",
+          "explanation": "Opens a raw TCP connection to port 80 where you can type HTTP commands"
+        }
+      ]
+    },
+    {
+      "name": "ab",
+      "synopsis": "ab [options] URL",
+      "description": "Apache HTTP server benchmarking tool for load testing",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "benchmark a web server with 1000 requests and 10 concurrent connections",
+          "command": "ab -n 1000 -c 10 http://localhost:8080/",
+          "explanation": "Sends 1000 total requests with 10 at a time to measure server performance"
+        },
+        {
+          "type": "example",
+          "text": "run a quick load test and show percentile response times",
+          "command": "ab -n 500 -c 50 http://example.com/api/endpoint",
+          "explanation": "Benchmarks 500 requests at 50 concurrency and displays response time distribution"
+        },
+        {
+          "type": "example",
+          "text": "benchmark a POST endpoint with a JSON payload",
+          "command": "ab -n 200 -c 20 -p data.json -T 'application/json' http://localhost:8080/api",
+          "explanation": "Sends 200 POST requests with JSON data from a file"
+        },
+        {
+          "type": "example",
+          "text": "benchmark with keep-alive connections enabled",
+          "command": "ab -n 1000 -c 100 -k http://localhost:8080/",
+          "explanation": "Uses HTTP keep-alive to reuse connections during the test"
+        }
+      ]
+    },
+    {
+      "name": "httpie",
+      "synopsis": "http [options] [METHOD] URL [items]",
+      "description": "User-friendly HTTP client for the command line with intuitive syntax",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "make a simple GET request with pretty output",
+          "command": "http https://api.example.com/users",
+          "explanation": "Sends a GET request and displays the response with syntax highlighting"
+        },
+        {
+          "type": "example",
+          "text": "send a POST request with JSON fields",
+          "command": "http POST https://api.example.com/users name=John email=john@example.com",
+          "explanation": "Sends a JSON POST with the specified key-value pairs"
+        },
+        {
+          "type": "example",
+          "text": "download a file using HTTPie",
+          "command": "http --download https://example.com/file.zip",
+          "explanation": "Downloads the file with a progress bar"
+        },
+        {
+          "type": "example",
+          "text": "send a request with custom headers and authentication",
+          "command": "http -a user:pass GET https://api.example.com/secret X-Custom-Header:value",
+          "explanation": "Authenticates with basic auth and includes a custom header"
+        },
+        {
+          "type": "example",
+          "text": "submit form data instead of JSON",
+          "command": "http --form POST https://example.com/login username=admin password=secret",
+          "explanation": "Sends data as application/x-www-form-urlencoded"
+        }
+      ]
+    }
+  ]
+}
