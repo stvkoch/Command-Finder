@@ -2,9 +2,12 @@ import sys
 
 from cf.search import SearchResult
 
+# Sentinel returned when user picks "Show more"
+SHOW_MORE = object()
+
 
 def select_command(results: list[SearchResult], verbose: bool = False,
-                   non_interactive: bool = False) -> str | None:
+                   non_interactive: bool = False, has_more: bool = True) -> str | None:
     if not results:
         print("No matching commands found.", file=sys.stderr)
         return None
@@ -15,10 +18,10 @@ def select_command(results: list[SearchResult], verbose: bool = False,
 
     try:
         from simple_term_menu import TerminalMenu
-        return _select_with_menu(results, verbose)
+        return _select_with_menu(results, verbose, has_more)
     except (ImportError, OSError):
         # OSError when /dev/tty is not available
-        return _select_with_input(results, verbose)
+        return _select_with_input(results, verbose, has_more)
 
 
 def _format_entry(r: SearchResult, verbose: bool) -> str:
@@ -39,10 +42,14 @@ def _format_preview(r: SearchResult) -> str:
     return "\n".join(lines)
 
 
-def _select_with_menu(results: list[SearchResult], verbose: bool) -> str | None:
+def _select_with_menu(results: list[SearchResult], verbose: bool,
+                      has_more: bool) -> str | None:
     from simple_term_menu import TerminalMenu
 
     entries = [_format_entry(r, verbose) for r in results]
+    if has_more:
+        entries.append("[+] Show more results...")
+
     previews = {i: _format_preview(r) for i, r in enumerate(results)}
 
     def preview_func(index):
@@ -50,7 +57,6 @@ def _select_with_menu(results: list[SearchResult], verbose: bool) -> str | None:
             return previews[index]
         return ""
 
-    # Build preview command as a callable
     menu = TerminalMenu(
         entries,
         title="Select a command (press q to cancel):",
@@ -62,10 +68,14 @@ def _select_with_menu(results: list[SearchResult], verbose: bool) -> str | None:
     chosen = menu.show()
     if chosen is None:
         return None
+    # "Show more" is the last entry
+    if has_more and chosen == len(results):
+        return SHOW_MORE
     return results[chosen].command_template
 
 
-def _select_with_input(results: list[SearchResult], verbose: bool) -> str | None:
+def _select_with_input(results: list[SearchResult], verbose: bool,
+                       has_more: bool) -> str | None:
     """Fallback selector using basic input() when simple-term-menu is unavailable."""
     print("\nMatching commands:\n", file=sys.stderr)
     for i, r in enumerate(results, 1):
@@ -76,13 +86,20 @@ def _select_with_input(results: list[SearchResult], verbose: bool) -> str | None
             print(f"     {r.explanation}", file=sys.stderr)
         print(file=sys.stderr)
 
+    if has_more:
+        print(f"  +) Show more results...", file=sys.stderr)
+        print(file=sys.stderr)
+
     try:
-        choice = input("Select [1-{}] (q to cancel): ".format(len(results)))
+        choice = input("Select [1-{}{}] (q to cancel): ".format(
+            len(results), "/+" if has_more else ""))
     except (EOFError, KeyboardInterrupt):
         return None
 
     if choice.strip().lower() in ("q", ""):
         return None
+    if has_more and choice.strip() == "+":
+        return SHOW_MORE
     try:
         idx = int(choice.strip()) - 1
         if 0 <= idx < len(results):

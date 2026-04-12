@@ -26,7 +26,7 @@ def main(
     print_mode: Annotated[bool, typer.Option("--print", "-p", help="Print command to stdout")] = False,
     copy: Annotated[bool, typer.Option("--copy", "-c", help="Copy command to clipboard")] = False,
     tmux: Annotated[bool, typer.Option("--tmux", "-t", help="Send command to tmux pane")] = False,
-    top: Annotated[int, typer.Option("--top", help="Number of results to show")] = 7,
+    top: Annotated[int, typer.Option("--top", help="Number of results (default: 7, env: CF_TOP)")] = None,
     seed: Annotated[bool, typer.Option("--seed", help="Seed/rebuild the database and export ONNX model")] = False,
     force: Annotated[bool, typer.Option("--force", help="Force reseed (clear existing data)")] = False,
     verbose: Annotated[bool, typer.Option("--verbose", "-v", help="Show similarity scores")] = False,
@@ -47,6 +47,11 @@ def main(
         raise typer.Exit(1)
 
     query_str = " ".join(query)
+
+    # Resolve --top default from env
+    if top is None:
+        from cf.config import DEFAULT_TOP_K
+        top = DEFAULT_TOP_K
 
     # Check if DB exists and has data
     from cf.config import DB_PATH
@@ -69,17 +74,30 @@ def main(
         typer.echo(f"Query: {query_str}", err=True)
 
     from cf.search import search
-    results = search(query_str, top_k=top)
+    from cf.selector import SHOW_MORE, select_command
 
-    if not results:
-        typer.echo("No matching commands found.", err=True)
-        raise typer.Exit(1)
+    current_top = top
+    from cf.config import DEFAULT_MAX_TOP_K
+    max_top = DEFAULT_MAX_TOP_K
 
-    from cf.selector import select_command
-    selected = select_command(results, verbose=verbose)
+    while True:
+        results = search(query_str, top_k=current_top)
 
-    if not selected:
-        raise typer.Exit(0)
+        if not results:
+            typer.echo("No matching commands found.", err=True)
+            raise typer.Exit(1)
+
+        has_more = current_top < max_top and len(results) >= current_top
+        selected = select_command(results, verbose=verbose, has_more=has_more)
+
+        if selected is SHOW_MORE:
+            current_top = min(current_top + 10, max_top)
+            continue
+
+        if not selected:
+            raise typer.Exit(0)
+
+        break
 
     from cf.output import output_clipboard, output_print, output_tmux
 
@@ -128,16 +146,23 @@ cf() {
 }
 
 cf-widget() {
+    local query="$BUFFER"
     local result
-    result=$(command cf --print "$@" </dev/tty 2>/dev/tty)
+    if [[ -z "$query" ]]; then
+        zle -I
+        echo -n "cf> " > /dev/tty
+        read -r query < /dev/tty
+        [[ -z "$query" ]] && return
+    fi
+    result=$(command cf --print "$query" </dev/tty 2>/dev/tty)
     if [[ -n "$result" ]]; then
         BUFFER="$result"
         CURSOR=$#BUFFER
-        zle reset-prompt
     fi
+    zle reset-prompt
 }
 zle -N cf-widget
-bindkey '^K' cf-widget
+bindkey '^F' cf-widget
 
 # Then restart your shell or run: source ~/.zshrc
 """

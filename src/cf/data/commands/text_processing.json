@@ -868,6 +868,112 @@
       ]
     },
     {
+      "name": "cat",
+      "synopsis": "cat [options] [file...]",
+      "description": "Concatenate files and print them to standard output",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "print a file to the terminal",
+          "command": "cat notes.txt",
+          "explanation": "Sends the entire file to stdout"
+        },
+        {
+          "type": "example",
+          "text": "join several files in order into one stream",
+          "command": "cat part1.txt part2.txt part3.txt > combined.txt",
+          "explanation": "Concatenates inputs left to right into the output file"
+        },
+        {
+          "type": "example",
+          "text": "number all lines for quick reference",
+          "command": "cat -n script.sh",
+          "explanation": "Prefixes each line with a line number including blanks"
+        },
+        {
+          "type": "example",
+          "text": "append stdin to the end of a file",
+          "command": "cat >> log.txt",
+          "explanation": "With no files, cat reads from the keyboard until EOF; >> appends"
+        }
+      ]
+    },
+    {
+      "name": "less",
+      "synopsis": "less [options] [file...]",
+      "description": "View long files or pipes interactively (forward and backward scrolling)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "page through a large log file",
+          "command": "less /var/log/system.log",
+          "explanation": "Use Space to page down, b to page up, q to quit"
+        },
+        {
+          "type": "example",
+          "text": "follow new lines appended to a file like tail -f",
+          "command": "less +F app.log",
+          "explanation": "Press Ctrl+C then F again to toggle follow mode in less"
+        },
+        {
+          "type": "example",
+          "text": "search forward for a pattern inside less",
+          "command": "less +/error build.log",
+          "explanation": "Opens the file jumped to the first match of 'error'"
+        },
+        {
+          "type": "example",
+          "text": "pipe command output into a pager without line wrap",
+          "command": "git log -p | less -S",
+          "explanation": "-S chops long lines so you scroll horizontally with arrow keys"
+        }
+      ]
+    },
+    {
+      "name": "more",
+      "synopsis": "more [options] [file...]",
+      "description": "Simple file pager (forward-only on many systems)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "page through a text file when less is unavailable",
+          "command": "more readme.txt",
+          "explanation": "Space advances a page; q exits"
+        },
+        {
+          "type": "example",
+          "text": "view output of a long command one screen at a time",
+          "command": "ls -la /usr/bin | more",
+          "explanation": "Pipes output through more for basic scrolling"
+        }
+      ]
+    },
+    {
+      "name": "split",
+      "synopsis": "split [options] [input [prefix]]",
+      "description": "Split a large file into smaller fixed-size pieces",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "split a 10 GB file into 1 GB chunks named chunk_aa chunk_ab",
+          "command": "split -b 1G huge.iso chunk_",
+          "explanation": "-b uses byte size; default output is xaa xab unless you set a prefix"
+        },
+        {
+          "type": "example",
+          "text": "split a text file into files of 1000 lines each",
+          "command": "split -l 1000 big.log part_",
+          "explanation": "Creates part_aa, part_ab, ... each with at most 1000 lines"
+        },
+        {
+          "type": "example",
+          "text": "rejoin split binary parts on any Unix system",
+          "command": "cat chunk_* > restored.iso",
+          "explanation": "Concatenates pieces in sorted name order back into one file"
+        }
+      ]
+    },
+    {
       "name": "dos2unix",
       "synopsis": "dos2unix [options] [file...]",
       "description": "Convert line endings between DOS/Windows and Unix formats",
@@ -895,6 +1001,57 @@
           "text": "convert all files in a directory from DOS to Unix format",
           "command": "find . -name '*.txt' -exec dos2unix {} +",
           "explanation": "Recursively finds all .txt files and converts their line endings"
+        }
+      ]
+    },
+    {
+      "name": "xxd",
+      "synopsis": "xxd [options] [infile [outfile]]",
+      "description": "Make a hexdump or do the reverse",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "view the hexadecimal representation of a binary file",
+          "command": "xxd file.bin",
+          "explanation": "Outputs the hex values and corresponding ASCII characters"
+        },
+        {
+          "type": "example",
+          "text": "revert a hexdump back to a binary file",
+          "command": "xxd -r dump.hex file.bin",
+          "explanation": "Reconstructs the original binary from a hex dump format"
+        }
+      ]
+    },
+    {
+      "name": "envsubst",
+      "synopsis": "envsubst [SHELL-FORMAT]",
+      "description": "Substitute environment variables in shell format strings",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "replace environment variables in a template file",
+          "command": "envsubst < template.conf > output.conf",
+          "explanation": "Fills in $VAR or ${VAR} in the template with actual environment values"
+        },
+        {
+          "type": "example",
+          "text": "replace only specific environment variables",
+          "command": "envsubst '$USER,$HOME' < template.txt",
+          "explanation": "Only substitutes the variables explicitly listed in the string"
+        }
+      ]
+    },
+    {
+      "name": "sponge",
+      "synopsis": "sponge [file]",
+      "description": "Soak up standard input and write to a file",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "filter a file and write the result back to the same file safely",
+          "command": "grep pattern file.txt | sponge file.txt",
+          "explanation": "Reads all input before opening the output file, avoiding truncation"
         }
       ]
     }

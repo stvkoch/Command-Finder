@@ -19,7 +19,14 @@ CACHE_DIR = Path.home() / ".local" / "share" / "cf" / "cache"
 # ── ONNX fast path (no torch/transformers) ───────────────────
 
 def _onnx_available() -> bool:
-    return (ONNX_DIR / "model.onnx").exists() and (ONNX_DIR / "tokenizer.json").exists()
+    if not ((ONNX_DIR / "model.onnx").exists() and (ONNX_DIR / "tokenizer.json").exists()):
+        return False
+    try:
+        import onnxruntime  # noqa: F401
+        from tokenizers import Tokenizer  # noqa: F401
+        return True
+    except ImportError:
+        return False
 
 
 def _get_onnx():
@@ -169,21 +176,43 @@ def export_onnx() -> Path:
     if "token_type_ids" not in dummy:
         dummy["token_type_ids"] = torch.zeros_like(dummy["input_ids"])
 
-    torch.onnx.export(
-        transformer,
-        (dummy["input_ids"], dummy["attention_mask"], dummy["token_type_ids"]),
-        str(ONNX_DIR / "model.onnx"),
-        input_names=["input_ids", "attention_mask", "token_type_ids"],
-        output_names=["token_embeddings"],
-        dynamic_axes={
-            "input_ids": {0: "batch", 1: "seq"},
-            "attention_mask": {0: "batch", 1: "seq"},
-            "token_type_ids": {0: "batch", 1: "seq"},
-            "token_embeddings": {0: "batch", 1: "seq"},
-        },
-        opset_version=14,
-        dynamo=False,
-    )
+    # Disable use_cache to avoid kwarg conflict during ONNX tracing
+    transformer.config.use_cache = False
+    transformer.eval()
+
+    # Replace forward to bypass transformers 5.x decorators that conflict
+    # with torch.jit.trace (duplicate use_cache argument injection)
+    original_forward = transformer.forward.__wrapped__ if hasattr(transformer.forward, '__wrapped__') else None
+
+    class _OnnxWrapper(torch.nn.Module):
+        def __init__(self, bert):
+            super().__init__()
+            self.bert = bert
+        def forward(self, input_ids, attention_mask, token_type_ids):
+            out = self.bert.embeddings(input_ids=input_ids, token_type_ids=token_type_ids)
+            extended_mask = self.bert.get_extended_attention_mask(attention_mask, input_ids.shape)
+            out = self.bert.encoder(out, attention_mask=extended_mask).last_hidden_state
+            return out
+
+    wrapper = _OnnxWrapper(transformer)
+    wrapper.eval()
+
+    with torch.no_grad():
+        torch.onnx.export(
+            wrapper,
+            (dummy["input_ids"], dummy["attention_mask"], dummy["token_type_ids"]),
+            str(ONNX_DIR / "model.onnx"),
+            input_names=["input_ids", "attention_mask", "token_type_ids"],
+            output_names=["token_embeddings"],
+            dynamic_axes={
+                "input_ids": {0: "batch", 1: "seq"},
+                "attention_mask": {0: "batch", 1: "seq"},
+                "token_type_ids": {0: "batch", 1: "seq"},
+                "token_embeddings": {0: "batch", 1: "seq"},
+            },
+            opset_version=14,
+            dynamo=False,
+        )
     print("done.", file=sys.stderr)
     print(f"ONNX model saved to {ONNX_DIR}", file=sys.stderr)
     return ONNX_DIR

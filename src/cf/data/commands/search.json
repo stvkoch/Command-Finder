@@ -41,6 +41,24 @@
           "text": "find files and execute a command on each one",
           "command": "find . -name '*.log' -exec gzip {} \\;",
           "explanation": "Compresses every .log file found"
+        },
+        {
+          "type": "example",
+          "text": "search only the current directory without subfolders",
+          "command": "find . -maxdepth 1 -type f",
+          "explanation": "-maxdepth 1 limits recursion to the starting directory"
+        },
+        {
+          "type": "example",
+          "text": "skip heavy directories like node_modules while finding source files",
+          "command": "find . -path '*/node_modules' -prune -o -name '*.ts' -print",
+          "explanation": "-prune stops descending into matched paths; -o chains the real predicate"
+        },
+        {
+          "type": "example",
+          "text": "run a command on many files with one process (faster than one exec per file)",
+          "command": "find . -name '*.jpg' -exec jpegoptim {} +",
+          "explanation": "The + form batches paths like xargs for efficiency"
         }
       ]
     },

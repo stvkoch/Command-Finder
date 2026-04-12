@@ -1,0 +1,486 @@
+{
+  "category": "macos",
+  "commands": [
+    {
+      "name": "sw_vers",
+      "synopsis": "sw_vers [-productName|-productVersion|-buildVersion]",
+      "description": "Print macOS product name, version, and build (system profiler shortcut)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "see which macOS version you are running",
+          "command": "sw_vers",
+          "explanation": "Shows product name, version, and build number"
+        },
+        {
+          "type": "example",
+          "text": "print only the macOS version number for scripts",
+          "command": "sw_vers -productVersion",
+          "explanation": "Outputs a single line like 14.2.1 suitable for automation"
+        },
+        {
+          "type": "example",
+          "text": "get the build number for troubleshooting or compatibility checks",
+          "command": "sw_vers -buildVersion",
+          "explanation": "Shows the internal build identifier (e.g. 23C71)"
+        }
+      ]
+    },
+    {
+      "name": "diskutil",
+      "synopsis": "diskutil [verb] [options]",
+      "description": "Manage local disks, volumes, and APFS containers on macOS",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all disks and partitions with identifiers",
+          "command": "diskutil list",
+          "explanation": "Shows disk0, synthesized volumes, and APFS structure"
+        },
+        {
+          "type": "example",
+          "text": "see detailed information about one disk or volume",
+          "command": "diskutil info disk0",
+          "explanation": "Prints filesystem type, size, mount point, and UUID"
+        },
+        {
+          "type": "example",
+          "text": "safely eject an external drive or disk image",
+          "command": "diskutil eject /Volumes/MyDrive",
+          "explanation": "Unmounts and powers down the device when possible"
+        },
+        {
+          "type": "example",
+          "text": "repair permissions and verify a volume (check first)",
+          "command": "diskutil verifyVolume /",
+          "explanation": "Runs a read-only check on the boot volume without repairing"
+        },
+        {
+          "type": "example",
+          "text": "erase and reformat a USB stick as ExFAT with a label",
+          "command": "diskutil eraseDisk ExFAT MYUSB MBRFormat /dev/disk4",
+          "explanation": "Destructively repartitions disk4; triple-check the device node first"
+        }
+      ]
+    },
+    {
+      "name": "launchctl",
+      "synopsis": "launchctl subcommand [arguments]",
+      "description": "Interface to launchd for user and system services on macOS",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list all loaded user launch agents",
+          "command": "launchctl list",
+          "explanation": "Shows PID, exit status, and label for GUI session services"
+        },
+        {
+          "type": "example",
+          "text": "unload a user LaunchAgent plist you are debugging",
+          "command": "launchctl unload ~/Library/LaunchAgents/com.example.app.plist",
+          "explanation": "Stops the job and removes it from launchd until loaded again"
+        },
+        {
+          "type": "example",
+          "text": "load a LaunchAgent after editing its plist",
+          "command": "launchctl load ~/Library/LaunchAgents/com.example.app.plist",
+          "explanation": "Registers and starts the agent in the current user domain"
+        },
+        {
+          "type": "example",
+          "text": "bootstrap a service in the user domain (modern launchctl on newer macOS)",
+          "command": "launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.example.app.plist",
+          "explanation": "Preferred on recent macOS instead of load for some workflows"
+        },
+        {
+          "type": "example",
+          "text": "print environment variables launchd injects for your session",
+          "command": "launchctl getenv PATH",
+          "explanation": "Reads a single variable from the caller's launchd context"
+        }
+      ]
+    },
+    {
+      "name": "plutil",
+      "synopsis": "plutil [options] file",
+      "description": "Convert, lint, and edit Apple property list files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "check whether a plist is valid XML or binary",
+          "command": "plutil -lint com.example.plist",
+          "explanation": "Validates syntax and prints OK or an error"
+        },
+        {
+          "type": "example",
+          "text": "convert a binary plist to readable XML",
+          "command": "plutil -convert xml1 -o - file.plist",
+          "explanation": "Outputs XML to stdout for inspection or diffing"
+        },
+        {
+          "type": "example",
+          "text": "convert XML plist to binary for smaller on-disk size",
+          "command": "plutil -convert binary1 Info.plist",
+          "explanation": "Rewrites the file in binary1 format in place"
+        },
+        {
+          "type": "example",
+          "text": "pretty-print JSON as an XML plist",
+          "command": "plutil -convert xml1 data.json -o data.plist",
+          "explanation": "Useful when bridging JSON configs into plist-only tools"
+        }
+      ]
+    },
+    {
+      "name": "mdfind",
+      "synopsis": "mdfind [-live] [query]",
+      "description": "Search files using Spotlight metadata indexes",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find PDF documents indexed by Spotlight",
+          "command": "mdfind kind:pdf",
+          "explanation": "Uses the kind query token to match PDF content type"
+        },
+        {
+          "type": "example",
+          "text": "search only your home folder for a phrase in indexed content",
+          "command": "mdfind -onlyin ~ 'invoice 2024'",
+          "explanation": "Restricts the query to your home directory tree"
+        },
+        {
+          "type": "example",
+          "text": "live search that updates as the index changes",
+          "command": "mdfind -live 'kMDItemAuthors == \"Ada Lovelace\"'",
+          "explanation": "Keeps streaming new matches until you interrupt it"
+        }
+      ]
+    },
+    {
+      "name": "mdls",
+      "synopsis": "mdls [-raw] [-name attr] file",
+      "description": "Display Spotlight metadata attributes for a file",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "see all metadata Spotlight stores for one file",
+          "command": "mdls ~/Documents/report.pdf",
+          "explanation": "Lists attributes like dates, dimensions, and where from"
+        },
+        {
+          "type": "example",
+          "text": "read a single attribute such as pixel dimensions",
+          "command": "mdls -name kMDItemPixelHeight -name kMDItemPixelWidth photo.png",
+          "explanation": "Filters output to specific keys only"
+        }
+      ]
+    },
+    {
+      "name": "ditto",
+      "synopsis": "ditto [options] src ... dst",
+      "description": "Copy directories while preserving resource forks, ACLs, and HFS+ metadata",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "clone a folder for backup keeping extended attributes",
+          "command": "ditto src_folder dst_folder",
+          "explanation": "Preferred over cp -R for macOS bundles and xattrs"
+        },
+        {
+          "type": "example",
+          "text": "copy an app bundle to another volume safely",
+          "command": "ditto /Applications/MyApp.app /Volumes/Backup/MyApp.app",
+          "explanation": "Preserves code signing extended attributes and bundle structure"
+        },
+        {
+          "type": "example",
+          "text": "show what would be copied without writing files",
+          "command": "ditto -V src dst",
+          "explanation": "Verbose mode lists each path as it is processed"
+        }
+      ]
+    },
+    {
+      "name": "xattr",
+      "synopsis": "xattr [-lrs] [options] file",
+      "description": "List, read, set, and remove extended attributes on files",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list extended attributes on a downloaded file",
+          "command": "xattr file.zip",
+          "explanation": "Shows quarantine and other attribute names"
+        },
+        {
+          "type": "example",
+          "text": "remove the quarantine flag so Gatekeeper stops warning",
+          "command": "xattr -d com.apple.quarantine ~/Downloads/myapp.dmg",
+          "explanation": "Only do this for files you trust; it removes download tagging"
+        },
+        {
+          "type": "example",
+          "text": "clear all extended attributes from a file",
+          "command": "xattr -c suspicious.bin",
+          "explanation": "Strips every xattr; use with care"
+        },
+        {
+          "type": "example",
+          "text": "recursively list attributes in a directory tree",
+          "command": "xattr -lr ~/Library/Developer",
+          "explanation": "Useful when debugging codesign or custom metadata"
+        }
+      ]
+    },
+    {
+      "name": "softwareupdate",
+      "synopsis": "softwareupdate [command] [args]",
+      "description": "Install macOS system updates from the command line",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list available software updates without installing",
+          "command": "softwareupdate -l",
+          "explanation": "Shows recommended updates and labels"
+        },
+        {
+          "type": "example",
+          "text": "install all recommended updates non-interactively",
+          "command": "sudo softwareupdate -ia",
+          "explanation": "Installs all available items; may require a reboot"
+        },
+        {
+          "type": "example",
+          "text": "download available updates without installing them yet",
+          "command": "sudo softwareupdate -d -a",
+          "explanation": "Fetches update packages to disk so you can install later offline or after review"
+        }
+      ]
+    },
+    {
+      "name": "osascript",
+      "synopsis": "osascript [-l language] script",
+      "description": "Run AppleScript or JavaScript for Automation from the shell",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show a notification from a shell script",
+          "command": "osascript -e 'display notification \"Build finished\" with title \"CI\"'",
+          "explanation": "Posts a user notification without opening Script Editor"
+        },
+        {
+          "type": "example",
+          "text": "set the Mac volume to 50 percent",
+          "command": "osascript -e 'set volume output volume 50'",
+          "explanation": "Controls system audio via AppleScript"
+        },
+        {
+          "type": "example",
+          "text": "run an AppleScript file",
+          "command": "osascript myscript.scpt",
+          "explanation": "Executes a compiled or plain .scpt file"
+        }
+      ]
+    },
+    {
+      "name": "networksetup",
+      "synopsis": "networksetup -listallhardwareports | ...",
+      "description": "Configure network locations, proxies, and Wi-Fi on macOS",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list hardware ports and their device names",
+          "command": "networksetup -listallhardwareports",
+          "explanation": "Maps Ethernet vs Wi-Fi to en0, en1, etc."
+        },
+        {
+          "type": "example",
+          "text": "turn Wi-Fi power on or off",
+          "command": "sudo networksetup -setairportpower en0 off",
+          "explanation": "Disables wireless; replace en0 with your Wi-Fi interface"
+        },
+        {
+          "type": "example",
+          "text": "show DNS servers for a service",
+          "command": "networksetup -getdnsservers Wi-Fi",
+          "explanation": "Reads resolver configuration for the named service"
+        }
+      ]
+    },
+    {
+      "name": "scutil",
+      "synopsis": "scutil [--dns|--nc|--proxy]",
+      "description": "Query system configuration including DNS and proxy settings",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "see resolver order and search domains",
+          "command": "scutil --dns",
+          "explanation": "Shows how macOS resolves hostnames including VPN split DNS"
+        },
+        {
+          "type": "example",
+          "text": "inspect active proxy configuration",
+          "command": "scutil --proxy",
+          "explanation": "Disables HTTP proxy state useful when debugging connectivity"
+        }
+      ]
+    },
+    {
+      "name": "security",
+      "synopsis": "security [command] [options]",
+      "description": "Manage keychains, certificates, and secure storage from the CLI",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "list keychains the user search list uses",
+          "command": "security list-keychains",
+          "explanation": "Shows paths to login.keychain-db and others"
+        },
+        {
+          "type": "example",
+          "text": "find a generic password item by account name",
+          "command": "security find-generic-password -a myuser -s myservice -w",
+          "explanation": "-w prints only the password to stdout; avoid logging"
+        },
+        {
+          "type": "example",
+          "text": "import a certificate into the login keychain",
+          "command": "security import cert.pem -k ~/Library/Keychains/login.keychain-db",
+          "explanation": "Adds a PEM certificate for apps that use the keychain"
+        }
+      ]
+    },
+    {
+      "name": "codesign",
+      "synopsis": "codesign -s identity | -dv path",
+      "description": "Sign and verify code signatures on macOS binaries and bundles",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "verify whether an app is signed and not modified",
+          "command": "codesign --verify --deep --strict /Applications/SomeApp.app",
+          "explanation": "Exits 0 if the bundle signature is intact"
+        },
+        {
+          "type": "example",
+          "text": "display signing identity and entitlements of a binary",
+          "command": "codesign -dv --entitlements :- /path/to/binary",
+          "explanation": "-d verbose shows Team ID and CDHash; entitlements print to stdout"
+        }
+      ]
+    },
+    {
+      "name": "log",
+      "synopsis": "log [show|stream|collect]",
+      "description": "View and stream unified logging data (substitute for tailing /var/log on modern macOS)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "stream live logs filtered by process name",
+          "command": "log stream --predicate 'process == \"mydaemon\"' --level debug",
+          "explanation": "Shows unified log messages as they arrive"
+        },
+        {
+          "type": "example",
+          "text": "show logs from the last hour for a subsystem",
+          "command": "log show --last 1h --predicate 'subsystem == \"com.apple.network\"'",
+          "explanation": "Reads persisted logs with a time window and filter"
+        }
+      ]
+    },
+    {
+      "name": "pmset",
+      "synopsis": "pmset [-g] [command]",
+      "description": "Manage power management settings (sleep, wakeup, assertions)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "prevent the mac from sleeping temporarily",
+          "command": "pmset noidle",
+          "explanation": "Creates a power assertion to prevent idle sleep"
+        },
+        {
+          "type": "example",
+          "text": "display current power management settings and battery state",
+          "command": "pmset -g",
+          "explanation": "Shows the active power management profile and battery percentage"
+        },
+        {
+          "type": "example",
+          "text": "schedule the mac to wake up at a specific time",
+          "command": "pmset schedule wake \"08:00:00\"",
+          "explanation": "Adds a wake event to the system management controller"
+        }
+      ]
+    },
+    {
+      "name": "system_profiler",
+      "synopsis": "system_profiler [dataType]",
+      "description": "Report system hardware and software configuration",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "get detailed hardware and software profile of the mac",
+          "command": "system_profiler",
+          "explanation": "Dumps a comprehensive report of all system components"
+        },
+        {
+          "type": "example",
+          "text": "list all USB devices connected to the mac",
+          "command": "system_profiler SPUSBDataType",
+          "explanation": "Shows only the USB device tree and connection details"
+        },
+        {
+          "type": "example",
+          "text": "check battery health and cycle count",
+          "command": "system_profiler SPPowerDataType | grep \"Cycle Count\"",
+          "explanation": "Filters the power profile to extract the battery cycle count"
+        }
+      ]
+    },
+    {
+      "name": "screencapture",
+      "synopsis": "screencapture [options] file",
+      "description": "Take screenshots from the command line",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "capture the whole screen to a file",
+          "command": "screencapture screen.png",
+          "explanation": "Saves an image of the entire screen to the specified file"
+        },
+        {
+          "type": "example",
+          "text": "capture a selected portion of the screen interactively",
+          "command": "screencapture -i selection.png",
+          "explanation": "Allows the user to click and drag to select an area to capture"
+        },
+        {
+          "type": "example",
+          "text": "copy the screenshot directly to the clipboard",
+          "command": "screencapture -c",
+          "explanation": "Captures the screen to the clipboard instead of a file"
+        }
+      ]
+    },
+    {
+      "name": "qlmanage",
+      "synopsis": "qlmanage [options]",
+      "description": "Quick Look Server debug and management tool",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "preview a file using quick look from the terminal",
+          "command": "qlmanage -p file.txt",
+          "explanation": "Opens a Quick Look window for the specified file"
+        },
+        {
+          "type": "example",
+          "text": "clear the quick look thumbnail cache",
+          "command": "qlmanage -r cache",
+          "explanation": "Resets the Quick Look memory and disk caches"
+        }
+      ]
+    }
+  ]
+}

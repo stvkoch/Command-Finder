@@ -14,17 +14,27 @@ cf() {
 }
 
 # ZLE widget: for keybinding integration (injected directly into BUFFER)
+# If text is already on the line, use it as the query
 cf-widget() {
+    local query="$BUFFER"
     local result
-    result=$(command cf --print </dev/tty 2>/dev/tty)
+
+    if [[ -z "$query" ]]; then
+        # Empty line: prompt for input
+        zle -I  # invalidate display
+        echo -n "cf> " > /dev/tty
+        read -r query < /dev/tty
+        [[ -z "$query" ]] && return
+    fi
+
+    result=$(command cf --print "$query" </dev/tty 2>/dev/tty)
     if [[ -n "$result" ]]; then
         BUFFER="$result"
         CURSOR=$#BUFFER
-        zle reset-prompt
     fi
+    zle reset-prompt
 }
 zle -N cf-widget
 
-# Bind Ctrl+K to open cf interactively
-# Change this keybinding if Ctrl+K conflicts with your setup
-bindkey '^K' cf-widget
+# Bind Ctrl+F to open cf search widget
+bindkey '^F' cf-widget

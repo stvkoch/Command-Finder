@@ -251,6 +251,36 @@
           "text": "uninstall a package and clean up",
           "command": "brew uninstall wget && brew cleanup",
           "explanation": "Removes the formula and deletes old cached downloads"
+        },
+        {
+          "type": "example",
+          "text": "see what is wrong with your Homebrew setup",
+          "command": "brew doctor",
+          "explanation": "Runs diagnostics for permissions, PATH, and outdated Xcode CLT"
+        },
+        {
+          "type": "example",
+          "text": "list only top-level installed formulas you asked for",
+          "command": "brew leaves",
+          "explanation": "Omits dependencies pulled in automatically"
+        },
+        {
+          "type": "example",
+          "text": "show the dependency tree of a formula",
+          "command": "brew deps --tree ffmpeg",
+          "explanation": "Visualizes recursive dependencies before a large install"
+        },
+        {
+          "type": "example",
+          "text": "reproduce a machine from a Brewfile",
+          "command": "brew bundle install --file=Brewfile",
+          "explanation": "Installs everything listed in brew bundle format for dotfiles repos"
+        },
+        {
+          "type": "example",
+          "text": "manage background services installed by brew",
+          "command": "brew services start redis",
+          "explanation": "Starts redis as a user LaunchAgent on macOS"
         }
       ]
     },
@@ -423,32 +453,278 @@
     },
     {
       "name": "npx",
-      "synopsis": "npx [options] command [args...]",
-      "description": "Execute npm package binaries without installing globally",
+      "synopsis": "npx [options] <package>[@version] [args]",
+      "description": "Execute npm packages without installing them globally, run one-off tools and scaffolding commands",
       "patterns": [
         {
           "type": "example",
-          "text": "run a package without installing it",
-          "command": "npx create-react-app myapp",
-          "explanation": "Downloads and runs create-react-app temporarily"
+          "text": "start a quick local web server to serve files",
+          "command": "npx http-server . -p 8080",
+          "explanation": "Serves current directory on port 8080 with directory listing"
         },
         {
           "type": "example",
-          "text": "run a specific version of a package",
+          "text": "start a static file server with CORS enabled",
+          "command": "npx serve -l 3000",
+          "explanation": "Serves current directory on port 3000 with CORS headers"
+        },
+        {
+          "type": "example",
+          "text": "start a mock REST API server from a JSON file",
+          "command": "npx json-server --watch db.json --port 3001",
+          "explanation": "Creates a full REST API from a JSON file with CRUD endpoints"
+        },
+        {
+          "type": "example",
+          "text": "expose local server to the internet with a public URL",
+          "command": "npx localtunnel --port 3000",
+          "explanation": "Creates a public tunnel URL pointing to your local port 3000"
+        },
+        {
+          "type": "example",
+          "text": "create a new Next.js application",
+          "command": "npx create-next-app@latest my-app",
+          "explanation": "Scaffolds a new Next.js project with the latest template"
+        },
+        {
+          "type": "example",
+          "text": "create a new Vite project with React and TypeScript",
+          "command": "npx create-vite@latest my-app --template react-ts",
+          "explanation": "Scaffolds a Vite project with React and TypeScript configured"
+        },
+        {
+          "type": "example",
+          "text": "create a new React Native Expo app",
+          "command": "npx create-expo-app my-app",
+          "explanation": "Scaffolds a new Expo React Native project"
+        },
+        {
+          "type": "example",
+          "text": "clone a git repo without git history as a template",
+          "command": "npx degit user/repo my-project",
+          "explanation": "Downloads repo contents without .git history, great for templates"
+        },
+        {
+          "type": "example",
+          "text": "create a new React app with Create React App",
+          "command": "npx create-react-app my-app --template typescript",
+          "explanation": "Scaffolds a React project with TypeScript template"
+        },
+        {
+          "type": "example",
+          "text": "format all code files with Prettier",
+          "command": "npx prettier --write .",
+          "explanation": "Auto-formats all supported files in the current directory"
+        },
+        {
+          "type": "example",
+          "text": "check code formatting without modifying files",
+          "command": "npx prettier --check .",
+          "explanation": "Reports which files are not formatted without changing them"
+        },
+        {
+          "type": "example",
+          "text": "lint all JavaScript and TypeScript files",
+          "command": "npx eslint . --ext .js,.ts,.tsx --fix",
+          "explanation": "Runs ESLint and auto-fixes what it can across JS/TS files"
+        },
+        {
+          "type": "example",
+          "text": "initialize a TypeScript configuration file",
+          "command": "npx tsc --init",
+          "explanation": "Creates a tsconfig.json with default compiler options"
+        },
+        {
+          "type": "example",
+          "text": "type check TypeScript project without emitting files",
+          "command": "npx tsc --noEmit",
+          "explanation": "Runs TypeScript compiler in check-only mode"
+        },
+        {
+          "type": "example",
+          "text": "detect circular dependencies in a project",
+          "command": "npx madge --circular --extensions ts,js src/",
+          "explanation": "Finds circular import chains in TypeScript/JavaScript files"
+        },
+        {
+          "type": "example",
+          "text": "find unused dependencies in package.json",
+          "command": "npx depcheck",
+          "explanation": "Analyzes imports and reports packages in package.json that are unused"
+        },
+        {
+          "type": "example",
+          "text": "kill whatever process is running on a specific port",
+          "command": "npx kill-port 3000",
+          "explanation": "Finds and kills the process occupying port 3000"
+        },
+        {
+          "type": "example",
+          "text": "move files to trash instead of permanently deleting",
+          "command": "npx trash-cli file1.txt file2.txt",
+          "explanation": "Moves files to system trash so they can be recovered"
+        },
+        {
+          "type": "example",
+          "text": "cross-platform recursive directory removal like rm -rf",
+          "command": "npx rimraf dist node_modules",
+          "explanation": "Deletes directories recursively, works on Windows too"
+        },
+        {
+          "type": "example",
+          "text": "generate a QR code in the terminal",
+          "command": "npx qrcode-terminal 'https://example.com'",
+          "explanation": "Renders a QR code as ASCII art in the terminal"
+        },
+        {
+          "type": "example",
+          "text": "show simplified man page for a command",
+          "command": "npx tldr tar",
+          "explanation": "Shows practical examples for a command from the tldr-pages project"
+        },
+        {
+          "type": "example",
+          "text": "open a URL or file from the command line",
+          "command": "npx open-cli https://example.com",
+          "explanation": "Opens URL in default browser or file in default application"
+        },
+        {
+          "type": "example",
+          "text": "initialize Prisma ORM in a project",
+          "command": "npx prisma init",
+          "explanation": "Creates prisma/schema.prisma and .env with database URL placeholder"
+        },
+        {
+          "type": "example",
+          "text": "run Prisma database migrations",
+          "command": "npx prisma migrate dev --name init",
+          "explanation": "Creates and applies a migration from schema changes"
+        },
+        {
+          "type": "example",
+          "text": "open Prisma Studio database browser",
+          "command": "npx prisma studio",
+          "explanation": "Opens a web UI to browse and edit database records"
+        },
+        {
+          "type": "example",
+          "text": "generate Drizzle ORM database migration",
+          "command": "npx drizzle-kit generate",
+          "explanation": "Generates SQL migration files from Drizzle schema changes"
+        },
+        {
+          "type": "example",
+          "text": "push Drizzle schema directly to database without migration",
+          "command": "npx drizzle-kit push",
+          "explanation": "Syncs schema to database directly, useful for prototyping"
+        },
+        {
+          "type": "example",
+          "text": "check for outdated npm packages and update package.json",
+          "command": "npx npm-check-updates -u",
+          "explanation": "Updates all version ranges in package.json to latest"
+        },
+        {
+          "type": "example",
+          "text": "check bundle size impact of a package before installing",
+          "command": "npx bundlephobia axios",
+          "explanation": "Shows minified, gzipped, and download size of a package"
+        },
+        {
+          "type": "example",
+          "text": "initialize git hooks with Husky",
+          "command": "npx husky init",
+          "explanation": "Sets up Husky and creates a pre-commit hook template"
+        },
+        {
+          "type": "example",
+          "text": "automate npm package release with version bump",
+          "command": "npx release-it",
+          "explanation": "Bumps version, creates changelog, git tag, and publishes to npm"
+        },
+        {
+          "type": "example",
+          "text": "analyze webpack bundle and visualize module sizes",
+          "command": "npx webpack-bundle-analyzer stats.json",
+          "explanation": "Opens interactive treemap of bundle contents from webpack stats"
+        },
+        {
+          "type": "example",
+          "text": "show system environment info for bug reports",
+          "command": "npx envinfo --system --binaries --browsers --npmPackages",
+          "explanation": "Prints OS, Node, npm, browsers, and installed packages info"
+        },
+        {
+          "type": "example",
+          "text": "list all package licenses in a project",
+          "command": "npx license-checker --summary",
+          "explanation": "Scans node_modules and lists license types used"
+        },
+        {
+          "type": "example",
+          "text": "run a Lighthouse performance audit on a URL",
+          "command": "npx lighthouse https://example.com --output html --output-path report.html",
+          "explanation": "Generates a performance, accessibility, and SEO audit report"
+        },
+        {
+          "type": "example",
+          "text": "test internet connection speed from terminal",
+          "command": "npx speed-test",
+          "explanation": "Runs a speed test and shows download/upload speeds"
+        },
+        {
+          "type": "example",
+          "text": "run a command with environment variables cross-platform",
+          "command": "npx cross-env NODE_ENV=production node server.js",
+          "explanation": "Sets environment variables in a way that works on Windows and Unix"
+        },
+        {
+          "type": "example",
+          "text": "run TypeScript file directly without compiling",
+          "command": "npx tsx script.ts",
+          "explanation": "Executes TypeScript with ESM support, no tsconfig needed"
+        },
+        {
+          "type": "example",
+          "text": "auto-restart node server on file changes",
+          "command": "npx nodemon server.js",
+          "explanation": "Watches for file changes and automatically restarts the process"
+        },
+        {
+          "type": "example",
+          "text": "initialize Storybook in a project",
+          "command": "npx storybook@latest init",
+          "explanation": "Detects framework and sets up Storybook with example stories"
+        },
+        {
+          "type": "example",
+          "text": "initialize Tailwind CSS configuration",
+          "command": "npx tailwindcss init -p",
+          "explanation": "Creates tailwind.config.js and postcss.config.js files"
+        },
+        {
+          "type": "example",
+          "text": "run multiple npm scripts in parallel",
+          "command": "npx concurrently \"npm:dev\" \"npm:watch:css\"",
+          "explanation": "Runs multiple commands simultaneously with combined output"
+        },
+        {
+          "type": "example",
+          "text": "optimize SVG files reducing their size",
+          "command": "npx svgo --folder ./icons --recursive",
+          "explanation": "Removes metadata and optimizes SVG paths to reduce file size"
+        },
+        {
+          "type": "example",
+          "text": "run a specific version of a node package",
           "command": "npx node@18 -e \"console.log(process.version)\"",
-          "explanation": "Uses a specific Node.js version for a one-off command"
+          "explanation": "Temporarily uses a specific Node.js version for one command"
         },
         {
           "type": "example",
-          "text": "run a locally installed binary",
-          "command": "npx jest --watch",
-          "explanation": "Runs the project-local jest binary"
-        },
-        {
-          "type": "example",
-          "text": "execute a GitHub gist as a script",
-          "command": "npx https://gist.github.com/user/abc123",
-          "explanation": "Downloads and runs the gist as a Node.js script"
+          "text": "execute a package from a GitHub repository directly",
+          "command": "npx github:user/repo",
+          "explanation": "Downloads and runs a package directly from a GitHub repo"
         }
       ]
     },

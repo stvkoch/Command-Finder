@@ -1104,6 +1104,76 @@
           "explanation": "The -n flag shows what would be renamed without actually doing it"
         }
       ]
+    },
+    {
+      "name": "readlink",
+      "synopsis": "readlink [options] file",
+      "description": "Print the target of a symbolic link",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "see where a symlink points",
+          "command": "readlink /usr/local/bin/python",
+          "explanation": "Prints the link target path on one line"
+        },
+        {
+          "type": "example",
+          "text": "resolve a symlink to its ultimate canonical path (GNU readlink)",
+          "command": "readlink -f ./some_link",
+          "explanation": "-f follows every symlink component to the final file"
+        },
+        {
+          "type": "example",
+          "text": "show one level of symlink target on macOS using stat",
+          "command": "stat -f '%Y' /path/to/symlink",
+          "explanation": "Prints where the symlink points; use realpath or repeated reads for full canonicalization"
+        }
+      ]
+    },
+    {
+      "name": "inotifywait",
+      "synopsis": "inotifywait [options] file1 [file2] [...]",
+      "description": "Wait for changes to files using inotify",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "watch a directory for new files and print their names",
+          "command": "inotifywait -m -e create /path/to/dir",
+          "explanation": "Runs continuously and outputs events as files are created"
+        },
+        {
+          "type": "example",
+          "text": "wait until a specific file is modified",
+          "command": "inotifywait -e modify file.txt",
+          "explanation": "Blocks until a modification event occurs on the file"
+        }
+      ]
+    },
+    {
+      "name": "fswatch",
+      "synopsis": "fswatch [options] ... path ...",
+      "description": "A cross-platform file change monitor",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "watch a directory and run a command when files change",
+          "command": "fswatch -o /path/to/dir | xargs -n1 ./script.sh",
+          "explanation": "Triggers the script execution upon any filesystem event in the directory"
+        }
+      ]
+    },
+    {
+      "name": "dirs",
+      "synopsis": "dirs [-clpv]",
+      "description": "Display list of currently remembered directories",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "show the directory stack managed by pushd and popd",
+          "command": "dirs -v",
+          "explanation": "Prints the directory stack with index numbers"
+        }
+      ]
     }
   ]
 }

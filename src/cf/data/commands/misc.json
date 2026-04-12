@@ -1302,6 +1302,99 @@
       ]
     },
     {
+      "name": "openssl",
+      "synopsis": "openssl command [options]",
+      "description": "Cryptography toolkit for TLS keys, CSRs, certificates, and message digests",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "generate a 4096-bit RSA private key",
+          "command": "openssl genrsa -out server.key 4096",
+          "explanation": "Creates a PEM-encoded private key file"
+        },
+        {
+          "type": "example",
+          "text": "create a certificate signing request interactively",
+          "command": "openssl req -new -key server.key -out server.csr",
+          "explanation": "Prompts for DN fields and writes a CSR for a CA to sign"
+        },
+        {
+          "type": "example",
+          "text": "inspect a certificate's subject and dates",
+          "command": "openssl x509 -in cert.pem -noout -subject -dates",
+          "explanation": "Prints metadata without the full PEM body"
+        },
+        {
+          "type": "example",
+          "text": "compute SHA-256 checksum of a file",
+          "command": "openssl dgst -sha256 installer.pkg",
+          "explanation": "Outputs a hex digest independent of shasum command availability"
+        },
+        {
+          "type": "example",
+          "text": "test a TLS handshake to a host on port 443",
+          "command": "openssl s_client -connect example.com:443 -servername example.com </dev/null",
+          "explanation": "Shows certificate chain and negotiated cipher; SNI matches virtual hosts"
+        },
+        {
+          "type": "example",
+          "text": "generate 32 cryptographically random bytes as hex",
+          "command": "openssl rand -hex 32",
+          "explanation": "Prints 64 hex characters from the OS random source; common for secrets and key material"
+        },
+        {
+          "type": "example",
+          "text": "generate hex bytes usable as raw Ethereum wallet private key material",
+          "command": "openssl rand -hex 32",
+          "explanation": "EVM private keys are 32 bytes (64 hex digits). Never share or log this; prefer hardware or audited wallet software for real funds, and ensure any import path rejects invalid secp256k1 scalars"
+        }
+      ]
+    },
+    {
+      "name": "base64",
+      "synopsis": "base64 [options] [infile]",
+      "description": "Encode or decode data in Base64",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "encode a small secret to paste in JSON or YAML",
+          "command": "printf 'secret-value' | base64",
+          "explanation": "Outputs a single line of Base64 without a newline in the input"
+        },
+        {
+          "type": "example",
+          "text": "decode Base64 from the clipboard on macOS",
+          "command": "pbpaste | base64 -D",
+          "explanation": "-D decodes on macOS BSD base64; use -d on GNU coreutils"
+        },
+        {
+          "type": "example",
+          "text": "decode Base64 on Linux",
+          "command": "base64 -d encoded.txt",
+          "explanation": "GNU base64 uses -d for decode"
+        }
+      ]
+    },
+    {
+      "name": "uuidgen",
+      "synopsis": "uuidgen [options]",
+      "description": "Generate a random UUID (RFC 4122) on macOS and many Unix systems",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a unique ID for a temp resource or database row",
+          "command": "uuidgen",
+          "explanation": "Prints an uppercase UUID string by default on macOS"
+        },
+        {
+          "type": "example",
+          "text": "generate a lowercase UUID for Linux-friendly configs",
+          "command": "uuidgen | tr '[:upper:]' '[:lower:]'",
+          "explanation": "Some APIs expect lowercase hex UUIDs"
+        }
+      ]
+    },
+    {
       "name": "clear",
       "synopsis": "clear",
       "description": "Clear the terminal screen",

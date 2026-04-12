@@ -109,6 +109,62 @@
           "text": "create a SOCKS proxy tunnel through a remote server",
           "command": "ssh -D 9090 user@server",
           "explanation": "Sets up a dynamic SOCKS proxy on local port 9090 tunneled through the remote server"
+        },
+        {
+          "type": "example",
+          "text": "jump through a bastion host to reach a private server",
+          "command": "ssh -J bastion.example.com user@10.0.1.50",
+          "explanation": "ProxyJump opens the second hop through the first without manual netcat hacks"
+        }
+      ]
+    },
+    {
+      "name": "ssh-keygen",
+      "synopsis": "ssh-keygen [-t type] [-f path] [-C comment]",
+      "description": "Generate, convert, and manage SSH authentication keys",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a new ed25519 key with a comment",
+          "command": "ssh-keygen -t ed25519 -C \"you@example.com\" -f ~/.ssh/id_ed25519_work",
+          "explanation": "Ed25519 keys are short, fast, and recommended for new deployments"
+        },
+        {
+          "type": "example",
+          "text": "remove passphrase from a key non-interactively for automation",
+          "command": "ssh-keygen -p -P 'oldpass' -N '' -f ~/.ssh/id_rsa",
+          "explanation": "Use only for throwaway CI keys; empty passphrases weaken security"
+        },
+        {
+          "type": "example",
+          "text": "print the fingerprint of a public key to compare with a server",
+          "command": "ssh-keygen -lf ~/.ssh/id_ed25519.pub",
+          "explanation": "Shows MD5 or SHA256 fingerprint depending on OpenSSH version"
+        }
+      ]
+    },
+    {
+      "name": "ssh-add",
+      "synopsis": "ssh-add [options] [file ...]",
+      "description": "Add private keys to the ssh-agent for passwordless use in a session",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "load the default identities into the agent",
+          "command": "ssh-add",
+          "explanation": "Prompts for passphrases if needed and caches unlocked keys"
+        },
+        {
+          "type": "example",
+          "text": "add a specific key file",
+          "command": "ssh-add ~/.ssh/id_ed25519_work",
+          "explanation": "Registers that key for subsequent ssh and git operations"
+        },
+        {
+          "type": "example",
+          "text": "list keys currently loaded in the agent",
+          "command": "ssh-add -l",
+          "explanation": "Shows fingerprints of each loaded key"
         }
       ]
     },
@@ -974,6 +1030,63 @@
           "text": "submit form data instead of JSON",
           "command": "http --form POST https://example.com/login username=admin password=secret",
           "explanation": "Sends data as application/x-www-form-urlencoded"
+        }
+      ]
+    },
+    {
+      "name": "ssh-copy-id",
+      "synopsis": "ssh-copy-id [-i key] [user@]hostname",
+      "description": "Install your public key in a remote user's authorized_keys",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "enable passwordless SSH login to a server",
+          "command": "ssh-copy-id user@server.example.com",
+          "explanation": "Appends your default ~/.ssh/id*.pub to remote ~/.ssh/authorized_keys"
+        },
+        {
+          "type": "example",
+          "text": "install a non-default public key",
+          "command": "ssh-copy-id -i ~/.ssh/id_ed25519_work.pub user@server",
+          "explanation": "Uses the specified .pub file instead of the default identity"
+        }
+      ]
+    },
+    {
+      "name": "socat",
+      "synopsis": "socat [options] <address> <address>",
+      "description": "Multipurpose relay (SOcket CAT)",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "create a simple tcp port forwarder",
+          "command": "socat TCP-LISTEN:8080,fork TCP:target:80",
+          "explanation": "Listens on port 8080 and forwards connections to target port 80"
+        },
+        {
+          "type": "example",
+          "text": "transfer a file over the network using tcp",
+          "command": "socat -u FILE:data.tar.gz TCP-LISTEN:9000",
+          "explanation": "Acts as a server to send a file to the first connecting client"
+        }
+      ]
+    },
+    {
+      "name": "iperf3",
+      "synopsis": "iperf3 -s | -c host [options]",
+      "description": "Perform network throughput tests",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "start an iperf3 server to listen for benchmark connections",
+          "command": "iperf3 -s",
+          "explanation": "Runs in server mode to accept incoming speed tests"
+        },
+        {
+          "type": "example",
+          "text": "run a network speed test against an iperf3 server",
+          "command": "iperf3 -c server_ip",
+          "explanation": "Connects to the server and measures bandwidth throughput"
         }
       ]
     }

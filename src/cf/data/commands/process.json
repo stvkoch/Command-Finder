@@ -1013,6 +1013,57 @@
           "explanation": "Runs the health check every 15 minutes using a transient timer"
         }
       ]
+    },
+    {
+      "name": "iotop",
+      "synopsis": "iotop [options]",
+      "description": "Simple top-like I/O monitor",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "monitor disk I/O usage by processes in real time",
+          "command": "sudo iotop",
+          "explanation": "Displays a continuously updated table of I/O utilization"
+        },
+        {
+          "type": "example",
+          "text": "show only processes that are currently doing I/O",
+          "command": "sudo iotop -o",
+          "explanation": "Filters out idle processes to focus on active disk usage"
+        }
+      ]
+    },
+    {
+      "name": "taskset",
+      "synopsis": "taskset [options] mask command",
+      "description": "Retrieve or set a process's CPU affinity",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "run a command on specific cpu cores",
+          "command": "taskset -c 0,1 command",
+          "explanation": "Restricts the execution of the command to CPU cores 0 and 1"
+        },
+        {
+          "type": "example",
+          "text": "change cpu affinity of a running process",
+          "command": "taskset -cp 0,1 <pid>",
+          "explanation": "Modifies an existing process to only run on cores 0 and 1"
+        }
+      ]
+    },
+    {
+      "name": "ionice",
+      "synopsis": "ionice [-c class] [-n level] [command]",
+      "description": "Get or set program I/O scheduling class and priority",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "run a command with lowest i/o priority to avoid slowing down the system",
+          "command": "ionice -c 3 command",
+          "explanation": "Executes the command in the 'idle' scheduling class (class 3)"
+        }
+      ]
     }
   ]
 }

@@ -97,17 +97,66 @@ Options:
   --print, -p          Print command to stdout
   --copy, -c           Copy to clipboard
   --tmux, -t           Send to tmux pane via send-keys
-  --top N              Number of results (default: 7)
+  --top N              Number of results (default: 7, env: CF_TOP)
   --verbose, -v        Show similarity scores and DB stats
-  --seed               Seed/rebuild the database
+  --seed               Seed/rebuild the database and export ONNX model
   --seed --force       Clear and reseed from scratch
-  --install-shell      Print zsh integration setup
+  --install-shell      Print zsh integration setup instructions
   --version            Show version
+```
+
+### Configuration
+
+All settings can be configured via environment variables. Set them in `~/.zshrc` for permanent defaults:
+
+| Environment variable | Default | Description |
+|---------------------|---------|-------------|
+| `CF_TOP` | `7` | Number of results to show |
+| `CF_MAX_TOP` | `50` | Maximum results when using "Show more" |
+| `CF_MODEL` | `all-MiniLM-L6-v2` | Sentence-transformers embedding model |
+| `CF_EMBEDDING_DIM` | `384` | Embedding dimensions (must match model) |
+| `CF_DB_DIR` | `~/.local/share/cf` | Database and cache directory |
+| `CF_DB_NAME` | `cf.db` | Database filename |
+| `CF_DATA_DIR` | *(package default)* | Path to seed JSON files |
+
+```bash
+# Example: show 15 results by default, use a different data dir
+export CF_TOP=15
+export CF_DB_DIR="$HOME/.cf"
+```
+
+The `--top` flag overrides `CF_TOP` for a single invocation.
+
+### Navigating results
+
+The selector shows `CF_TOP` results by default (7 if unset). Scroll to the bottom and select `[+] Show more results...` to load 10 more at a time (up to 50 max). Use `--top N` to change the count for a single run:
+
+```bash
+cf --top 15 "find files"     # Start with 15 results
 ```
 
 ### Keyboard shortcut
 
-With shell integration enabled, press `Ctrl+K` anywhere in your terminal to open cf as a ZLE widget. The result is placed directly in your command line.
+With shell integration enabled, press `Ctrl+F` anywhere in your terminal to open cf as a ZLE widget:
+
+- **Text on the line**: type a query then press `Ctrl+F` -- it searches and replaces the line with the selected command
+- **Empty prompt**: press `Ctrl+F` -- it shows a `cf>` prompt to type your query
+
+### Shell integration setup
+
+```bash
+cf --install-shell           # Print setup instructions
+```
+
+Or add directly to `~/.zshrc`:
+
+```bash
+source /path/to/cf/shell/cf.zsh
+```
+
+This enables:
+- `cf "query"` pushes the selected command into your prompt via `print -z`
+- `Ctrl+F` opens the search widget inline as a ZLE widget
 
 ## How it works
 
@@ -122,7 +171,7 @@ With shell integration enabled, press `Ctrl+K` anywhere in your terminal to open
             │
    ┌────────v────────┐
    │  Vector search   │  sqlite-vec
-   │  cosine distance │  ~1,536 indexed patterns
+   │  cosine distance │  ~1,909 indexed patterns
    └────────┬────────┘
             │
    ┌────────v────────┐
@@ -140,23 +189,25 @@ Each shell command has multiple **patterns** indexed separately -- natural langu
 
 ## Command coverage
 
-327 commands across 13 categories:
+389 commands across 15 categories, 1,909 searchable patterns:
 
-| Category | Commands | Patterns |
-|----------|----------|----------|
-| filesystem | 30 | 149 |
-| text_processing | 27 | 118 |
-| search | 14 | 68 |
-| networking | 28 | 130 |
-| system | 34 | 154 |
-| process | 29 | 135 |
-| permissions | 21 | 96 |
-| compression | 16 | 78 |
-| disk | 20 | 92 |
-| git | 28 | 161 |
-| docker | 22 | 102 |
-| package_managers | 17 | 79 |
-| misc | 41 | 174 |
+| Category | Commands | Patterns | Highlights |
+|----------|----------|----------|------------|
+| filesystem | 34 | 156 | ls, cp, mv, rm, find, rsync, du, df, ln, stat |
+| text_processing | 34 | 136 | grep, sed, awk, cut, sort, uniq, diff, tr, wc |
+| search | 14 | 71 | find, locate, fd, rg, fzf, xargs, parallel |
+| networking | 33 | 143 | curl, wget, ssh, scp, ping, dig, netstat, nmap |
+| system | 34 | 154 | uname, systemctl, journalctl, free, lscpu, env |
+| process | 32 | 140 | ps, top, kill, tmux, crontab, strace, lsof |
+| permissions | 21 | 96 | chmod, chown, sudo, useradd, passwd, setfacl |
+| compression | 16 | 78 | tar, gzip, zip, xz, 7z, zstd, bzip2 |
+| disk | 20 | 92 | fdisk, mkfs, mount, lsblk, smartctl, ncdu |
+| git | 28 | 161 | init, clone, commit, branch, rebase, stash, bisect |
+| docker | 22 | 102 | run, build, compose, exec, logs, kubectl |
+| package_managers | 17 | 125 | apt, brew, pip, npm, **npx (45 patterns)**, cargo |
+| perl_oneliners | 21 | 211 | substitution, regex, calculations, ROT13, CSV |
+| macos | 19 | 58 | open, pbcopy, defaults, caffeinate, say |
+| misc | 44 | 186 | jq, bc, alias, history, tput, bat, man, fzf |
 
 ## Shell integration
 
@@ -166,16 +217,28 @@ When you source `shell/cf.zsh`, two things are set up:
 
 1. **`cf` function** -- wraps the Python CLI. Captures the selected command and pushes it onto the zsh edit buffer using `print -z`. The command appears on your next prompt line, ready to edit or press Enter.
 
-2. **`cf-widget`** -- a ZLE widget bound to `Ctrl+K`. When triggered, it opens the search UI and injects the result directly into `BUFFER` (the current command line).
+2. **`cf-widget`** -- a ZLE widget bound to `Ctrl+F`. If you have text on the line, it uses that as the query. On an empty prompt, it shows a `cf>` input. The result is injected directly into `BUFFER` (the current command line).
 
 Both use `</dev/tty` redirection so the interactive selector works correctly inside command substitution.
 
-### Customizing the keybinding
+### Selector keybindings
+
+Inside the interactive selector menu:
+
+| Key | Action |
+|-----|--------|
+| `Up` / `k` | Move up |
+| `Down` / `j` | Move down |
+| `Enter` | Select command |
+| `q` / `Esc` | Cancel |
+| Select `[+] Show more...` | Load 10 more results |
+
+### Customizing the shell keybinding
 
 Edit `shell/cf.zsh` or add to your `.zshrc`:
 
 ```bash
-bindkey '^F' cf-widget   # Ctrl+F instead of Ctrl+K
+bindkey '^K' cf-widget   # Ctrl+K instead of Ctrl+F
 ```
 
 ## Adding commands
