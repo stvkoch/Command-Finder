@@ -4,12 +4,14 @@ from pathlib import Path
 
 from cf.config import DATA_DIR
 from cf.db import (
+    bulk_load_pragmas,
     clear_all,
     get_connection,
     init_db,
-    insert_command,
-    insert_embedding,
-    insert_pattern,
+    insert_commands_batch,
+    insert_embeddings_batch,
+    insert_patterns_batch,
+    restore_pragmas,
 )
 from cf.embeddings import encode_batch, to_bytes
 
@@ -44,46 +46,61 @@ def seed_database(db_path=None, force: bool = False) -> dict:
     if not all_data:
         return {"commands": 0, "patterns": 0}
 
-    # Collect all patterns with their metadata
-    all_patterns = []  # (category, cmd_data, pattern_data)
+    # ── Phase 1: Flatten and collect ─────────────────────────
+    # Build ordered lists for batch operations
+    cmd_rows = []       # (name, category, synopsis, description)
+    cmd_keys = []       # tracks which command each row belongs to
+    cmd_seen = {}       # (category, name) -> index in cmd_rows
+    pat_meta = []       # (cmd_index, type, text, template, explanation)
+
     for category_data in all_data:
         category = category_data["category"]
         for cmd in category_data["commands"]:
+            key = (category, cmd["name"])
+            if key not in cmd_seen:
+                cmd_seen[key] = len(cmd_rows)
+                cmd_rows.append((cmd["name"], category, cmd["synopsis"], cmd["description"]))
+            cmd_idx = cmd_seen[key]
             for pat in cmd["patterns"]:
-                all_patterns.append((category, cmd, pat))
+                pat_meta.append((
+                    cmd_idx,
+                    pat["type"],
+                    pat["text"],
+                    pat["command"],
+                    pat.get("explanation"),
+                ))
 
-    # Batch encode all pattern texts
-    texts = [p[2]["text"] for p in all_patterns]
+    # ── Phase 2: Encode embeddings (cached) ──────────────────
+    texts = [p[2] for p in pat_meta]
     print(f"Encoding {len(texts)} patterns...", file=sys.stderr)
     embeddings = encode_batch(texts)
 
-    # Insert into database
+    # ── Phase 3: Batch insert into DB ────────────────────────
     print("Inserting into database...", file=sys.stderr)
-    cmd_cache = {}  # (category, name) -> command_id
-    cmd_count = 0
-    pat_count = 0
+    bulk_load_pragmas(conn)
 
-    for i, (category, cmd, pat) in enumerate(all_patterns):
-        cache_key = (category, cmd["name"])
-        if cache_key not in cmd_cache:
-            cmd_id = insert_command(
-                conn, cmd["name"], category, cmd["synopsis"], cmd["description"]
-            )
-            cmd_cache[cache_key] = cmd_id
-            cmd_count += 1
+    # Insert all commands in one batch
+    cmd_ids = insert_commands_batch(conn, cmd_rows)
 
-        pat_id = insert_pattern(
-            conn,
-            cmd_cache[cache_key],
-            pat["type"],
-            pat["text"],
-            pat["command"],
-            pat.get("explanation"),
-        )
-        insert_embedding(conn, pat_id, to_bytes(embeddings[i]))
-        pat_count += 1
+    # Build pattern rows with resolved command IDs
+    pat_rows = [
+        (cmd_ids[cm_idx], ptype, text, tmpl, expl)
+        for cm_idx, ptype, text, tmpl, expl in pat_meta
+    ]
+    pat_ids = insert_patterns_batch(conn, pat_rows)
+
+    # Build embedding rows with resolved pattern IDs
+    emb_rows = [
+        (pat_ids[i], to_bytes(embeddings[i]))
+        for i in range(len(pat_ids))
+    ]
+    insert_embeddings_batch(conn, emb_rows)
 
     conn.commit()
+    restore_pragmas(conn)
     conn.close()
+
+    cmd_count = len(cmd_rows)
+    pat_count = len(pat_meta)
     print(f"Done: {cmd_count} commands, {pat_count} patterns indexed.", file=sys.stderr)
     return {"commands": cmd_count, "patterns": pat_count}

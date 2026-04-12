@@ -41,33 +41,77 @@ def init_db(conn: sqlite3.Connection) -> None:
             pattern_id INTEGER PRIMARY KEY,
             embedding FLOAT[{EMBEDDING_DIM}]
         );
+
+        CREATE INDEX IF NOT EXISTS idx_patterns_command_id
+            ON patterns(command_id);
+
+        CREATE TABLE IF NOT EXISTS query_cache (
+            query_text TEXT PRIMARY KEY,
+            embedding BLOB NOT NULL
+        );
     """)
     conn.commit()
 
 
-def insert_command(conn: sqlite3.Connection, name: str, category: str,
-                   synopsis: str, description: str) -> int:
-    cur = conn.execute(
-        "INSERT INTO commands (name, category, synopsis, description) VALUES (?, ?, ?, ?)",
-        (name, category, synopsis, description),
+def get_cached_query(conn: sqlite3.Connection, query: str) -> bytes | None:
+    row = conn.execute(
+        "SELECT embedding FROM query_cache WHERE query_text = ?", (query,)
+    ).fetchone()
+    return row[0] if row else None
+
+
+def cache_query(conn: sqlite3.Connection, query: str, embedding_bytes: bytes) -> None:
+    conn.execute(
+        "INSERT OR REPLACE INTO query_cache (query_text, embedding) VALUES (?, ?)",
+        (query, embedding_bytes),
     )
-    return cur.lastrowid
+    conn.commit()
 
 
-def insert_pattern(conn: sqlite3.Connection, command_id: int, pattern_type: str,
-                   text: str, command_template: str, explanation: str | None = None) -> int:
-    cur = conn.execute(
+def bulk_load_pragmas(conn: sqlite3.Connection) -> None:
+    """Tune PRAGMAs for fast bulk inserts. Call before seeding."""
+    conn.execute("PRAGMA synchronous=OFF")
+    conn.execute("PRAGMA temp_store=MEMORY")
+    conn.execute("PRAGMA cache_size=-64000")  # 64MB cache
+
+
+def restore_pragmas(conn: sqlite3.Connection) -> None:
+    """Restore safe PRAGMAs after bulk load."""
+    conn.execute("PRAGMA synchronous=NORMAL")
+    conn.execute("PRAGMA temp_store=DEFAULT")
+    conn.execute("PRAGMA cache_size=-2000")
+
+
+def insert_commands_batch(conn: sqlite3.Connection,
+                          rows: list[tuple]) -> list[int]:
+    """Batch insert commands. rows: [(name, category, synopsis, description), ...]"""
+    conn.executemany(
+        "INSERT INTO commands (name, category, synopsis, description) VALUES (?, ?, ?, ?)",
+        rows,
+    )
+    # Retrieve the auto-generated IDs for the batch
+    last_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]
+    return list(range(last_id - len(rows) + 1, last_id + 1))
+
+
+def insert_patterns_batch(conn: sqlite3.Connection,
+                          rows: list[tuple]) -> list[int]:
+    """Batch insert patterns. rows: [(command_id, type, text, template, explanation), ...]"""
+    conn.executemany(
         "INSERT INTO patterns (command_id, pattern_type, text, command_template, explanation) "
         "VALUES (?, ?, ?, ?, ?)",
-        (command_id, pattern_type, text, command_template, explanation),
+        rows,
     )
-    return cur.lastrowid
+    last_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]
+    return list(range(last_id - len(rows) + 1, last_id + 1))
 
 
-def insert_embedding(conn: sqlite3.Connection, pattern_id: int, embedding_bytes: bytes) -> None:
-    conn.execute(
+def insert_embeddings_batch(conn: sqlite3.Connection,
+                            rows: list[tuple]) -> None:
+    """Batch insert embeddings. rows: [(pattern_id, embedding_bytes), ...]"""
+    conn.executemany(
         "INSERT INTO pattern_embeddings (pattern_id, embedding) VALUES (?, ?)",
-        (pattern_id, embedding_bytes),
+        rows,
     )
 
 
@@ -114,4 +158,5 @@ def clear_all(conn: sqlite3.Connection) -> None:
     conn.execute("DELETE FROM pattern_embeddings")
     conn.execute("DELETE FROM patterns")
     conn.execute("DELETE FROM commands")
+    conn.execute("DELETE FROM query_cache")
     conn.commit()

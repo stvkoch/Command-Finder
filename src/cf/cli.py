@@ -27,7 +27,7 @@ def main(
     copy: Annotated[bool, typer.Option("--copy", "-c", help="Copy command to clipboard")] = False,
     tmux: Annotated[bool, typer.Option("--tmux", "-t", help="Send command to tmux pane")] = False,
     top: Annotated[int, typer.Option("--top", help="Number of results to show")] = 7,
-    seed: Annotated[bool, typer.Option("--seed", help="Seed/rebuild the database")] = False,
+    seed: Annotated[bool, typer.Option("--seed", help="Seed/rebuild the database and export ONNX model")] = False,
     force: Annotated[bool, typer.Option("--force", help="Force reseed (clear existing data)")] = False,
     verbose: Annotated[bool, typer.Option("--verbose", "-v", help="Show similarity scores")] = False,
     install_shell: Annotated[bool, typer.Option("--install-shell", help="Show shell integration instructions")] = False,
@@ -97,6 +97,11 @@ def _do_seed(force: bool):
     from cf.seed import seed_database
     stats = seed_database(force=force)
     typer.echo(f"Database ready: {stats['commands']} commands, {stats['patterns']} patterns.", err=True)
+
+    # Auto-export ONNX model for fast query loading
+    from cf.embeddings import _onnx_available, export_onnx
+    if not _onnx_available() or force:
+        export_onnx()
 
 
 def _print_shell_instructions():

@@ -8,3 +8,4 @@ DEFAULT_TOP_K = 7
 DATA_DIR = Path(str(files("cf") / "data" / "commands"))
 DB_DIR = Path.home() / ".local" / "share" / "cf"
 DB_PATH = DB_DIR / "cf.db"
+ONNX_DIR = DB_DIR / "onnx"  # exported ONNX model + tokenizer
