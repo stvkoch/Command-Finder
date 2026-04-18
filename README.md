@@ -22,7 +22,7 @@
 Find shell commands using natural language. Type what you want to do, get the command.
 
 ```
-$ cf "find large files older than 30 days"
+$ cf find large files older than 30 days
 
   > find . -size +100M -mtime +30 -type f
     find / -size +100M -type f
@@ -30,6 +30,18 @@ $ cf "find large files older than 30 days"
 
   [arrows: navigate] [enter: select] [q: cancel]
 ```
+or
+
+```
+$ find large files older than 30 days # CTRL+f
+
+  > find . -size +100M -mtime +30 -type f
+    find / -size +100M -type f
+    find . -mtime +30 -type f -delete
+
+  [arrows: navigate] [enter: select] [q: cancel]
+```
+
 
 The selected command is injected directly into your shell prompt, ready to edit or run.
 
