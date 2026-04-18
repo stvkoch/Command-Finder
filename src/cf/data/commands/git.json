@@ -563,6 +563,79 @@
           "text": "search commit messages for a keyword",
           "command": "git log --grep=\"bugfix\"",
           "explanation": "Shows only commits whose messages contain bugfix"
+        },
+        {
+          "type": "example",
+          "text": "show the next commit after a specific commit hash",
+          "command": "git log --reverse --ancestry-path <hash>..HEAD --format=%H | head -1",
+          "explanation": "Prints the hash of the commit that directly follows <hash> on the current branch"
+        },
+        {
+          "type": "example",
+          "text": "show full details of the commit right after a given hash",
+          "command": "git show $(git log --reverse --ancestry-path <hash>..HEAD --format=%H | head -1)",
+          "explanation": "Displays the diff and message of the commit immediately after <hash>"
+        },
+        {
+          "type": "example",
+          "text": "list all commits after a hash in chronological order",
+          "command": "git log --reverse --ancestry-path <hash>..main --oneline",
+          "explanation": "Shows commits on main that come after <hash>, oldest first"
+        },
+        {
+          "type": "example",
+          "text": "visualize commits that come after a hash",
+          "command": "git log --graph --oneline --ancestry-path <hash>..HEAD",
+          "explanation": "Draws an ASCII graph of commits on the path from <hash> to HEAD"
+        },
+        {
+          "type": "example",
+          "text": "show commits in a range between two hashes",
+          "command": "git log --ancestry-path <old-hash>..<new-hash> --oneline",
+          "explanation": "Lists commits on the path between two specific hashes, excluding <old-hash>"
+        }
+      ]
+    },
+    {
+      "name": "git rev-list",
+      "synopsis": "git rev-list [options] <commit>...",
+      "description": "List commit objects in reverse chronological order, useful for scripting and traversing history",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find the direct children of a commit",
+          "command": "git rev-list --all --children | grep ^<hash>",
+          "explanation": "Prints <hash> followed by the hashes of all commits that have it as a parent"
+        },
+        {
+          "type": "example",
+          "text": "count the number of commits on the current branch",
+          "command": "git rev-list --count HEAD",
+          "explanation": "Returns the total number of commits reachable from HEAD"
+        },
+        {
+          "type": "example",
+          "text": "count commits between two references",
+          "command": "git rev-list --count main..HEAD",
+          "explanation": "Shows how many commits the current branch is ahead of main"
+        },
+        {
+          "type": "example",
+          "text": "list all commit hashes in a repository",
+          "command": "git rev-list --all",
+          "explanation": "Prints every commit hash reachable from any ref in the repo"
+        },
+        {
+          "type": "example",
+          "text": "find the first commit in the repository",
+          "command": "git rev-list --max-parents=0 HEAD",
+          "explanation": "Returns the root commit(s) — commits with no parents"
+        },
+        {
+          "type": "example",
+          "text": "list commits that touched a specific file",
+          "command": "git rev-list HEAD -- path/to/file",
+          "explanation": "Shows hashes of every commit that modified the given file"
         }
       ]
     },
@@ -606,6 +679,60 @@
           "text": "show word-level differences instead of line-level",
           "command": "git diff --word-diff",
           "explanation": "Highlights individual changed words rather than whole lines"
+        },
+        {
+          "type": "example",
+          "text": "get a one-line summary of total changes",
+          "command": "git diff --shortstat main..HEAD",
+          "explanation": "Prints a single line like: X files changed, Y insertions(+), Z deletions(-)"
+        },
+        {
+          "type": "example",
+          "text": "get machine-readable numeric stats for each changed file",
+          "command": "git diff --numstat main..HEAD",
+          "explanation": "Outputs tab-separated added<TAB>deleted<TAB>filename, ideal for scripting"
+        },
+        {
+          "type": "example",
+          "text": "see percentage of changes per directory",
+          "command": "git diff --dirstat main..HEAD",
+          "explanation": "Shows the percentage of changes grouped by directory"
+        },
+        {
+          "type": "example",
+          "text": "see dirstat with cumulative percentages and file counts",
+          "command": "git diff --dirstat=files,10,cumulative main..HEAD",
+          "explanation": "Groups by directory using file counts, hides dirs under 10%, and includes parent dirs cumulatively"
+        },
+        {
+          "type": "example",
+          "text": "list changed files with their status letter",
+          "command": "git diff --name-status main..HEAD",
+          "explanation": "Outputs each file prefixed with A (added), M (modified), D (deleted), or R (renamed)"
+        },
+        {
+          "type": "example",
+          "text": "count changed files per top-level folder",
+          "command": "git diff --name-only main..HEAD | awk -F/ '{print $1}' | sort | uniq -c | sort -rn",
+          "explanation": "Simple per-folder file count without line stats, sorted by most-changed folder first"
+        },
+        {
+          "type": "example",
+          "text": "aggregate files changed and lines added/removed per top-level folder",
+          "command": "git diff --numstat main..HEAD | awk '{split($3,a,\"/\"); files[a[1]]++; add[a[1]]+=$1; del[a[1]]+=$2} END {for (d in files) printf \"%-30s %5d files  +%-6d -%d\\n\", d, files[d], add[d], del[d]}' | sort -k2 -nr",
+          "explanation": "Rolls up numstat into per-top-level-folder totals: files changed, insertions, deletions"
+        },
+        {
+          "type": "example",
+          "text": "aggregate stats per folder at any depth (configurable)",
+          "command": "git diff --numstat main..HEAD | awk -v depth=3 '{n=split($3,a,\"/\"); lim=(n<depth)?n:depth; d=a[1]; for (i=2; i<=lim; i++) d=d\"/\"a[i]; files[d]++; add[d]+=$1; del[d]+=$2} END {for (d in files) printf \"%-50s %5d  +%-6d -%d\\n\", d, files[d], add[d], del[d]}' | sort -k2 -nr",
+          "explanation": "Per-folder stats grouped at any path depth — change -v depth=3 to the desired number of levels"
+        },
+        {
+          "type": "example",
+          "text": "show lines added and removed per author across a range",
+          "command": "git log --numstat --pretty=format:\"%an\" main..HEAD | awk 'NF==1{author=$0} NF==3{add[author]+=$1; del[author]+=$2} END {for (a in add) printf \"%-25s +%-8d -%d\\n\", a, add[a], del[a]}'",
+          "explanation": "Aggregates insertions and deletions by commit author across the given range"
         }
       ]
     },
@@ -1160,6 +1287,73 @@
           "text": "expire old reflog entries",
           "command": "git reflog expire --expire=90.days.ago --all",
           "explanation": "Removes reflog entries older than 90 days"
+        }
+      ]
+    },
+    {
+      "name": "git merge-base",
+      "synopsis": "git merge-base [options] <commit> <commit>...",
+      "description": "Find the best common ancestor between commits or branches, useful for identifying where a branch was created",
+      "patterns": [
+        {
+          "type": "example",
+          "text": "find the commit where a branch was created from main",
+          "command": "git merge-base main feature-branch",
+          "explanation": "Prints the SHA of the common ancestor commit where feature-branch diverged from main"
+        },
+        {
+          "type": "example",
+          "text": "show the commit that a branch was branched off from",
+          "command": "git merge-base main HEAD",
+          "explanation": "Finds the branch point between the current branch and main"
+        },
+        {
+          "type": "example",
+          "text": "find the fork point of a branch after rebases",
+          "command": "git merge-base --fork-point main feature-branch",
+          "explanation": "Uses the reflog to find the original branch point, even if the base branch has moved"
+        },
+        {
+          "type": "example",
+          "text": "show the commit details of the branch creation point",
+          "command": "git show $(git merge-base main feature-branch)",
+          "explanation": "Displays the full commit info for the point where the branch was created"
+        },
+        {
+          "type": "example",
+          "text": "list all commits on a branch since it was created",
+          "command": "git log $(git merge-base main feature-branch)..feature-branch",
+          "explanation": "Shows every commit added on feature-branch after it diverged from main"
+        },
+        {
+          "type": "example",
+          "text": "check if one commit is an ancestor of another",
+          "command": "git merge-base --is-ancestor commit1 commit2",
+          "explanation": "Exits 0 if commit1 is an ancestor of commit2, 1 otherwise — useful in scripts"
+        },
+        {
+          "type": "example",
+          "text": "find the common ancestor of multiple branches",
+          "command": "git merge-base --octopus branch1 branch2 branch3",
+          "explanation": "Returns the best common ancestor across three or more branches for octopus merges"
+        },
+        {
+          "type": "example",
+          "text": "list all merge bases when history has multiple ancestors",
+          "command": "git merge-base --all main feature-branch",
+          "explanation": "Shows every possible common ancestor instead of just the best one"
+        },
+        {
+          "type": "example",
+          "text": "find where the current branch diverged from its upstream",
+          "command": "git merge-base HEAD @{upstream}",
+          "explanation": "Identifies the point where the current branch split from its tracked remote branch"
+        },
+        {
+          "type": "example",
+          "text": "get the first commit made on the current branch",
+          "command": "git log --oneline $(git merge-base main HEAD)..HEAD | tail -1",
+          "explanation": "Shows the earliest commit added on the current branch after it was created from main"
         }
       ]
     }
