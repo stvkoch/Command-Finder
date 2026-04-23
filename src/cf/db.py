@@ -154,6 +154,37 @@ def get_stats(conn: sqlite3.Connection) -> dict:
     return {"commands": cmds, "patterns": pats}
 
 
+def get_detailed_stats(conn: sqlite3.Connection) -> dict:
+    cmds = conn.execute("SELECT COUNT(*) FROM commands").fetchone()[0]
+    pats = conn.execute("SELECT COUNT(*) FROM patterns").fetchone()[0]
+    cats = conn.execute("SELECT COUNT(DISTINCT category) FROM commands").fetchone()[0]
+    cached = conn.execute("SELECT COUNT(*) FROM query_cache").fetchone()[0]
+    embeds = conn.execute("SELECT COUNT(*) FROM pattern_embeddings").fetchone()[0]
+
+    by_category = conn.execute("""
+        SELECT c.category,
+               COUNT(DISTINCT c.id) AS commands,
+               COUNT(p.id) AS patterns
+        FROM commands c
+        LEFT JOIN patterns p ON p.command_id = c.id
+        GROUP BY c.category
+        ORDER BY c.category
+    """).fetchall()
+
+    return {
+        "commands": cmds,
+        "patterns": pats,
+        "categories": cats,
+        "cached_queries": cached,
+        "embeddings": embeds,
+        "embedding_dim": EMBEDDING_DIM,
+        "by_category": [
+            {"category": r[0], "commands": r[1], "patterns": r[2]}
+            for r in by_category
+        ],
+    }
+
+
 def clear_all(conn: sqlite3.Connection) -> None:
     conn.execute("DELETE FROM pattern_embeddings")
     conn.execute("DELETE FROM patterns")

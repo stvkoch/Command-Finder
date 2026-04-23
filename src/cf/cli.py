@@ -30,6 +30,7 @@ def main(
     seed: Annotated[bool, typer.Option("--seed", help="Seed/rebuild the database and export ONNX model")] = False,
     force: Annotated[bool, typer.Option("--force", help="Force reseed (clear existing data)")] = False,
     verbose: Annotated[bool, typer.Option("--verbose", "-v", help="Show similarity scores")] = False,
+    stats: Annotated[bool, typer.Option("--stats", help="Show database statistics")] = False,
     install_shell: Annotated[bool, typer.Option("--install-shell", help="Show shell integration instructions")] = False,
     version: Annotated[bool, typer.Option("--version", callback=version_callback, is_eager=True, help="Show version")] = False,
 ):
@@ -40,6 +41,10 @@ def main(
 
     if seed:
         _do_seed(force)
+        raise typer.Exit()
+
+    if stats:
+        _show_stats()
         raise typer.Exit()
 
     if not query:
@@ -108,6 +113,35 @@ def main(
     else:
         # Default: print to stdout (shell wrapper handles readline injection)
         output_print(selected)
+
+
+def _show_stats():
+    from cf.config import DB_PATH
+    if not DB_PATH.exists():
+        typer.echo("Database not found. Run 'cf --seed' first.", err=True)
+        raise typer.Exit(1)
+
+    from cf.db import get_connection, get_detailed_stats, init_db
+    conn = get_connection()
+    init_db(conn)
+    s = get_detailed_stats(conn)
+    conn.close()
+
+    typer.echo(f"Database:        {DB_PATH}")
+    typer.echo(f"Categories:      {s['categories']}")
+    typer.echo(f"Commands:        {s['commands']}")
+    typer.echo(f"Patterns:        {s['patterns']}")
+    typer.echo(f"Embeddings:      {s['embeddings']}")
+    typer.echo(f"Embedding dim:   {s['embedding_dim']}")
+    typer.echo(f"Cached queries:  {s['cached_queries']}")
+    typer.echo("")
+
+    if s["by_category"]:
+        name_w = max(len(r["category"]) for r in s["by_category"])
+        typer.echo(f"  {'Category':<{name_w}}  Commands  Patterns")
+        typer.echo(f"  {'-' * name_w}  --------  --------")
+        for r in s["by_category"]:
+            typer.echo(f"  {r['category']:<{name_w}}  {r['commands']:>8}  {r['patterns']:>8}")
 
 
 def _do_seed(force: bool):
