@@ -1439,19 +1439,19 @@
         {
           "type": "example",
           "text": "claude commit - AI generated commit message for staged files",
-          "command": "git commit -m \"$(claude -p 'Review the staged changes with git diff --cached and write a concise conventional commit message. Output only the message text, no markdown, no explanation.')\"",
+          "command": "git commit -m \"$(claude -p 'Review the staged changes with git diff --cached and write a concise conventional commit message. Output only the commit message text, no markdown, no explanation.')\"",
           "explanation": "One-liner that asks claude to read the staged diff and produce a commit message, then commits with it"
         },
         {
           "type": "example",
           "text": "generate a commit message from the staged diff using claude",
-          "command": "git diff --cached | claude -p 'Write a concise conventional commit message for this diff. Output only the message text.'",
+          "command": "git diff --cached | claude -p 'Write a concise conventional commit message for this diff. Output only the commit message text, no markdown, no explanation.'",
           "explanation": "Pipes the staged diff into claude, which returns just the commit message on stdout"
         },
         {
           "type": "example",
           "text": "stage everything and let claude commit it",
-          "command": "git add -A && git commit -m \"$(claude -p 'Review the staged changes with git diff --cached and write a concise conventional commit message. Output only the message text.')\"",
+          "command": "git add -A && git commit -m \"$(claude -p 'Review the staged changes with git diff --cached and write a concise conventional commit message. Output only the commit message text, no markdown, no explanation.')\"",
           "explanation": "Stages all changes then asks claude to write the commit message before committing"
         },
         {
