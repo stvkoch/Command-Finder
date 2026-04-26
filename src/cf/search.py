@@ -31,6 +31,7 @@ class SearchResult:
     command_description: str
     synopsis: str
     distance: float
+    destructive: bool = False
 
 
 def search(query: str, top_k: int = 10, db_path=None) -> list[SearchResult]:
@@ -57,12 +58,16 @@ def search(query: str, top_k: int = 10, db_path=None) -> list[SearchResult]:
     raw = search_similar(conn, embedding_bytes, top_k=top_k * 2)
     conn.close()
 
-    # Deduplicate: keep best (lowest distance) match per command_template
+    # Deduplicate: keep best (lowest distance) match per command_template.
+    # OR the destructive flag across dupes so any destructive marker wins.
     seen = {}
     for r in raw:
         key = r["command_template"]
-        if key not in seen or r["distance"] < seen[key]["distance"]:
+        prior = seen.get(key)
+        if prior is None or r["distance"] < prior["distance"]:
             seen[key] = r
+        if prior is not None and r.get("destructive"):
+            seen[key]["destructive"] = True
 
     # Sort by distance, take top_k
     results = sorted(seen.values(), key=lambda r: r["distance"])[:top_k]
@@ -76,6 +81,7 @@ def search(query: str, top_k: int = 10, db_path=None) -> list[SearchResult]:
             command_description=r["command_description"],
             synopsis=r["synopsis"],
             distance=r["distance"],
+            destructive=r.get("destructive", False),
         )
         for r in results
     ]

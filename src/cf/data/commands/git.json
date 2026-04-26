@@ -200,13 +200,15 @@
           "type": "example",
           "text": "force push to overwrite remote history",
           "command": "git push --force",
-          "explanation": "Overwrites the remote branch with local history, use with caution"
+          "explanation": "Overwrites the remote branch with local history, use with caution",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "safely force push only if no one else has pushed",
           "command": "git push --force-with-lease",
-          "explanation": "Force pushes but fails if the remote has commits you haven't seen"
+          "explanation": "Force pushes but fails if the remote has commits you haven't seen",
+          "destructive": true
         },
         {
           "type": "example",
@@ -629,7 +631,7 @@
           "type": "example",
           "text": "find the first commit in the repository",
           "command": "git rev-list --max-parents=0 HEAD",
-          "explanation": "Returns the root commit(s) — commits with no parents"
+          "explanation": "Returns the root commit(s) \u2014 commits with no parents"
         },
         {
           "type": "example",
@@ -726,7 +728,7 @@
           "type": "example",
           "text": "aggregate stats per folder at any depth (configurable)",
           "command": "git diff --numstat main..HEAD | awk -v depth=3 '{n=split($3,a,\"/\"); lim=(n<depth)?n:depth; d=a[1]; for (i=2; i<=lim; i++) d=d\"/\"a[i]; files[d]++; add[d]+=$1; del[d]+=$2} END {for (d in files) printf \"%-50s %5d  +%-6d -%d\\n\", d, files[d], add[d], del[d]}' | sort -k2 -nr",
-          "explanation": "Per-folder stats grouped at any path depth — change -v depth=3 to the desired number of levels"
+          "explanation": "Per-folder stats grouped at any path depth \u2014 change -v depth=3 to the desired number of levels"
         },
         {
           "type": "example",
@@ -849,13 +851,15 @@
           "type": "example",
           "text": "completely discard the last commit and all changes",
           "command": "git reset --hard HEAD~1",
-          "explanation": "Permanently removes the last commit and all associated changes"
+          "explanation": "Permanently removes the last commit and all associated changes",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "reset to match the remote branch exactly",
           "command": "git reset --hard origin/main",
-          "explanation": "Discards all local commits and changes, matching the remote"
+          "explanation": "Discards all local commits and changes, matching the remote",
+          "destructive": true
         },
         {
           "type": "example",
@@ -1151,19 +1155,22 @@
           "type": "example",
           "text": "delete all untracked files",
           "command": "git clean -f",
-          "explanation": "Forcefully removes all untracked files"
+          "explanation": "Forcefully removes all untracked files",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "remove untracked files and directories",
           "command": "git clean -fd",
-          "explanation": "Removes untracked files and empty untracked directories"
+          "explanation": "Removes untracked files and empty untracked directories",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "remove untracked files including those in .gitignore",
           "command": "git clean -fdx",
-          "explanation": "Removes all untracked files including ignored ones like build artifacts"
+          "explanation": "Removes all untracked files including ignored ones like build artifacts",
+          "destructive": true
         },
         {
           "type": "example",
@@ -1280,7 +1287,8 @@
           "type": "example",
           "text": "restore to a reflog entry",
           "command": "git reset --hard HEAD@{3}",
-          "explanation": "Resets HEAD to where it was 3 moves ago according to the reflog"
+          "explanation": "Resets HEAD to where it was 3 moves ago according to the reflog",
+          "destructive": true
         },
         {
           "type": "example",
@@ -1329,7 +1337,7 @@
           "type": "example",
           "text": "check if one commit is an ancestor of another",
           "command": "git merge-base --is-ancestor commit1 commit2",
-          "explanation": "Exits 0 if commit1 is an ancestor of commit2, 1 otherwise — useful in scripts"
+          "explanation": "Exits 0 if commit1 is an ancestor of commit2, 1 otherwise \u2014 useful in scripts"
         },
         {
           "type": "example",

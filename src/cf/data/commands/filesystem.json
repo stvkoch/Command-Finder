@@ -121,31 +121,36 @@
           "type": "example",
           "text": "delete a file",
           "command": "rm file.txt",
-          "explanation": "Permanently removes the specified file"
+          "explanation": "Permanently removes the specified file",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "delete a directory and all its contents",
           "command": "rm -rf directory/",
-          "explanation": "Recursively and forcefully removes a directory and everything in it"
+          "explanation": "Recursively and forcefully removes a directory and everything in it",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "remove a file with confirmation prompt",
           "command": "rm -i file.txt",
-          "explanation": "The -i flag asks for confirmation before deleting"
+          "explanation": "The -i flag asks for confirmation before deleting",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "remove all log files in the current directory",
           "command": "rm *.log",
-          "explanation": "Uses a glob pattern to delete all files ending in .log"
+          "explanation": "Uses a glob pattern to delete all files ending in .log",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "delete an empty directory",
           "command": "rm -d empty_dir/",
-          "explanation": "The -d flag removes empty directories"
+          "explanation": "The -d flag removes empty directories",
+          "destructive": true
         }
       ]
     },
@@ -855,31 +860,36 @@
           "type": "example",
           "text": "empty a file without deleting it",
           "command": "truncate -s 0 logfile.log",
-          "explanation": "Sets the file size to 0 bytes, effectively clearing its contents"
+          "explanation": "Sets the file size to 0 bytes, effectively clearing its contents",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "create a file of a specific size for testing",
           "command": "truncate -s 1G testfile.img",
-          "explanation": "Creates a sparse file that appears to be 1 gigabyte"
+          "explanation": "Creates a sparse file that appears to be 1 gigabyte",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "shrink a file to a specific size",
           "command": "truncate -s 100M large_file.dat",
-          "explanation": "Truncates or extends the file to exactly 100 megabytes"
+          "explanation": "Truncates or extends the file to exactly 100 megabytes",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "reduce a file size by a certain amount",
           "command": "truncate -s -10M file.dat",
-          "explanation": "The minus sign reduces the file size by 10 megabytes"
+          "explanation": "The minus sign reduces the file size by 10 megabytes",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "extend a file by appending empty space",
           "command": "truncate -s +50M file.dat",
-          "explanation": "The plus sign grows the file by 50 megabytes, padded with null bytes"
+          "explanation": "The plus sign grows the file by 50 megabytes, padded with null bytes",
+          "destructive": true
         }
       ]
     },
@@ -1021,7 +1031,8 @@
           "type": "example",
           "text": "generate a file filled with random data",
           "command": "dd if=/dev/urandom of=random.bin bs=1M count=100",
-          "explanation": "Creates a 100 MB file of random bytes"
+          "explanation": "Creates a 100 MB file of random bytes",
+          "destructive": true
         }
       ]
     },

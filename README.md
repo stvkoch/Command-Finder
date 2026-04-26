@@ -272,7 +272,8 @@ Seed data lives in `src/cf/data/commands/*.json`. To add commands:
           "type": "example",
           "text": "natural language description of this use case",
           "command": "mytool --flag value",
-          "explanation": "brief explanation"
+          "explanation": "brief explanation",
+          "destructive": false
         }
       ]
     }
@@ -292,6 +293,7 @@ cf --seed --force
 - Include multiple phrasings: "delete empty folders", "remove directories that are empty", "clean up empty dirs"
 - Each pattern gets its own embedding, so more patterns = better recall
 - The `command` field is what gets injected -- make it a real, runnable command
+- Set `destructive` to `true` for commands that delete files, kill processes, rewrite history, wipe volumes, or otherwise make hard-to-undo changes. Destructive results are marked with `⚠` in the selector and require typing `yes` before cf injects, copies, prints, or sends the command.
 
 ## Project structure
 

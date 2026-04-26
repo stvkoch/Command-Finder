@@ -5,6 +5,28 @@ from cf.search import SearchResult
 # Sentinel returned when user picks "Show more"
 SHOW_MORE = object()
 
+DESTRUCTIVE_MARK = "⚠ "
+
+
+def _confirm_destructive(r: SearchResult) -> bool:
+    """Prompt y/N on /dev/tty before returning a destructive command."""
+    msg = (
+        f"\n⚠  DESTRUCTIVE COMMAND\n"
+        f"   {r.command_template}\n"
+        f"   This may delete files, kill processes, or rewrite history.\n"
+        f"   Type 'yes' to confirm: "
+    )
+    try:
+        with open("/dev/tty", "r+") as tty:
+            tty.write(msg)
+            tty.flush()
+            answer = tty.readline().strip().lower()
+    except OSError:
+        # No tty — refuse rather than silently injecting
+        print("Cannot read confirmation: no tty available.", file=sys.stderr)
+        return False
+    return answer == "yes"
+
 
 def select_command(results: list[SearchResult], verbose: bool = False,
                    non_interactive: bool = False, has_more: bool = True) -> str | None:
@@ -26,7 +48,8 @@ def select_command(results: list[SearchResult], verbose: bool = False,
 
 def _format_entry(r: SearchResult, verbose: bool) -> str:
     score = f" ({r.distance:.3f})" if verbose else ""
-    return f"{r.command_template}  [{r.command_name}]{score}"
+    mark = DESTRUCTIVE_MARK if r.destructive else ""
+    return f"{mark}{r.command_template}  [{r.command_name}]{score}"
 
 
 def _format_preview(r: SearchResult) -> str:
@@ -39,6 +62,8 @@ def _format_preview(r: SearchResult) -> str:
     ]
     if r.explanation:
         lines.extend(["", f"Explanation: {r.explanation}"])
+    if r.destructive:
+        lines.extend(["", "⚠ DESTRUCTIVE: requires confirmation before injection"])
     return "\n".join(lines)
 
 
@@ -71,7 +96,10 @@ def _select_with_menu(results: list[SearchResult], verbose: bool,
     # "Show more" is the last entry
     if has_more and chosen == len(results):
         return SHOW_MORE
-    return results[chosen].command_template
+    selected = results[chosen]
+    if selected.destructive and not _confirm_destructive(selected):
+        return None
+    return selected.command_template
 
 
 def _select_with_input(results: list[SearchResult], verbose: bool,
@@ -80,7 +108,8 @@ def _select_with_input(results: list[SearchResult], verbose: bool,
     print("\nMatching commands:\n", file=sys.stderr)
     for i, r in enumerate(results, 1):
         score = f"  (distance: {r.distance:.3f})" if verbose else ""
-        print(f"  {i}) {r.command_template}", file=sys.stderr)
+        mark = DESTRUCTIVE_MARK if r.destructive else ""
+        print(f"  {i}) {mark}{r.command_template}", file=sys.stderr)
         print(f"     {r.pattern_text} [{r.command_name}]{score}", file=sys.stderr)
         if r.explanation:
             print(f"     {r.explanation}", file=sys.stderr)
@@ -103,7 +132,10 @@ def _select_with_input(results: list[SearchResult], verbose: bool,
     try:
         idx = int(choice.strip()) - 1
         if 0 <= idx < len(results):
-            return results[idx].command_template
+            selected = results[idx]
+            if selected.destructive and not _confirm_destructive(selected):
+                return None
+            return selected.command_template
     except ValueError:
         pass
 

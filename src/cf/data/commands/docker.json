@@ -325,25 +325,29 @@
           "type": "example",
           "text": "remove a stopped container",
           "command": "docker rm mycontainer",
-          "explanation": "Deletes the container and its writable layer"
+          "explanation": "Deletes the container and its writable layer",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "force remove a running container",
           "command": "docker rm -f mycontainer",
-          "explanation": "Kills and removes the container in one step"
+          "explanation": "Kills and removes the container in one step",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "remove all stopped containers",
           "command": "docker rm $(docker ps -aq -f status=exited)",
-          "explanation": "Finds and removes all containers that have exited"
+          "explanation": "Finds and removes all containers that have exited",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "remove a container and its volumes",
           "command": "docker rm -v mycontainer",
-          "explanation": "Deletes the container along with its anonymous volumes"
+          "explanation": "Deletes the container along with its anonymous volumes",
+          "destructive": true
         }
       ]
     },
@@ -356,25 +360,29 @@
           "type": "example",
           "text": "delete a local Docker image",
           "command": "docker rmi myapp:latest",
-          "explanation": "Removes the specified image from local storage"
+          "explanation": "Removes the specified image from local storage",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "force remove an image even if containers use it",
           "command": "docker rmi -f myapp:latest",
-          "explanation": "Forcefully removes the image regardless of references"
+          "explanation": "Forcefully removes the image regardless of references",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "remove all dangling images",
           "command": "docker rmi $(docker images -q -f dangling=true)",
-          "explanation": "Deletes all untagged and unreferenced images"
+          "explanation": "Deletes all untagged and unreferenced images",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "remove all images",
           "command": "docker rmi $(docker images -q)",
-          "explanation": "Removes every local image"
+          "explanation": "Removes every local image",
+          "destructive": true
         }
       ]
     },
@@ -491,7 +499,8 @@
           "type": "example",
           "text": "remove a specific volume",
           "command": "docker volume rm mydata",
-          "explanation": "Deletes the named volume and its data"
+          "explanation": "Deletes the named volume and its data",
+          "destructive": true
         }
       ]
     },
@@ -541,13 +550,15 @@
           "type": "example",
           "text": "clean up all unused Docker resources",
           "command": "docker system prune -a",
-          "explanation": "Removes all unused images, containers, networks, and build cache"
+          "explanation": "Removes all unused images, containers, networks, and build cache",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "prune with volume cleanup too",
           "command": "docker system prune -a --volumes",
-          "explanation": "Removes everything unused including volumes"
+          "explanation": "Removes everything unused including volumes",
+          "destructive": true
         },
         {
           "type": "example",

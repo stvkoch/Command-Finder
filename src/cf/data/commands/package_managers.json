@@ -250,7 +250,8 @@
           "type": "example",
           "text": "uninstall a package and clean up",
           "command": "brew uninstall wget && brew cleanup",
-          "explanation": "Removes the formula and deletes old cached downloads"
+          "explanation": "Removes the formula and deletes old cached downloads",
+          "destructive": true
         },
         {
           "type": "example",

@@ -35,7 +35,7 @@ Key files:
 
 ```sql
 commands(id, name, category, synopsis, description)
-patterns(id, command_id FK, pattern_type, text, command_template, explanation)
+patterns(id, command_id FK, pattern_type, text, command_template, explanation, destructive)
 pattern_embeddings  -- vec0 virtual table, PK pattern_id, FLOAT[384]
 query_cache(query_text PK, embedding BLOB)
 ```
@@ -93,6 +93,7 @@ cf "<natural-language query for the new entry>"                    # smoke test
 
 - **`text`** is the embedded string. Write it as user intent ("compress a folder to tar.gz"), not man-page language.
 - **`command`** is the injected shell command. Must be runnable, copy-pasteable, with placeholders (`<file>`, `/path/to/dir`) where concrete values would mislead.
+- **`destructive`** is an optional boolean, defaulting to `false`. Set it to `true` when a pattern deletes data, kills processes, rewrites git history, wipes volumes, or otherwise causes hard-to-undo changes; cf marks the result with `⚠` and requires typing `yes` before returning the command.
 - **More patterns per command = better recall.** Add 3–8 paraphrased `text` entries that share or vary the `command`.
 - **Category uniqueness**: don't re-add a command that already lives in another category file.
 - **`pattern_type`**: use `"example"` unless you are introducing a new type end-to-end.

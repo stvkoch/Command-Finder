@@ -122,8 +122,8 @@ class TestInsertPatternsBatch:
             ("ls", "fs", "ls", "List"),
         ])
         pat_ids = insert_patterns_batch(conn, [
-            (cmd_ids[0], "example", "list files", "ls -la", "Show details"),
-            (cmd_ids[0], "example", "hidden files", "ls -a", None),
+            (cmd_ids[0], "example", "list files", "ls -la", "Show details", 0),
+            (cmd_ids[0], "example", "hidden files", "ls -a", None, 0),
         ])
         assert len(pat_ids) == 2
         assert pat_ids[1] == pat_ids[0] + 1
@@ -132,7 +132,7 @@ class TestInsertPatternsBatch:
         _, conn = tmp_db
         with pytest.raises(sqlite3.IntegrityError):
             insert_patterns_batch(conn, [
-                (9999, "example", "text", "template", None),
+                (9999, "example", "text", "template", None, 0),
             ])
 
 
@@ -141,7 +141,7 @@ class TestInsertEmbeddingsBatch:
         _, conn = tmp_db
         cmd_ids = insert_commands_batch(conn, [("ls", "fs", "ls", "List")])
         pat_ids = insert_patterns_batch(conn, [
-            (cmd_ids[0], "example", "list files", "ls -la", None),
+            (cmd_ids[0], "example", "list files", "ls -la", None, 0),
         ])
         emb = random_embedding(seed=0)
         insert_embeddings_batch(conn, [(pat_ids[0], to_bytes(emb))])

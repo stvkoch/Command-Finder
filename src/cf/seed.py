@@ -51,7 +51,7 @@ def seed_database(db_path=None, force: bool = False) -> dict:
     cmd_rows = []       # (name, category, synopsis, description)
     cmd_keys = []       # tracks which command each row belongs to
     cmd_seen = {}       # (category, name) -> index in cmd_rows
-    pat_meta = []       # (cmd_index, type, text, template, explanation)
+    pat_meta = []       # (cmd_index, type, text, template, explanation, destructive)
 
     for category_data in all_data:
         category = category_data["category"]
@@ -68,6 +68,7 @@ def seed_database(db_path=None, force: bool = False) -> dict:
                     pat["text"],
                     pat["command"],
                     pat.get("explanation"),
+                    1 if pat.get("destructive") else 0,
                 ))
 
     # ── Phase 2: Encode embeddings (cached) ──────────────────
@@ -84,8 +85,8 @@ def seed_database(db_path=None, force: bool = False) -> dict:
 
     # Build pattern rows with resolved command IDs
     pat_rows = [
-        (cmd_ids[cm_idx], ptype, text, tmpl, expl)
-        for cm_idx, ptype, text, tmpl, expl in pat_meta
+        (cmd_ids[cm_idx], ptype, text, tmpl, expl, destructive)
+        for cm_idx, ptype, text, tmpl, expl, destructive in pat_meta
     ]
     pat_ids = insert_patterns_batch(conn, pat_rows)
 

@@ -22,7 +22,8 @@
           "type": "example",
           "text": "find and delete all temporary files",
           "command": "find . -name '*.tmp' -delete",
-          "explanation": "Finds and removes all .tmp files recursively"
+          "explanation": "Finds and removes all .tmp files recursively",
+          "destructive": true
         },
         {
           "type": "example",

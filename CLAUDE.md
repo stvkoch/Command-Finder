@@ -77,6 +77,13 @@ One category per file. Filename should match the `category` field (e.g. `git.jso
           "text": "commit staged changes with a message",
           "command": "git commit -m \"message\"",
           "explanation": "Records all staged changes with the given commit message"
+        },
+        {
+          "type": "example",
+          "text": "discard local changes and reset to upstream",
+          "command": "git reset --hard origin/main",
+          "explanation": "Drops all local commits and uncommitted changes",
+          "destructive": true
         }
       ]
     }
@@ -95,6 +102,7 @@ One category per file. Filename should match the `category` field (e.g. `git.jso
   - **`text`** — natural-language description of *what the user wants to do*. Write how a user would phrase the task, not how the command works. This is the embedded string.
   - **`command`** — the exact shell command that will be injected into the user's prompt. Must be runnable; use placeholders like `<file>`, `/path/to/dir`, `name` where appropriate.
   - **`explanation`** — one-line explanation shown in the selector preview. Optional but recommended.
+  - **`destructive`** — optional boolean (default `false`). Set `true` for commands that delete files, kill processes, rewrite git history, wipe volumes, or otherwise cause irreversible changes. The selector marks these with a ⚠ prefix and prompts a `yes`/N double-confirmation before injecting/copying the command. Examples: `rm -rf`, `kill -9`, `git push --force`, `git reset --hard`, `git clean -fd`, `find -delete`, `truncate`, `dd`, `docker rm -f`, `docker volume rm`, `docker system prune`. Don't mark non-destructive operations (read-only flags, `kill -HUP` reloads, `chmod` grants) — alarm fatigue defeats the prompt.
 
 ### Writing good patterns
 

@@ -121,13 +121,15 @@
           "type": "example",
           "text": "terminate a process gracefully by its PID",
           "command": "kill 1234",
-          "explanation": "Sends SIGTERM (default) to process 1234, allowing it to clean up"
+          "explanation": "Sends SIGTERM (default) to process 1234, allowing it to clean up",
+          "destructive": true
         },
         {
           "type": "example",
           "text": "force kill an unresponsive process",
           "command": "kill -9 1234",
-          "explanation": "Sends SIGKILL to immediately terminate process 1234 without cleanup"
+          "explanation": "Sends SIGKILL to immediately terminate process 1234 without cleanup",
+          "destructive": true
         },
         {
           "type": "example",
@@ -145,7 +147,8 @@
           "type": "example",
           "text": "stop a process temporarily",
           "command": "kill -STOP 1234",
-          "explanation": "Suspends process 1234 so it stops executing but remains in memory"
+          "explanation": "Suspends process 1234 so it stops executing but remains in memory",
+          "destructive": true
         }
       ]
     },

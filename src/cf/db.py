@@ -34,7 +34,8 @@ def init_db(conn: sqlite3.Connection) -> None:
             pattern_type TEXT NOT NULL,
             text TEXT NOT NULL,
             command_template TEXT NOT NULL,
-            explanation TEXT
+            explanation TEXT,
+            destructive INTEGER NOT NULL DEFAULT 0
         );
 
         CREATE VIRTUAL TABLE IF NOT EXISTS pattern_embeddings USING vec0(
@@ -50,6 +51,12 @@ def init_db(conn: sqlite3.Connection) -> None:
             embedding BLOB NOT NULL
         );
     """)
+    # Migrate older DBs that predate the destructive column.
+    cols = {row[1] for row in conn.execute("PRAGMA table_info(patterns)")}
+    if "destructive" not in cols:
+        conn.execute(
+            "ALTER TABLE patterns ADD COLUMN destructive INTEGER NOT NULL DEFAULT 0"
+        )
     conn.commit()
 
 
@@ -96,10 +103,10 @@ def insert_commands_batch(conn: sqlite3.Connection,
 
 def insert_patterns_batch(conn: sqlite3.Connection,
                           rows: list[tuple]) -> list[int]:
-    """Batch insert patterns. rows: [(command_id, type, text, template, explanation), ...]"""
+    """Batch insert patterns. rows: [(command_id, type, text, template, explanation, destructive), ...]"""
     conn.executemany(
-        "INSERT INTO patterns (command_id, pattern_type, text, command_template, explanation) "
-        "VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO patterns (command_id, pattern_type, text, command_template, explanation, destructive) "
+        "VALUES (?, ?, ?, ?, ?, ?)",
         rows,
     )
     last_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]
@@ -125,7 +132,8 @@ def search_similar(conn: sqlite3.Connection, query_embedding_bytes: bytes,
             c.name,
             c.description,
             c.synopsis,
-            pe.distance
+            pe.distance,
+            p.destructive
         FROM pattern_embeddings pe
         JOIN patterns p ON p.id = pe.pattern_id
         JOIN commands c ON c.id = p.command_id
@@ -143,6 +151,7 @@ def search_similar(conn: sqlite3.Connection, query_embedding_bytes: bytes,
             "command_description": r[4],
             "synopsis": r[5],
             "distance": r[6],
+            "destructive": bool(r[7]),
         }
         for r in rows
     ]
